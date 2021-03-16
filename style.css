@@ -1,0 +1,13 @@
+section{
+    height: 500px;
+}
+
+#mapid{
+    height: 100%;
+}
+
+/*TEMPO FIXE*/
+.card{
+    max-height: 300px;
+    overflow: auto;
+}
