@@ -42,6 +42,18 @@ jQuery.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1nsrEIrjH08yZ1mbJE
 })
 
 window.onload = function() {
-    var map = L.map('mapid').setView([50.819867, -0.163331], 13);
+    var map = L.map('mapid',{ zoomControl: false })
     L.tileLayer.provider('Stamen.Watercolor').addTo(map);
+    checklist_marker = L.featureGroup().addTo(map);
+    jQuery.getJSON('the-competition/checklist_list.json', function(checklist_list){
+        checklist_list.forEach(e => {
+            console.log(e.Latitude)
+            L.marker([e.Latitude, e.Longitude])
+            .bindPopup('<a href="https://ebird.org/profile/'+e.user_id+'">'+e.user_name+'</a><br>'+
+            '<a href="https://ebird.org/checklist/'+e.user_subId+'">'+e.Location+'</a><br>'+
+            'Number of Species: '+e.nb_species)
+            .addTo(checklist_marker)
+        });
+        map.fitBounds(checklist_marker.getBounds());
+    })
   };
