@@ -1,0 +1,123 @@
+import csv
+import codecs
+import os
+import json
+
+# Defien working directory
+os.chdir('/mnt/c/Users/rnussba1/Documents/GitHub/johnstottbirdingday/the-competition')
+
+
+
+# Read data
+data=[]
+with open('MyEBirdData.csv', mode='r') as csv_file:
+    csv_reader = csv.DictReader(csv_file)
+    line_count = 0
+    for row in csv_reader:
+        data.append(row)
+        line_count += 1
+#print(data)
+
+
+
+
+
+# Match associate User and checklistid
+## Read sublid list
+subId_match=[]
+with open('subId_match.csv', mode='r', encoding='utf-8-sig') as csv_file:
+    csv_reader = csv.DictReader(csv_file)
+    line_count = 0
+    for row in csv_reader:
+        subId_match.append(row)
+        line_count += 1
+#print(subId_match)
+
+## Check subId not present in the match list
+subId_list_unique=list(set([d['Submission ID'] for d in data]))
+subId_list_unique_notin = [s for s in subId_list_unique if s not in [s2['my_subId'] for s2 in subId_match]]
+print(subId_list_unique_notin)
+
+## Add user information to data
+for d in data:
+    s = [s for s in subId_match if s['my_subId']==d['Submission ID']]
+    if s:
+        d.update(s[0])
+    else:
+        print(d['Submission ID'])
+
+
+
+
+# Match Taxonomy Category
+## Read taxonomy
+taxo=[]
+with open('eBird_Taxonomy_v2019.csv', mode='r', encoding='utf-8-sig') as csv_file:
+    csv_reader = csv.DictReader(csv_file)
+    line_count = 0
+    for row in csv_reader:
+        taxo.append(row)
+        line_count += 1
+
+## Add user information to data
+for d in data:
+    s = [t for t in taxo if t["TAXON_ORDER"]==d['Taxonomic Order']]
+    if s:
+        d['category'] = s[0]['CATEGORY']
+    else:
+        print(d)
+
+
+
+
+
+# Compute Value
+
+## Species
+species_list_sp_only = list(set([d['Common Name'] for d in data if d['category']=="species"]))
+
+## Checklists
+checklist_list = []
+subId_list = list(set([d['Submission ID'] for d in data]))
+
+for subId in subId_list:
+    sightings = [d for d in data if d['Submission ID']==subId]
+    checklist={}
+    checklist['my_subId'] = sightings[0]['my_subId']
+    checklist['State/Province'] = sightings[0]['State/Province']
+    checklist['Location ID'] = sightings[0]['Location ID']
+    checklist['Latitude'] = sightings[0]['Latitude']
+    checklist['Location'] = sightings[0]['Location']
+    checklist['Longitude'] = sightings[0]['Longitude']
+    checklist['user_id'] = sightings[0]['user_id']
+    checklist['user_name'] = sightings[0]['user_name']
+    checklist['user_subId'] = sightings[0]['user_subId']
+    checklist['nb_species'] = len(list(set([d['Common Name'] for d in sightings if d['category']=="species"])))
+    checklist_list.append(checklist)
+
+
+## User
+user_list = []
+user_name_list = list(set([d['user_name'] for d in data]))
+
+for user_name in user_name_list:
+    sightings = [d for d in data if d['user_name']==user_name]
+    user={}
+    user['user_id'] = sightings[0]['user_id']
+    user['user_name'] = sightings[0]['user_name']
+    user['checklists'] = list(set([d['user_subId'] for d in sightings]))
+    user['nb_species'] = len(list(set([d['Common Name'] for d in sightings if d['category']=="species"])))
+    user_list.append(user)
+
+
+
+
+# Export
+with open('species_list_sp_only.json', 'w') as outfile:
+    json.dump(species_list_sp_only, outfile)
+
+with open('checklist_list.json', 'w') as outfile:
+    json.dump(checklist_list, outfile)
+
+with open('user_list.json', 'w') as outfile:
+    json.dump(user_list, outfile)
