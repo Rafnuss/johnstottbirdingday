@@ -1,10 +1,49 @@
+body{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Libre Baskerville', serif;
+}
+
 section{
     height: 500px;
 }
-
+.bg-blue{
+    background-color: #006382;
+}
+.text-blue{
+    color: #006382;
+}
 #mapid{
     height: 100%;
 }
+
+
+#welcome{
+    background-image: url('assets/welcome.jpg');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    background-attachment: fixed;
+}
+
+#the-day-picture{
+    background-image: url('assets/the-day.jpg');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+#the-organizers-picture{
+    background-image: url('assets/the-organizers.jpg');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */  
+}
+#the-man-picture {
+    background-image: url('assets/the-man.jpg');
+    background-position: top; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */  
+}
+
 
 /*TEMPO FIXE*/
 .card{

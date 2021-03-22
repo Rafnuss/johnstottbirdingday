@@ -12,20 +12,22 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="anonymous" />
-        <!-- Core theme CSS (includes Bootstrap)-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Core theme CSS (includes Bootstrap)-->
     <link href="style.css" rel="stylesheet" />
 </head>
 
 
 <body data-bs-spy="scroll" data-bs-target=".navbar-nav" data-bs-offset="0">
     <!-- Navigation-->
-    <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-blue">
         <div class="container">
             <div class="w-100">
             </div>
             <div class="mx-auto ">
-                <a class="navbar-brand mx-auto" href="#">Logo</a>
+                <a class="navbar-brand mx-auto" href="#"><img src="assets/logo.svg" class="w-100"></a>
 
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
@@ -46,37 +48,58 @@
         </div>
     </nav>
 
-    <!-- The Day -->
-    <section class="bg-success" id="the-day">
+    <!-- Welcom -->
+    <section id="welcome"> 
         <div class="container pt-5 pb-5">
-            <div class="row">
+            <div class="row ">
                 <div class="col-md-4">
-                    The day
+                    <h1 class="text-blue">Welcome to the John Stott Memorial Birding Day 2021
+                        <hr class="text-white" size="10" style="opacity:1;">
+                        <small class="text-white">8<sup>th</sup> May 2021</small>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- The Day -->
+    <section class="bg-white" id="the-day">
+        <div class="container pt-5 pb-5 h-100">
+            <div class="row align-items-center h-100">
+                <div class="col-md-4">
+                    <h2 class="text-blue">The day</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse gravida felis sed pellentesque eleifend. Donec eu varius est. Maecenas elementum ipsum</p>
+                    <a href="#">How you can take part</a>
+                </div>
+                <div class="col-md-8 h-100" id="the-day-picture">                    
                 </div>
             </div>
         </div>
     </section>
     <!-- The Organizers -->
-    <section class="bg-danger" id="the-organizers">
+    <section class="bg-blue text-white" id="the-organizers">
         <div class="container pt-5 pb-5">
             <div class="row">
-                <div class="col-md-4">
-                    The organizers
-                </div>
                 <div class="col-md-8">
-                    
+                    <h2>The organizers</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse gravida felis sed pellentesque eleifend. Donec eu varius est. Maecenas elementum </p>
+                    <a href="#">Read more about A Rocha</a>
+                    <img class="img-fluid" src="assets/A_Rocha_generic.png">
+                </div>
+                <div class="col-md-4" id="the-organizers-picture">
                 </div>
             </div>
         </div>
     </section>
     <!-- The Men -->
-    <section class="bg-warning" id="the-man">
-        <div class="container pt-5 pb-5">
-            <div class="row">
+    <section class="bg-white" id="the-man">
+        <div class="container h-100 pt-5 pb-5">
+            <div class="row h-100">
                 <div class="col-md-4">
-                    The men
+                    <h2 class="text-blue">The Men</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse gravida felis sed pellentesque eleifend. Donec eu varius est. Maecenas elementum ipsum</p>
+                    <a href="#">Read more</a>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8 h-100" id="the-man-picture">
                     
                 </div>
             </div>
@@ -88,7 +111,7 @@
         <div class="container">
             <div class="row pt-5 pb-5">
                 <div class="col-md-4 bg-light">
-                    <h1>The competition.</h1> 
+                    <h2 class="text-blue">The competition.</h2> 
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p> 
                     <a href="/the-competition/" type="button" class="btn btn-primary btn-lg">Participate</a>
                 </div>
@@ -99,7 +122,7 @@
         </div>
     </section>
     <!-- The Stories -->
-    <section class="bg-info" id="the-stories">
+    <section class="bg-white" id="the-stories">
         <div class="container pt-5 pb-5">
             <div class="carousel slide" id="carouselStories" data-bs-ride="carousel">
                 <div class="carousel-inner">
@@ -117,7 +140,7 @@
             </div>
     </section>
     <!-- The Auction-->
-    <section class="bg-danger" id="the-auction">
+    <section class="bg-blue" id="the-auction">
         <div class="container pt-5 pb-5">
             <div class="row">
                 <div class="col-md-12">
