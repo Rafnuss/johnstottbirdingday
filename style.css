@@ -4,7 +4,7 @@ body{
 }
 
 section{
-    /*min-height: 500px;*/
+    height: 700px;
 }
 .bg-blue{
     background-color: #006382;
@@ -15,11 +15,26 @@ section{
 #mapid{
     height: 100%;
 }
+.nav-link:hover{
+    text-decoration: underline;
+}
+
+#nav-logo{
+    height: 70px;
+    transition: 0.4s;
+}
+.justGiving{
+    background:#882c84;
+    font-family: roboto,arial;
+}
+.justGiving:hover{
+    background:#700066;
+}
 
 
 #welcome{
     background-image: url('assets/welcome.jpg');
-    background-position: center; /* Center the image */
+    background-position: top; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover the entire container */
     background-attachment: fixed;
@@ -45,8 +60,3 @@ section{
 }
 
 
-/*TEMPO FIXE*/
-.card{
-    max-height: 300px;
-    overflow: auto;
-}

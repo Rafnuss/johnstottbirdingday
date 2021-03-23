@@ -12,24 +12,22 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="anonymous" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Libre+Baskerville:wght@400;700&display=swap"
+        rel="stylesheet">
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="style.css" rel="stylesheet" />
 </head>
 
 
-<body data-bs-spy="scroll" data-bs-target=".navbar-nav" data-bs-offset="0">
+<body data-bs-spy="scroll" data-bs-target=".navbar-nav" data-bs-offset="20">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-blue">
         <div class="container">
-            <div class="w-100">
-            </div>
-            <div class="mx-auto ">
-                <a class="navbar-brand mx-auto" href="#"><img src="assets/logo.svg" class="w-100"></a>
-
-            </div>
+            <a class="navbar-brand" href="#"><img src="assets/logo.svg" id="nav-logo"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -38,24 +36,25 @@
                     <li class="nav-item"><a class="nav-link" href="#the-day">The Day</a></li>
                     <li class="nav-item"><a class="nav-link" href="#the-organizers">The Organizers</a></li>
                     <li class="nav-item"><a class="nav-link" href="#the-man">The Man</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#the-competition">The Competition</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#the-bird-race">The Bird Race</a></li>
                     <li class="nav-item"><a class="nav-link" href="#the-stories">The Stories</a></li>
                     <li class="nav-item"><a class="nav-link" href="#the-auction">The Auction</a></li>
                     <li class="nav-item"><a class="nav-link" href="#the-retreat">The Retreat</a></li>
                 </ul>
             </div>
-
+            <a href="https://www.justgiving.com/arocha" target="_blank" type="button" class="navbar-brand btn d-flex justGiving text-white ms-5  align-items-center"><img class="me-2" src="assets/justgiving.png" width="25">Donate</a>
         </div>
     </nav>
 
-    <!-- Welcom -->
-    <section id="welcome"> 
-        <div class="container pt-5 pb-5">
-            <div class="row ">
-                <div class="col-md-4">
+    <!-- Welcome -->
+    <section id="welcome" class="vh-100">
+        <div class="container h-100 pt-5 pb-5">
+            <div class="row h-100">
+                <div class="col-md-4 col-xs-6 my-auto">
                     <h1 class="text-blue">Welcome to the John Stott Memorial Birding Day 2021
                         <hr class="text-white" size="10" style="opacity:1;">
                         <small class="text-white">8<sup>th</sup> May 2021</small>
+                        #johnstottbirdingday
                     </h1>
                 </div>
             </div>
@@ -63,28 +62,35 @@
     </section>
     <!-- The Day -->
     <section class="bg-white" id="the-day">
-        <div class="container pt-5 pb-5">
-            <div class="row">
-                <div class="col-md-4">
+        <div class="container h-100 pt-5 pb-5">
+            <div class="row h-100">
+                <div class="col-md-4 my-auto">
                     <h2 class="text-blue">The day</h2>
-                    <p>‘The ‘John Stott memorial birding day’ is a global one-day event on 8 May 2021 to commemorate, celebrate and continue John Stott’s legacy as a theologian, pastor and birdwatcher in his centenary year. </p>
-                    <p>Whether you are a novice or an expert birder, we invite you join friends old and new to head into the great outdoors and enjoy the avian part of God’s good creation.</p>
+                    <p>‘The ‘John Stott memorial birding day’ is a global one-day event on 8 May 2021 to commemorate,
+                        celebrate and continue John Stott’s legacy as a theologian, pastor and birdwatcher in his
+                        centenary year. </p>
+                    <p>Whether you are a novice or an expert birder, we invite you join friends old and new to head into
+                        the great outdoors and enjoy the avian part of God’s good creation.</p>
                     <a href="#">How you can take part</a>
                 </div>
-                <div class="col-md-8" id="the-day-picture">                    
+                <div class="col-md-8" id="the-day-picture">
                 </div>
             </div>
         </div>
     </section>
     <!-- The Organizers -->
     <section class="bg-blue text-white" id="the-organizers">
-        <div class="container pt-5 pb-5">
-            <div class="row">
-                <div class="col-md-8">
+        <div class="container pt-5 pb-5 h-100">
+            <div class="row h-100">
+                <div class="col-md-8 my-auto">
                     <h2>The organizers</h2>
-                    <p>The ‘John Stott memorial birding day’ is brought to you by A Rocha, a family of organizations around the world working in community-based nature conservation. Founded in 1983, we believe the care of creation belongs at the heart of our calling as followers of Christ. John Stott was a generous and encouraging friend to A Rocha from its earliest days; his influence continues to be felt in our culture, theology and values today.</p>
-                    <p>To find out more about A Rocha, please visit <a href="www.arocha.org">www.arocha.org</a></p>
-                    <a href="www.arocha.org"><img class="w-50" src="assets/A_Rocha_generic.png"></a>
+                    <p>The ‘John Stott memorial birding day’ is brought to you by A Rocha, a family of organizations
+                        around the world working in community-based nature conservation. Founded in 1983, we believe the
+                        care of creation belongs at the heart of our calling as followers of Christ. John Stott was a
+                        generous and encouraging friend to A Rocha from its earliest days; his influence continues to be
+                        felt in our culture, theology and values today.</p>
+                    <p>To find out more about A Rocha, please visit <a href="https://www.arocha.org/">www.arocha.org</a></p>
+                    <a href="https://www.arocha.org/en/"><img class="w-50" src="assets/A_Rocha_generic.png"></a>
                 </div>
                 <div class="col-md-4" id="the-organizers-picture">
                 </div>
@@ -93,84 +99,125 @@
     </section>
     <!-- The Men -->
     <section class="bg-white" id="the-man">
-        <div class="container pt-5 pb-5">
-            <div class="row">
-                <div class="col-md-4">
-                    <h2 class="text-blue">The Men</h2>
-                    <p>John Stott was at the forefront of bringing creation care to the attention of the global Church. He cared deeply for the plight of the planet because he was hardwired with a love of nature in general of birds in particular. But he was also someone who listened carefully to the Bible and he heard within it God’s great love and concern for all he had made, not just the humans.</p>
-                    <span class="collapse" id="the-man-read-more"><p>He particularly loved Psalm 104, which he said was the first great ecological poem. On the tenth anniversary of A Rocha in 1993, he preached a sermon which cited many psalms, but one reference which particularly struck us was Psalm 105: 1, ‘Give thanks to the Lord. Call on his name and make known to the nations what he has done. Sing praise to him and tell of all his wonderful acts.’ And he said, ‘Of course we’re used to the idea that we’re to bear witness to what God has done in Jesus for the salvation of the world. But the Scripture says we are also to bear witness to the wonderful works of our creator. God’s mighty acts in creation and redemption are to be made known throughout the world. I hope, Sisters and Brothers, that we will not be afraid to bear witness to the creator as well as to the redeemer.’ </p>
-                    <p>29 April is the centenary of John Stott’s birth. Although he didn’t live to celebrate his 100th birthday with us, his legacy endures. We hope you will enjoy this day of birding in his memory.</p></span>
-                    <a href="#" data-bs-toggle="collapse" data-bs-target="#the-man-read-more" aria-expanded="false" aria-controls="the-man-read-more">Read more</a>
+        <div class="container pt-5 pb-5 h-100">
+            <div class="row h-100">
+                <div class="col-md-4 my-auto">
+                    <h2 class="text-blue">The Man</h2>
+                    <p>John Stott was at the forefront of bringing creation care to the attention of the global Church.
+                        He cared deeply for the plight of the planet because he was hardwired with a love of nature in
+                        general of birds in particular. But he was also someone who listened carefully to the Bible and
+                        he heard within it God’s great love and concern for all he had made, not just the humans.</p>
+                    <span class="collapse" id="the-man-read-more">
+                        <p>He particularly loved Psalm 104, which he said was the first great ecological poem. On the
+                            tenth anniversary of A Rocha in 1993, he preached a sermon which cited many psalms, but one
+                            reference which particularly struck us was Psalm 105: 1, ‘Give thanks to the Lord. Call on
+                            his name and make known to the nations what he has done. Sing praise to him and tell of all
+                            his wonderful acts.’ And he said, ‘Of course we’re used to the idea that we’re to bear
+                            witness to what God has done in Jesus for the salvation of the world. But the Scripture says
+                            we are also to bear witness to the wonderful works of our creator. God’s mighty acts in
+                            creation and redemption are to be made known throughout the world. I hope, Sisters and
+                            Brothers, that we will not be afraid to bear witness to the creator as well as to the
+                            redeemer.’ </p>
+                        <p>29 April is the centenary of John Stott’s birth. Although he didn’t live to celebrate his
+                            100th birthday with us, his legacy endures. We hope you will enjoy this day of birding in
+                            his memory.</p>
+                    </span>
+                    <a href="#" data-bs-toggle="collapse" data-bs-target="#the-man-read-more" aria-expanded="false"
+                        aria-controls="the-man-read-more">Read more</a>
                 </div>
                 <div class="col-md-8" id="the-man-picture">
-                    
                 </div>
             </div>
         </div>
     </section>
-    <!-- The Competition -->
-    <section id="the-competition">
+    <!-- The Bird Race -->
+    <section id="the-bird-race">
         <div class="h-100 w-100 position-absolute" id="mapid" style="z-index: -1;"></div>
-        <div class="container">
-            <div class="row pt-5 pb-5">
-                <div class="col-md-6 bg-light">
-                    <h2 class="text-blue">The competition.</h2> 
-                    <p>You can compete as an individual or a team. Winners of each individual category will be awarded a bird book from John Stott’s own collection.</p>  
-                    <p>We are partnering with <a href=”bird.org/news/global-big-day-8-may-2021”>eBird’s Global Big Day</a>. To take part in the competition, you will need to <a href=”https://secure.birds.cornell.edu/cassso/account/create”>create an eBird account</a>, submit your sightings with the <href=”https://support.ebird.org/en/support/solutions/articles/48000957911-enter-sightings-on-the-ebird-website”>eBird website</a> or with their  <a href=”https://support.ebird.org/en/support/solutions/articles/48000957940-enter-sightings-with-ebird-mobile”>mobile app</a>. and To participate to the competition, simply <a href=”https://support.ebird.org/en/support/solutions/articles/48000625567-editing-and-sharing-checklists”>share your submitted checklist</a> with the username <a href=”https://ebird.org/profile/MjM1MDM0MA”>johnstottbirdingday</a>.</p>
-                    <p>On the day, please log your data which will then appear on this page in real time so you can see your ranking.</p> 
-                    <a href="/the-competition/" type="button" class="btn btn-primary btn-lg">Participate</a>
+        <div class="container h-100">
+            <div class="row pt-5 pb-5 h-100">
+                <div class="col-md-6 rounded py-4 bg-light my-auto">
+                    <h2 class="text-blue">The Bird Race.</h2>
+                    <p>You can compete as an individual or a team. Winners of each individual category will be awarded a
+                        bird book from John Stott’s own collection.</p>
+                    <p>We are partnering with <a href=”bird.org/news/global-big-day-8-may-2021”>eBird’s Global Big
+                            Day</a>. To take part in the competition, you will need to <a
+                            href=”https://secure.birds.cornell.edu/cassso/account/create”>create an eBird account</a>,
+                            submit your sightings with the
+                            <href=”https://support.ebird.org/en/support/solutions/articles/48000957911-enter-sightings-on-the-ebird-website”>eBird
+                            website</a> or with their <a
+                            href=”https://support.ebird.org/en/support/solutions/articles/48000957940-enter-sightings-with-ebird-mobile”>mobile
+                            app</a>. and To participate to the competition, simply <a
+                            href=”https://support.ebird.org/en/support/solutions/articles/48000625567-editing-and-sharing-checklists”>share
+                            your submitted checklist</a> with the username <a
+                            href=”https://ebird.org/profile/MjM1MDM0MA”>johnstottbirdingday </a>. </p> <p>On the day,
+                            please log your data which will then appear on this page in real time so you can see your
+                            ranking.</p>
+                    <a href="/the-competition/" type="button"
+                        class="mx-auto d-block btn btn-primary btn-lg">Participate</a>
                 </div>
             </div>
         </div>
     </section>
     <!-- The Stories -->
     <section class="bg-white" id="the-stories">
-        <div class="container pt-5 pb-5">
-            <div class="row">
-                <div class="col-12">
-                    <p>John loved nothing better than a birding adventure. Many of you experienced these adventures with him around the world and we’d love you to share your stories. </p>
+        <div class="container pt-5 pb-5 h-100">
+            <div class="row h-100">
+                <div class="col-12 my-auto">
+                    <h2 class="text-blue">The Stories.</h2>
+                    <p>John loved nothing better than a birding adventure. Many of you experienced these adventures with
+                        him around the world and we’d love you to share your stories. </p>
                     <p>Submit them below and a moderator will post them to the site for everyone to enjoy.</p>
+                </div>
+                <div class="col-12">
+                <div class="carousel slide" id="carouselStories" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselStories"
+                            data-bs-slide="prev">
+                            <!--<span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+                            <i class="fas fa-3x fa-chevron-circle-left text-blue"></i>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselStories"
+                            data-bs-slide="next">
+                            <!--<span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+                            <i class="fas fa-3x fa-chevron-circle-right text-blue"></i>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
-            <div class="carousel slide" id="carouselStories" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselStories"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselStories"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
                 </div>
             </div>
             </div>
     </section>
     <!-- The Auction-->
     <section class="bg-blue text-white" id="the-auction">
-        <div class="container pt-5 pb-5">
-            <div class="row">
-                <div class="col-md-12">
+        <div class="container pt-5 pb-5 h-100">
+            <div class="row h-100">
+                <div class="col-md-12 my-auto">
                     <h2>The Auction</h2>
-                    <p>All proceeds from this auction will go towards furthering A Rocha’s work around the world. If you have a painting or book given to you by John Stott that you would like to donate, please contact international@arocha.org with details. </p>
+                    <p>All proceeds from this auction will go towards furthering A Rocha’s work around the world. If you
+                        have a painting or book given to you by John Stott that you would like to donate, please contact
+                        international@arocha.org with details. </p>
                 </div>
             </div>
         </div>
     </section>
     <!-- The retreat-->
     <section class="bg-white" id="the-retreat">
-        <div class="container pt-5 pb-5">
-            <div class="row">
-                <div class="col-md-12">
+        <div class="container pt-5 pb-5 h-100">
+            <div class="row h-100">
+                <div class="col-md-12 my-auto">
                     <h2>The retreat</h2>
-                    <p>If a day staring at the sky through binoculars or crouched in a bush with a telescope doesn’t appeal, use 8 May as an opportunity to take some time out with God and learn more about him from ‘the birds our teachers,’ as the title of one of John’s books called them?</p>
-                    <p>We’ve put together some readings, prayers and reflections drawn from John’s writings, and invite you to head outside alone or with a small group of friends to connect with God through the beauty of all he has made.</p> 
+                    <p>If a day staring at the sky through binoculars or crouched in a bush with a telescope doesn’t
+                        appeal, use 8 May as an opportunity to take some time out with God and learn more about him from
+                        ‘the birds our teachers,’ as the title of one of John’s books called them?</p>
+                    <p>We’ve put together some readings, prayers and reflections drawn from John’s writings, and invite
+                        you to head outside alone or with a small group of friends to connect with God through the
+                        beauty of all he has made.</p>
                 </div>
             </div>
         </div>
     </section>
-    
+
 
 
 
@@ -226,14 +273,18 @@
     <!-- Third party plugin JS-->
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>-->
     <!-- Contact form JS
-    <script src="assets/mail/jqBootstrapValidation.js"></script>
-    <script src="assets/mail/contact_me.js"></script>-->
+                    <script src="assets/mail/jqBootstrapValidation.js"></script>
+                    <script src="assets/mail/contact_me.js"></script>-->
     <script src="https://apis.google.com/js/api.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-providers/1.11.0/leaflet-providers.min.js" integrity="sha512-TO+Wd5hbpDsACTmvzSqAZL83jMQCXGRFNoS4WZxcxrlJBTdgMYaT7g5uX49C5+Kbuxzlg2A+TFJ6UqdsXuOKLw==" crossorigin="anonymous"></script>
-    
-    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-providers/1.11.0/leaflet-providers.min.js"
+        integrity="sha512-TO+Wd5hbpDsACTmvzSqAZL83jMQCXGRFNoS4WZxcxrlJBTdgMYaT7g5uX49C5+Kbuxzlg2A+TFJ6UqdsXuOKLw=="
+        crossorigin="anonymous"></script>
+
+
     <!-- Core theme JS-->
     <script src="script.js"></script>
 </body>

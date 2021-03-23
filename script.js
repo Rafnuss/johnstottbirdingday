@@ -1,28 +1,18 @@
-var stories
-jQuery.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1nsrEIrjH08yZ1mbJE8XpiwPfU0ol2ugTal2mT-9DZnk/values/Sheet1!A1:E50?key=AIzaSyBa0wvOE3H9mSaQYC4bA3bXRHEPAtbgwow', function(d){
-    d = d.values;
-    stories = d.slice(1, d.length).map( (story_array) => {
-        story = story_array.reduce( (acc,curr,i) => {
-            acc[d[0][i]] = curr;
-            return acc
-        }, {})
-        return story
-    })
-
-    cards = stories.map(story => {
+jQuery.getJSON('/stories.json', function(stories){
+    console.log(stories)
+    cards = stories.map( (story,id) => {
         return `<div class="col-sm-3">
+        <div class="card-header">` + story.author + `</div>
             <div class="card">
-                ` + (story.featured=='TRUE' ? '<div class="card-header">Featured</div>' : '') + ` 
-                ` + (story.imageUrl ? '<img src="'+story.imageUrl+'">' : '') + ` 
+                ` + (story.photos.length>0 ? '<img src="/assets/stories/'+story.photos[0]+'">' : '') + ` 
                 <div class="card-body">
-                    <h5 class="card-title">` + (story.author ? story.author : '') + `</h5>
-                    <p class="card-text">` + (story.message ? story.message : '') + `</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    <h5 class="card-title">` + story.author + `</h5>
+                    <p class="card-text">` + shorten(story.body,70) + `</p>
+                    <a href="" data-bs-toggle="modal" data-bs-target="#modal-`+id+`" >Read more...</a>
                 </div>
             </div>
         </div>`
     });
-
 
     var html = ""             
     for (var i = 0; i < cards.length; i++) {
@@ -39,6 +29,28 @@ jQuery.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1nsrEIrjH08yZ1mbJE
         }
     }
     jQuery('#carouselStories .carousel-inner').prepend(html)
+
+    modal = stories.map( (story,id) => {
+        return `<!-- Modal -->
+        <div class="modal fade" id="modal-`+id+`" tabindex="-1" aria-labelledby="modal-`+id+`-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-`+id+`-label">` + story.author + `</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                `+story.body + story.photos.reduce( (ac,cu) => ac+'<img class="img-fluid" src="/assets/stories/'+cu+'">','')+`
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+        </div>`
+    })
+
+    jQuery('body').append(modal.join(''))
 })
 
 window.onload = function() {
@@ -47,7 +59,6 @@ window.onload = function() {
     checklist_marker = L.featureGroup().addTo(map);
     jQuery.getJSON('the-competition/checklist_list.json', function(checklist_list){
         checklist_list.forEach(e => {
-            console.log(e.Latitude)
             L.marker([e.Latitude, e.Longitude])
             .bindPopup('<a href="https://ebird.org/profile/'+e.user_id+'">'+e.user_name+'</a><br>'+
             '<a href="https://ebird.org/checklist/'+e.user_subId+'">'+e.Location+'</a><br>'+
@@ -57,3 +68,18 @@ window.onload = function() {
         map.fitBounds(checklist_marker.getBounds());
     })
   };
+
+window.onscroll = function() {
+    if (document.documentElement.scrollTop > 80) {
+      document.getElementById("nav-logo").style.height = "40px";
+    } else {
+      document.getElementById("nav-logo").style.height = "70px";
+  }
+};
+
+function shorten(str, maxLen, separator = ' ') {
+    str = str.replace(/(<([^>]+)>)/gi, "");
+    if (str.length <= maxLen) return str;
+    var str_return = str.substr(0, str.lastIndexOf(separator, maxLen))
+    return str_return+'...';
+  }
