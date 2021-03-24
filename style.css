@@ -1,6 +1,8 @@
 body{
-    font-family: 'Lato', sans-serif;
     font-family: 'Libre Baskerville', serif;
+}
+.lato{
+    font-family: 'Lato', sans-serif;
 }
 
 section{
@@ -16,7 +18,7 @@ section{
     height: 100%;
 }
 .nav-link:hover{
-    text-decoration: underline;
+    border-bottom:4px solid white;
 }
 
 #nav-logo{
@@ -29,6 +31,10 @@ section{
 }
 .justGiving:hover{
     background:#700066;
+}
+.btn-social{
+    height:50px;
+    width: 50px;
 }
 
 

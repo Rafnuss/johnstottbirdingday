@@ -55,7 +55,7 @@ jQuery.getJSON('/stories.json', function(stories){
 
 window.onload = function() {
     var map = L.map('mapid',{ zoomControl: false })
-    L.tileLayer.provider('Stamen.Watercolor').addTo(map);
+    L.tileLayer.provider('Esri.WorldImagery').addTo(map);
     checklist_marker = L.featureGroup().addTo(map);
     jQuery.getJSON('the-competition/checklist_list.json', function(checklist_list){
         checklist_list.forEach(e => {
