@@ -54,9 +54,11 @@ jQuery.getJSON('/stories.json', function(stories){
 })
 
 window.onload = function() {
-    var map = L.map('mapid',{ zoomControl: false })
+    map = L.map('mapid',{ zoomControl: false }).fitBounds([[7, -180], [-51, 180]]);
     L.tileLayer.provider('Esri.WorldImagery').addTo(map);
     checklist_marker = L.featureGroup().addTo(map);
+    /*
+    Uncomment during the day
     jQuery.getJSON('the-competition/checklist_list.json', function(checklist_list){
         checklist_list.forEach(e => {
             L.marker([e.Latitude, e.Longitude])
@@ -67,6 +69,7 @@ window.onload = function() {
         });
         map.fitBounds(checklist_marker.getBounds());
     })
+    */
   };
 
 window.onscroll = function() {

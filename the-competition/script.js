@@ -19,12 +19,22 @@ window.onload = function () {
     })
 
 
+    jQuery.getJSON('species_list_sp_only.json', function(species_list){
+        jQuery('#species-nb').html(species_list.length)
+    })
+
+
     // Ranking
     var $table = $('#table');
     jQuery.getJSON('user_list.json', function(user_list){
         console.log(user_list)
+        jQuery('#users-nb').html(user_list.length)
         $('#table').bootstrapTable({
-            data: user_list
+            data: user_list.map( x => { 
+                x.user_name = '<a href="https://ebird.org/profile/'+x.user_id+'">'+x.user_name+'</a>';
+                x.checklists = x.checklists.map(y => '<a href="https://ebird.org/checklist/'+y+'"><i class="fas fa-clipboard-list"></i></a>').join(' ');
+                return x
+            })
         });
     })
 

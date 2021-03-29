@@ -7,108 +7,54 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>The Competition | John Stott Birding Day</title>
-    <!-- Favicon
-        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />-->
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon-16x16.png" />
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="anonymous" />
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css">
-        <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="style.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/style.css" rel="stylesheet" />
 </head>
 
 
 <body class="h-100 d-flex flex-column" data-bs-spy="scroll" data-bs-target=".navbar-nav" data-bs-offset="0">
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
-        <div class="container">
-            <div class="w-100">
-            </div>
-            <div class="mx-auto ">
-                <a class="navbar-brand mx-auto" href="#">Logo</a>
-
-            </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse w-100" id="collapseNavbar">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#the-day">The Day</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#the-organizers">The Organizers</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#the-man">The Man</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#the-competition">The Competition</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#the-stories">The Stories</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#the-auction">The Auction</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#the-retreat">The Retreat</a></li>
-                </ul>
-            </div>
-
-        </div>
-    </nav>
-
-    
     <div class="container-fluid flex-grow-1">
         <div class="row justify-content-center h-100">
-      
-          <div class="col-4 hidden-md-down bg-primary" >
-            <table id="table" data-height="460">
-                <thead>
-                    <tr>
-                        <th data-field="user_id">User ID</th>
-                        <th data-field="user_name">User Name</th>
-                        <th data-field="nb_species">Number Specie</th>
-                    </tr>
-                </thead>
-            </table>
-          </div>
-      
-          <div class="col-10 col-sm-10 col-md-10 col-lg-8 col-xl-8" id="mapid">
-            
-          </div>
-        </div>
-      </div>
-    
-    
-    <!-- Footer-->
-    <footer class="footer text-center bg-secondary">
-        <div class="container">
-            <div class="row">
-                <!-- Footer Location-->
-                <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="text-uppercase mb-4">Location</h4>
-                    <p class="lead mb-0">
-                        2215 John Daniel Drive
-                        <br />
-                        Clark, MO 65243
-                    </p>
-                </div>
-                <!-- Footer Social Icons-->
-                <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="text-uppercase mb-4">Around the Web</h4>
-                    <a class="btn btn-outline-light btn-social mx-1" href="#!"><i
-                            class="fab fa-fw fa-facebook-f"></i></a>
-                    <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
-                    <a class="btn btn-outline-light btn-social mx-1" href="#!"><i
-                            class="fab fa-fw fa-linkedin-in"></i></a>
-                    <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-dribbble"></i></a>
-                </div>
-                <!-- Footer About Text-->
-                <div class="col-lg-4">
 
+            <div class="col-4 hidden-md-down bg-blue text-white">
+                <div class="row">
+                    <div class="col-12">
+                        <a class="navbar-brand p-5" href="#"><img src="/assets/logo.svg" id="nav-logo"> Back to main page</a>
+                    </div>
+                    <div class="col-12">
+                        <p>Total number of birds: <span id="species-nb">0</span></p>
+                        <p>Total number of participants: <span id="users-nb">0</span></p>
+                    </div>
+                    <div class="col-12">
+                        <table id="table" data-height="460" class=" text-white">
+                            <thead>
+                                <tr>
+                                    <th data-field="user_name">User Name</th>
+                                    <th data-field="nb_species">Number Species</th>
+                                    <th data-field="checklists">Checklists</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
+
+            <div class="col-10 col-sm-10 col-md-10 col-lg-8 col-xl-8" id="mapid">
+            </div>
         </div>
-    </footer>
-    <!-- Copyright Section-->
-    <div class="copyright py-4 text-center bg-dark text-white">
-        <div class="container"><small>Copyright © JohnStottBirdingDay 2020</small></div>
     </div>
-    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
-    <div class="scroll-to-top d-lg-none position-fixed">
-        <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i
-                class="fa fa-chevron-up"></i></a>
-    </div>
+
+
+
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/f15ed359e8.js" crossorigin="anonymous"></script>
     <!-- Bootstrap core JS-->
@@ -123,11 +69,15 @@
     <script src="assets/mail/jqBootstrapValidation.js"></script>
     <script src="assets/mail/contact_me.js"></script>
     <script src="https://apis.google.com/js/api.js"></script>-->
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-providers/1.11.0/leaflet-providers.min.js" integrity="sha512-TO+Wd5hbpDsACTmvzSqAZL83jMQCXGRFNoS4WZxcxrlJBTdgMYaT7g5uX49C5+Kbuxzlg2A+TFJ6UqdsXuOKLw==" crossorigin="anonymous"></script>
-    
-    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-providers/1.11.0/leaflet-providers.min.js"
+        integrity="sha512-TO+Wd5hbpDsACTmvzSqAZL83jMQCXGRFNoS4WZxcxrlJBTdgMYaT7g5uX49C5+Kbuxzlg2A+TFJ6UqdsXuOKLw=="
+        crossorigin="anonymous"></script>
+
+
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
 
     <!-- Core theme JS-->
