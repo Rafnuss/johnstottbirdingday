@@ -4,11 +4,11 @@ body{
 .lato{
     font-family: 'Lato', sans-serif;
 }
-h1{
-    text-size:4.5rem;
+section, #mapid{
+    min-height: 700px;
 }
-section{
-    height: 700px;
+#mapid{
+    height: 150%;
 }
 .bg-blue{
     background-color: #006382;
@@ -24,10 +24,10 @@ a{
     text-decoration: none;
 }
 a:hover{
-    color: #0000;
+    color: #000000;
 }
-#mapid{
-    height: 100%;
+.nav-link{
+    border-bottom:4px solid transparent;
 }
 .nav-link:hover{
     border-bottom:4px solid white;
@@ -44,10 +44,31 @@ a:hover{
 .justGiving:hover{
     background:#700066;
 }
+.bg-blue-h:hover{
+    color: #ffff;
+    background-color: #006382;
+}
+.bg-blue-h:hover{
+    color: #ffff;
+    background-color: #006382;
+}
+.bg-white-h:hover{
+    color: #006382 !important;
+    background-color: #ffff;
+    border-color: #006382;
+}
 .btn-social{
     height:50px;
     width: 50px;
 }
+hr{
+    opacity: 1;
+    border-radius: 10px;
+}
+
+a:not(.collapsed)  span.is-not-collapse{display:none}
+a.collapsed  span.is-collapse {display:none}
+
 
 
 

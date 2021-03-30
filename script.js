@@ -2,7 +2,6 @@ jQuery.getJSON('/stories.json', function(stories){
     console.log(stories)
     cards = stories.map( (story,id) => {
         return `<div class="col-sm-3">
-        <div class="card-header">` + story.author + `</div>
             <div class="card">
                 ` + (story.photos.length>0 ? '<img src="/assets/stories/'+story.photos[0]+'">' : '') + ` 
                 <div class="card-body">
@@ -12,6 +11,7 @@ jQuery.getJSON('/stories.json', function(stories){
                 </div>
             </div>
         </div>`
+        //<div class="card-header">` + story.author + `</div>
     });
 
     var html = ""             
