@@ -4,15 +4,27 @@ body{
 .lato{
     font-family: 'Lato', sans-serif;
 }
-
+h1{
+    text-size:4.5rem;
+}
 section{
     height: 700px;
 }
 .bg-blue{
     background-color: #006382;
 }
+.bg-grey{
+    background-color: #9A9A9A;
+}
 .text-blue{
     color: #006382;
+}
+a{
+    color: #9A9A9A;
+    text-decoration: none;
+}
+a:hover{
+    color: #0000;
 }
 #mapid{
     height: 100%;
@@ -36,6 +48,7 @@ section{
     height:50px;
     width: 50px;
 }
+
 
 
 #welcome{
