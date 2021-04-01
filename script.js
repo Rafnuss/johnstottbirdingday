@@ -3,7 +3,7 @@ jQuery.getJSON('/stories.json', function(stories){
     cards = stories.map( (story,id) => {
         return `<div class="col-sm-3">
             <div class="card">
-                ` + (story.photos.length>0 ? '<img src="/assets/stories/'+story.photos[0]+'">' : '') + ` 
+                ` + (story.photos.length>0 ? '<img class="img-fluid" src="/assets/stories/'+story.photos[0]+'">' : '') + ` 
                 <div class="card-body">
                     <h5 class="card-title">` + story.author + `</h5>
                     <p class="card-text">` + shorten(story.body,70) + `</p>
@@ -54,7 +54,7 @@ jQuery.getJSON('/stories.json', function(stories){
 })
 
 window.onload = function() {
-    map = L.map('mapid',{ zoomControl: false }).fitBounds([[7, -180], [-51, 180]]);
+    map = L.map('mapid',{ zoomControl: false }).fitBounds([[7,-270], [-51, 90]]);
     L.tileLayer.provider('Esri.WorldImagery').addTo(map);
     checklist_marker = L.featureGroup().addTo(map);
     /*
