@@ -80,8 +80,8 @@ a.collapsed  span.is-collapse {display:none}
     background-attachment: fixed;
 }
 
-#the-day-picture{
-    background-image: url('assets/the-day.jpg');
+#taking-part-picture{
+    background-image: url('assets/taking-part.jpg');
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover the entire container */
