@@ -1,7 +1,7 @@
 jQuery.getJSON('/stories.json', function(stories){
     console.log(stories)
     cards = stories.map( (story,id) => {
-        return `<div class="col-sm-3">
+        return `<div class="col-sm-3  my-2">
             <div class="card">
                 ` + (story.photos.length>0 ? '<img class="img-fluid" src="/assets/stories/'+story.photos[0]+'">' : '') + ` 
                 <div class="card-body">
