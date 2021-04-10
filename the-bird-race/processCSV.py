@@ -4,13 +4,13 @@ import os
 import json
 
 # Defien working directory
-os.chdir('/mnt/c/Users/rnussba1/Documents/GitHub/johnstottbirdingday/the-competition')
+os.chdir('C:/Users/rnussba1/Documents/GitHub/johnstottbirdingday/the-bird-race')
 
 
 
 # Read data
 data=[]
-with open('MyEBirdData.csv', mode='r') as csv_file:
+with open('MyEBirdData.csv', mode='r', encoding='utf-8-sig') as csv_file:
     csv_reader = csv.DictReader(csv_file)
     line_count = 0
     for row in csv_reader:
@@ -59,7 +59,7 @@ with open('eBird_Taxonomy_v2019.csv', mode='r', encoding='utf-8-sig') as csv_fil
         taxo.append(row)
         line_count += 1
 
-## Add user information to data
+## Add 
 for d in data:
     s = [t for t in taxo if t["TAXON_ORDER"]==d['Taxonomic Order']]
     if s:
@@ -92,7 +92,10 @@ for subId in subId_list:
     checklist['user_id'] = sightings[0]['user_id']
     checklist['user_name'] = sightings[0]['user_name']
     checklist['user_subId'] = sightings[0]['user_subId']
+    checklist['Duration'] = sightings[0]['Duration (Min)']
+    checklist['number_of_observers'] = sightings[0]['Number of Observers']
     checklist['nb_species'] = len(list(set([d['Common Name'] for d in sightings if d['category']=="species"])))
+    checklist['Time'] = sightings[0]['Time']
     checklist_list.append(checklist)
 
 
@@ -107,17 +110,22 @@ for user_name in user_name_list:
     user['user_name'] = sightings[0]['user_name']
     user['checklists'] = list(set([d['user_subId'] for d in sightings]))
     user['nb_species'] = len(list(set([d['Common Name'] for d in sightings if d['category']=="species"])))
+    user['number_of_observers'] = max([int(d['Number of Observers']) for d in sightings])
+    user['country'] = list(set([d['State/Province'][0:2] for d in sightings]))
     user_list.append(user)
 
 
 
 
 # Export
-with open('species_list_sp_only.json', 'w') as outfile:
-    json.dump(species_list_sp_only, outfile)
 
-with open('checklist_list.json', 'w') as outfile:
-    json.dump(checklist_list, outfile)
 
-with open('user_list.json', 'w') as outfile:
-    json.dump(user_list, outfile)
+counter = [ len(species_list_sp_only), sum([int(d['number_of_observers']) for d in user_list]), len(list(set([i for user in user_list for i in user['country'] ]))), sum([int(d['Duration']) for d in checklist_list])/60]
+
+out={}
+out['counter']=counter
+out['checklist_list'] = checklist_list
+out['user_list'] = user_list
+
+with open('out.json', 'w') as outfile:
+    json.dump(out, outfile)

@@ -68,11 +68,12 @@ hr{
     opacity: 1;
     border-radius: 10px;
 }
+.icon-counter{
+    font-size: calc(40px + 1.7vw);
+}
 
 a:not(.collapsed)  span.is-not-collapse{display:none}
 a.collapsed  span.is-collapse {display:none}
-
-
 
 
 #welcome{
@@ -102,4 +103,32 @@ a.collapsed  span.is-collapse {display:none}
     background-size: cover; /* Resize the background image to cover the entire container */  
 }
 
-
+#sidebarhide{
+    cursor: pointer;
+}
+#sidebarhide:hover{
+    color: black !important;
+}
+#easybutton{
+    display: none;
+}
+.bootstrap-table, .fixed-table-container{
+    height:100% !important;
+ }
+.leaflet-popup-content{
+    font-family: 'Libre Baskerville', serif;
+    font-size: .9rem;
+}
+.awesome-marker i {
+    margin-left: 5px;
+}
+.awesome-marker:hover i {
+    color:black !important;
+}
+.leaflet-container a{
+    color: #9A9A9A;
+    text-decoration: none;
+}
+.leaflet-container a:hover{
+    color: #000000;
+}

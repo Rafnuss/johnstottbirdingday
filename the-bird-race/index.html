@@ -15,8 +15,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" integrity="sha512-cUoWMYmv4H9TGP4hbm1mIjYo90WzIQFo/5jj+P5tQcDTf+iVR59RyIj/a9fRsBxzxt5Dnv/Ex7MzRIxcDwaOLw==" crossorigin="anonymous" />
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" integrity="sha512-cUoWMYmv4H9TGP4hbm1mIjYo90WzIQFo/5jj+P5tQcDTf+iVR59RyIj/a9fRsBxzxt5Dnv/Ex7MzRIxcDwaOLw==" crossorigin="anonymous" />-->
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" integrity="sha512-Cv93isQdFwaKBV+Z4X8kaVBYWHST58Xb/jVOcV9aRsGSArZsgAnFIhMpDoMDcFNoUtday1hdjn0nGp3+KZyyFw==" crossorigin="anonymous" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/style.css" rel="stylesheet" />
 </head>
@@ -26,45 +28,47 @@
     <div class="container-fluid flex-grow-1 h-100">
         <div class="row justify-content-center h-100">
 
-            <div class="col-4 hidden-md-down h-100">
+            <div class="col-md-4 h-100 d-flex flex-column" id="sidebar">
                 <div class="row bg-blue text-white">
-                    <div class="col-12 px-4 py-2 d-flex">
-                        <a class="navbar-brand" href="/"><img src="/assets/logo.svg" id="nav-logo" style="height: 40px;"></a>
+                    <div class="col-12 px-4 py-2 d-flex align-items-center">
+                        <a class="navbar-brand" href="/"><img src="/assets/logo.svg" id="nav-logo" style="width: 133px;"></a>
                         <h1 class="flex-grow-1 text-center">The Bird Race</h1>
-                        <a href="/"><i class="fas fa-3x text-white fa-home"></i></a>
+                        <div style="width: 133px;text-align: right;">
+                            <i id="sidebarhide" class="fas fa-2x text-white fa-caret-left" onclick="sidebarhide()"></i>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 p-4">
-                        <div class="p-4 d-flex rounded bg-blue text-white">
-                            <img src="pigeon.svg" style="height: 6rem;" class="pe-3 display-3 align-self-stretch filter-white"/>
+                <div class="row" style="overflow-y: auto;">
+                    <div class="col-xl-6 p-4">
+                        <div class="p-xl-4 p-2 d-flex rounded bg-blue text-white">
+                            <i class="fas fa-dove icon-counter pe-3 align-self-center"></i>
                             <div class="d-flex flex-column">
                                 <div class="display-3 counter">0</div>
-                                <div class="h5 lato">Number of birds</div>
+                                <div class="h5 lato">Species</div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 p-4">
-                        <div class="p-4 d-flex rounded bg-blue text-white">
-                            <img src="users-group.svg" style="height: 6rem;" class="pe-3 display-3 align-self-stretch filter-white"/>
+                    <div class="col-xl-6 p-4">
+                        <div class="p-xl-4 p-2 d-flex rounded bg-blue text-white">
+                            <i class="fas fa-users icon-counter pe-3 align-self-center"></i>
                             <div class="d-flex flex-column">
                                 <div class="display-3 counter">0</div>
-                                <div class="h5 lato">Number of participants</div>
+                                <div class="h5 lato">Participants</div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 p-4">
-                        <div class="p-4 d-flex rounded bg-blue text-white">
-                            <img src="binoculars.svg" style="height: 6rem;" class="pe-3 display-3 align-self-stretch filter-white"/>
+                    <div class="col-xl-6 p-4">
+                        <div class="p-xl-4 p-2 d-flex rounded bg-blue text-white">
+                            <i class="fas fa-flag icon-counter pe-3 align-self-center"></i>
                             <div class="d-flex flex-column">
                                 <div class="display-3 counter">0</div>
-                                <div class="h5 lato">-</div>
+                                <div class="h5 lato">Countries</div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 p-4">
-                        <div class="p-4 d-flex rounded bg-blue text-white">
-                            <img src="clock.svg" style="height: 6rem;" class="pe-3 display-3 align-self-stretch filter-white"/>
+                    <div class="col-xl-6 p-4">
+                        <div class="p-xl-4 p-2 d-flex rounded bg-blue text-white">
+                            <i class="fas fa-clock icon-counter pe-3 align-self-center"></i>
                             <div class="d-flex flex-column">
                                 <div class="display-3 counter">0</div>
                                 <div class="h5 lato">Hours in the field</div>
@@ -72,14 +76,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row flex-grow-1" style="overflow: auto;">
                     <div class="col-12 px-4">
                         <table id="table" data-height="300" class=" text-blue">
                             <thead>
                                 <tr>
-                                    <th data-field="user_name">User Name</th>
-                                    <th data-field="nb_species">Number Species</th>
-                                    <th data-field="checklists">Checklists</th>
+                                    <th scope="col" data-field="nb_species">Species total</th>
+                                    <th scope="col" data-field="user_name">Observer</th>
+                                    <th scope="col" data-field="checklists">Checklists</th>
                                 </tr>
                             </thead>
                         </table>
@@ -87,7 +91,7 @@
                 </div>
             </div>
 
-            <div class="col-10 col-sm-10 col-md-10 col-lg-8 col-xl-8" id="mapid2">
+            <div class="col-md-8" id="mapid2">
             </div>
         </div>
     </div>
@@ -115,9 +119,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-providers/1.11.0/leaflet-providers.min.js"
         integrity="sha512-TO+Wd5hbpDsACTmvzSqAZL83jMQCXGRFNoS4WZxcxrlJBTdgMYaT7g5uX49C5+Kbuxzlg2A+TFJ6UqdsXuOKLw=="
         crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.min.js" integrity="sha512-8BqQ2RH4L4sQhV41ZB24fUc1nGcjmrTA6DILV/aTPYuUzo+wBdYdp0fvQ76Sxgf36p787CXF7TktWlcxu/zyOg==" crossorigin="anonymous"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.min.js" integrity="sha512-8BqQ2RH4L4sQhV41ZB24fUc1nGcjmrTA6DILV/aTPYuUzo+wBdYdp0fvQ76Sxgf36p787CXF7TktWlcxu/zyOg==" crossorigin="anonymous"></script>-->
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
     <!-- Core theme JS-->
     <script src="script.js"></script>
 </body>
