@@ -132,3 +132,13 @@ a.collapsed  span.is-collapse {display:none}
 .leaflet-container a:hover{
     color: #000000;
 }
+
+/*Auction*/
+.page-link{
+    cursor: pointer;
+    color: #006382;
+}
+.page-item.active .page-link{
+    background-color: #006382;
+    border-color: #006382;
+}

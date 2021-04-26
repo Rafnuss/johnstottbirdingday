@@ -1,5 +1,5 @@
 jQuery.getJSON('/stories.json', function(stories){
-    console.log(stories)
+    //console.log(stories)
     cards = stories.map( (story,id) => {
         return `<div class="col-sm-3  my-2">
             <div class="card">
@@ -53,6 +53,8 @@ jQuery.getJSON('/stories.json', function(stories){
     jQuery('body').append(modal.join(''))
 })
 
+auction_id = ['sdasda','dsfsdf','sdgsad','g3dcxc','gress','agdfg','grdfghsa','fhawxccv','trhefgs','sdfhdcg','sfgersdvch'];
+
 window.onload = function() {
     map = L.map('mapid',{ zoomControl: false }).fitBounds([[7,-270], [-51, 90]]);
     L.tileLayer.provider('Esri.WorldImagery').addTo(map);
@@ -70,6 +72,45 @@ window.onload = function() {
         map.fitBounds(checklist_marker.getBounds());
     })
     */
+
+    var cols = auction_id.map( (id,idx) =>{
+        return `<div class="col-sm-3 " id="auction-col-`+idx+`">
+        <div class="bg-blue text-white text-center">`
+        +id+
+        `</div></div>`
+    })
+    var html = ""
+    u=0        
+    for (var i = 0; i < cols.length; i++) {
+        if (i%4==0){
+            u=u+1;
+            html += '<div class="row auction-row" id="auction-row-'+u+'">'; 
+            jQuery('.page-item:last-child').before('<li class="page-item" id="page-item-'+u+'"><a class="page-link">'+u+'</a></li>')
+        }
+        html += cols[i]
+        if (i%4==3 | i==cols.length){
+            html += '</div>'
+        }
+    }
+    jQuery('#auction-nav').after(html)
+    jQuery('.auction-row').hide()
+    jQuery('.auction-row:first').show()
+    jQuery('.page-item:nth-child(2)').addClass('active')
+    jQuery('.page-link').on('click', (e)=>{
+        var us = e.target.innerText;
+        if (us=="«"){
+            us = Math.max(parseInt(jQuery('.page-item.active').text())-1,1);
+        } else if (us=="»") {
+            us = Math.min(parseInt(jQuery('.page-item.active').text())+1,u);
+        }
+        jQuery('.page-item').removeClass('active')
+        jQuery('#page-item-'+us).addClass('active') 
+
+        jQuery('.auction-row').hide()
+        jQuery('#auction-row-'+us).show()
+        
+    })
+    
   };
 
 window.onscroll = function() {
