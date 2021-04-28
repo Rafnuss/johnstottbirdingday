@@ -135,7 +135,6 @@ a.collapsed  span.is-collapse {display:none}
 
 /*Auction*/
   .grid-item {
-    width: 33.333%;
     float: left;
   }
   .grid-item img {

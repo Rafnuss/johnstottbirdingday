@@ -57,7 +57,7 @@ jQuery.getJSON('/stories.json', function(stories){
 jQuery.getJSON('/auctions.json', function(auctions){
     var cols = auctions.map( (auc,idx) =>{
         return `
-        <a class="grid-item p-4" href="https://www.jumblebee.co.uk/johnstottbirding#buzz_expend_`+ auc.linkId +`" target="_blank">
+        <a class="grid-item col-12 col-sm-6 col-lg-4 p-2 p-lg-4" href="https://www.jumblebee.co.uk/johnstottbirding#buzz_expend_`+ auc.linkId +`" target="_blank">
         <div class="bg-blue text-white text-center p-3 rounded">
         <img class="img-fluid p-4" src="/assets/auctions/`+ auc.linkId +`.jpg">
         <h5>`+auc.title+`</h5>
