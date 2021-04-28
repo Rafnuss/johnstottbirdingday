@@ -1,7 +1,7 @@
 window.onload = function () {
 
   // MAP
-  map = L.map('mapid2');
+  map = L.map('mapid2').fitWorld();
   L.tileLayer.provider('Esri.WorldImagery').addTo(map);
   checklist_marker = L.featureGroup().addTo(map);
 
