@@ -56,14 +56,19 @@ jQuery.getJSON('/stories.json', function(stories){
 
 jQuery.getJSON('/auctions.json', function(auctions){
     var cols = auctions.map( (auc,idx) =>{
-        return `<div class="col-4 mb-4" id="auction-col-`+idx+`">
-        <a href="https://www.jumblebee.co.uk/johnstottbirding#buzz_expend_`+ auc.linkId +`" target="_blank">
+        return `
+        <a class="grid-item p-4" href="https://www.jumblebee.co.uk/johnstottbirding#buzz_expend_`+ auc.linkId +`" target="_blank">
         <div class="bg-blue text-white text-center p-3 rounded">
-        <img class="img-fluid p-5" src="/assets/auctions/`+ auc.linkId +`.jpg">
+        <img class="img-fluid p-4" src="/assets/auctions/`+ auc.linkId +`.jpg">
         <h5>`+auc.title+`</h5>
-        </div></a></div>`
+        </div></a>`
     })
     jQuery('#auction-row').html(cols.join(''))
+    jQuery('.grid').imagesLoaded( function() {
+        jQuery('.grid').masonry({
+        itemSelector: '.grid-item',
+      });
+    });
 })
 
 
