@@ -39,5 +39,30 @@
         "description":"",
         "linkId": "140722",
         "photoId": "6087d619e9bd01619514905712273"
+    },
+    {
+        "title": "Paintings by JJ Audubon for the Birds of America",
+        "description":"",
+        "linkId": "140945"
+    },
+    {
+        "title": "The Birds of Australia (Vol 1)",
+        "description":"",
+        "linkId": "140947"
+    }    ,
+    {
+        "title": "Mr Gould's Tropical Birds",
+        "description":"",
+        "linkId": "140946"
+    },
+    {
+        "title": "Pageantry of Tropical Birds",
+        "description":"",
+        "linkId": "140955"
+    },
+    {
+        "title": "Aves de Chile",
+        "description":"",
+        "linkId": "140948"
     }
 ]
