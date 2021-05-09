@@ -1,3 +1,6 @@
+color_pin=['#efa00b','#d65108','#591f0a','#eee5e5','#adb6c4','#89023e','#ffd9da','#c7d9b7','#17bebb']//['#271F30','#C8AD55','#D0FCB3','#9BC59D','#5BC0EB','#C3423F','#F9E9EC','#F88DAD']
+
+
 window.onload = function () {
 
   // MAP
@@ -32,36 +35,42 @@ window.onload = function () {
       markerColor: "white"
     });*/
 
+    var unique_user = [...new Set(out.checklist_list.map( e => e.user_name))]
 
-    const markerHtmlStyles = `
-  background-color: #006382;
-  width: 2rem;
-  height: 2rem;
-  display: block;
-  left: -1rem;
-  top: -1rem;
-  position: relative;
-  border-radius: 2rem 2rem 0;
-  transform: rotate(45deg);
-  border: 2px solid #FFFFFF`
+    out.checklist_list.forEach( e => {
 
-  const icon = L.divIcon({
-    className: "my-custom-pin",
-    iconAnchor: [0, 24],
-    labelAnchor: [-6, 0],
-    popupAnchor: [0, -36],
-    html: `<span style="${markerHtmlStyles}" />`
-  })
+      var id = unique_user.indexOf(e.user_name)
 
-    out.checklist_list.forEach(e => {
+      const markerHtmlStyles = `
+      background-color: `+ color_pin[id % color_pin.length]+`;
+      width: 2rem;
+      height: 2rem;
+      display: block;
+      left: -1rem;
+      top: -1rem;
+      position: relative;
+      border-radius: 2rem 2rem 0;
+      transform: rotate(45deg);
+      border: 1px solid #000000
+      `
+      //
+      // background-color: #006382;
+    
+
       L.marker([e.Latitude, e.Longitude], {
-          icon: icon
+          icon: L.divIcon({
+            className: "my-custom-pin",
+            iconAnchor: [0, 24],
+            labelAnchor: [-6, 0],
+            popupAnchor: [0, -36],
+            html: `<span style="${markerHtmlStyles}" />`
+          })
         })
         .bindPopup('\
         <ul class="fa-ul">\
   <li><span class="fa-li"><i class="fas fa-dove text-blue"></i></span>'+e.nb_species+'</li>\
   <li><span class="fa-li"><i class="fas fa-clock text-blue"></i></span>'+e.Time+'</li>\
-  <li><span class="fa-li"><i class="fas fa-users text-blue"></i></span><a target="_blank" href="https://ebird.org/profile/' + e.user_id + '">' + e.user_name + '</a> <small class="text-muted">(+'+e.number_of_observers+')</small></b></li>\
+  <li><span class="fa-li"><i class="fas fa-users text-blue"></i></span>'+ (e.user_id=='' ? e.user_name : ('<a target="_blank" href="https://ebird.org/profile/' + e.user_id + '">' + e.user_name + '</a>') )  +  ' <small class="text-muted">(+'+e.number_of_observers+')</small></b></li>\
   <li><span class="fa-li"><i class="fas fa-map-marker text-blue"></i></span><a target="_blank" href="https://ebird.org/checklist/' + e.user_subId + '">' + e.Location + '</a></li>\
 </ul>',{minWidth:200})//,{maxWidth: "auto"})
         .addTo(checklist_marker)
@@ -91,14 +100,23 @@ window.onload = function () {
       data: out.user_list.map(x => {
         var y={}
         y.nb_species = x.nb_species;
-        y.user_name = '<a target="_blank" href="https://ebird.org/profile/' + x.user_id + '">' + x.user_name + '</a> <span class="flag-icon flag-icon-'+x.country[0].toLowerCase()+'"></span>' + ' <small class="text-muted">(<i class="fas fa-users"></i> '+x.number_of_observers+')</small>';
-        y.checklists = x.checklists.map(y => '<a target="_blank" href="https://ebird.org/checklist/' + y + '"><i class="fas fa-clipboard-list"></i></a>').join(' ');
+        y.user_name = (x.user_id=='' ? x.user_name : ('<a target="_blank" href="https://ebird.org/profile/' + x.user_id + '">' + x.user_name + '</a>') ) + ' <small class="text-muted">(<i class="fas fa-users"></i> '+x.number_of_observers+')</small>';
+        //y.checklists = x.checklists.map(y => '<a target="_blank" href="https://ebird.org/checklist/' + y + '"><i class="fas fa-clipboard-list"></i></a>').join(' ');
+        y.country = ' <span class="flag-icon flag-icon-'+x.country[0].toLowerCase()+'"></span>'
         return y
       }),
       classes:"table table-hover",
+      onLoadSuccess: function(){
+        jQuery('#table tr').on('click',function(e){
+          console.log(e)
+        })
+      }
     });
 
   })
+
+
+
 
 
 };

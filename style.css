@@ -69,7 +69,13 @@ hr{
     border-radius: 10px;
 }
 .icon-counter{
-    font-size: calc(40px + 1.7vw);
+    /*font-size: calc(40px + 1.7vw);*/
+}
+.counter{
+    font-size:1.5rem;
+}
+.counter-label{
+    font-size:1rem;
 }
 
 a:not(.collapsed)  span.is-not-collapse{display:none}
