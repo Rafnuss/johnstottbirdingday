@@ -5,6 +5,7 @@ import json
 
 # Defien working directory
 os.chdir('C:/Users/rnussba1/Documents/GitHub/johnstottbirdingday/the-bird-race')
+os.chdir('/Users/rafnuss/Documents/GitHub/johnstottbirdingday/the-bird-race/')
 
 
 
@@ -37,6 +38,8 @@ with open('subId_match.csv', mode='r', encoding='utf-8-sig') as csv_file:
 subId_list_unique=list(set([d['Submission ID'] for d in data]))
 subId_list_unique_notin = [s for s in subId_list_unique if s not in [s2['my_subId'] for s2 in subId_match]]
 print(subId_list_unique_notin)
+
+data = [d for d in data if d['Submission ID'] not in subId_list_unique_notin]
 
 ## Add user information to data
 for d in data:
@@ -92,7 +95,7 @@ for subId in subId_list:
     checklist['user_id'] = sightings[0]['user_id']
     checklist['user_name'] = sightings[0]['user_name']
     checklist['user_subId'] = sightings[0]['user_subId']
-    checklist['Duration'] = sightings[0]['Duration (Min)']
+    checklist['Duration'] = 0 if sightings[0]['Duration (Min)']=='' else int(sightings[0]['Duration (Min)'])
     checklist['number_of_observers'] = sightings[0]['Number of Observers']
     checklist['nb_species'] = len(list(set([d['Common Name'] for d in sightings if d['category']=="species"])))
     checklist['Time'] = sightings[0]['Time']
@@ -114,13 +117,13 @@ for user_name in user_name_list:
     user['country'] = list(set([d['State/Province'][0:2] for d in sightings]))
     user_list.append(user)
 
-
+user_list = sorted(user_list, key=lambda k: k['nb_species'],reverse=True) 
 
 
 # Export
 
 
-counter = [ len(species_list_sp_only), sum([int(d['number_of_observers']) for d in user_list]), len(list(set([i for user in user_list for i in user['country'] ]))), sum([int(d['Duration']) for d in checklist_list])/60]
+counter = [ len(species_list_sp_only), sum([int(d['number_of_observers']) for d in user_list]), len(list(set([i for user in user_list for i in user['country'] ]))), sum([d['Duration']for d in checklist_list])/60]
 
 out={}
 out['counter']=counter
