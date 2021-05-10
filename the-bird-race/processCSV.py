@@ -62,11 +62,21 @@ with open('eBird_Taxonomy_v2019.csv', mode='r', encoding='utf-8-sig') as csv_fil
         taxo.append(row)
         line_count += 1
 
+for t in taxo:
+    if t['CATEGORY']=="species":
+        t['COUNT_AS'] = t['SPECIES_CODE'] 
+    elif t['REPORT_AS']!='':
+        t['COUNT_AS'] = t['REPORT_AS'] 
+    else:
+        t['COUNT_AS'] = ""
+    
+
 ## Add 
 for d in data:
     s = [t for t in taxo if t["TAXON_ORDER"]==d['Taxonomic Order']]
     if s:
-        d['category'] = s[0]['CATEGORY']
+        # d['category'] = s[0]['CATEGORY']
+        d['count_as'] =  s[0]['COUNT_AS']
     else:
         print(d)
 
@@ -77,7 +87,10 @@ for d in data:
 # Compute Value
 
 ## Species
-species_list_sp_only = list(set([d['Common Name'] for d in data if d['category']=="species"]))
+# list(set([d['Common Name'] for d in data if d['count_as']==""]))
+species_list_sp_only = list(set([d['Common Name'] for d in data if d['count_as']!=""]))
+
+
 
 ## Checklists
 checklist_list = []
@@ -97,7 +110,7 @@ for subId in subId_list:
     checklist['user_subId'] = sightings[0]['user_subId']
     checklist['Duration'] = 0 if sightings[0]['Duration (Min)']=='' else int(sightings[0]['Duration (Min)'])
     checklist['number_of_observers'] = sightings[0]['Number of Observers']
-    checklist['nb_species'] = len(list(set([d['Common Name'] for d in sightings if d['category']=="species"])))
+    checklist['nb_species'] = len(list(set([d['count_as'] for d in sightings if d['count_as']!=""])))
     checklist['Time'] = sightings[0]['Time']
     checklist_list.append(checklist)
 
@@ -112,7 +125,7 @@ for user_name in user_name_list:
     user['user_id'] = sightings[0]['user_id']
     user['user_name'] = sightings[0]['user_name']
     user['checklists'] = list(set([d['user_subId'] for d in sightings]))
-    user['nb_species'] = len(list(set([d['Common Name'] for d in sightings if d['category']=="species"])))
+    user['nb_species'] = len(list(set([d['count_as'] for d in sightings if d['count_as']!=""])))
     user['number_of_observers'] = max([int(d['Number of Observers']) for d in sightings])
     user['country'] = list(set([d['State/Province'][0:2] for d in sightings]))
     user_list.append(user)
