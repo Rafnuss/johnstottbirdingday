@@ -1,3 +1,2 @@
 .vscode/*
-the-bird-race/.DS_Store
-the-bird-race/MyEBirdData.csv
+*.DS_Store
