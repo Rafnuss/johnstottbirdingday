@@ -3,7 +3,7 @@ jQuery.getJSON('/stories.json', function(stories){
     cards = stories.map( (story,id) => {
         return `<div class="col-sm-3  my-2">
             <div class="card">
-                ` + (story.photos.length>0 ? '<img class="img-fluid" src="/assets/stories/'+story.photos[0]+'">' : '') + ` 
+                ` + (story.photos.length>0 ? '<img class="img-fluid" src="/assets/stories/'+story.photos[0]+'">' : '<img class="img-fluid" src="/assets/stories/empty.jpg">') + ` 
                 <div class="card-body">
                     <h5 class="card-title">` + story.author + `</h5>
                     <p class="card-text">` + shorten(story.body,70) + `</p>
@@ -14,18 +14,30 @@ jQuery.getJSON('/stories.json', function(stories){
         //<div class="card-header">` + story.author + `</div>
     });
 
-    var html = ""             
-    for (var i = 0; i < cards.length; i++) {
-        if (i==0){
-            html += '<div class="carousel-item active"><div class="row justify-content-center">'
-        } else if (i%3==0){
-            html += '<div class="carousel-item"><div class="row justify-content-center">'
+    var html = ""
+    if (jQuery(window).width() < 576) {
+        for (var i = 0; i < cards.length; i++) {
+            if (i==0){
+                html += '<div class="carousel-item active" data-bs-interval="10000"><div class="row justify-content-center">'
+            } else {
+                html += '<div class="carousel-item" data-bs-interval="10000"><div class="row justify-content-center">'
+            }
+            html += cards[i]
+            html += '</div></div>'
         }
-        html += cards[i]
-        if (i%3==2){
-            html += '</div></div>'
-        } else if (i==cards.length){
-            html += '</div></div>'
+    }  else{
+        for (var i = 0; i < cards.length; i++) {
+            if (i==0){
+                html += '<div class="carousel-item active " data-bs-interval="10000"><div class="row justify-content-center">'
+            } else if (i%3==0){
+                html += '<div class="carousel-item" data-bs-interval="10000"><div class="row justify-content-center">'
+            }
+            html += cards[i]
+            if (i%3==2){
+                html += '</div></div>'
+            } else if (i==cards.length){
+                html += '</div></div>'
+            }
         }
     }
     jQuery('#carouselStories .carousel-inner').prepend(html)
