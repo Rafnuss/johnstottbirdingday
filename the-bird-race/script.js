@@ -48,6 +48,9 @@ window.onload = function () {
         transform: rotate(45deg);
         border: 1px solid #000000;`
 
+        // Remove sensitive checklist location.
+        out.checklist_list = out.checklist_list.filter(e => e.my_subId !="S87648328")
+
         out.checklist_list.forEach( e => {
             
             var id = unique_user.indexOf(e.user_name)
