@@ -31,48 +31,49 @@
             <div class="col-md-4 h-100 d-flex flex-column" id="sidebar">
                 <div class="row bg-blue text-white">
                     <div class="col-12 px-4 d-flex align-items-center">
-                        <a class="navbar-brand" href="/"><img src="/assets/logo.svg" id="nav-logo" style="width: 133px;"></a>
+                        <a class="d-block d-xl-none" href="/"><img src="/assets/logo_small.svg" class="img-fluid" id="nav-logo" style="width:50px;"></a>
+                        <a class="d-none d-xl-block" href="/"><img src="/assets/logo.svg" class="img-fluid" id="nav-logo" style="width:133px;"></a>
                         <h3 class="flex-grow-1 text-center mb-0">The Bird Race</h3>
                         <div style="text-align: right;">
                             <i id="sidebarhide" class="fas fa-2x text-white fa-caret-left" onclick="sidebarhide()"></i>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-3 col-sm-6 p-1">
+                <div class="row mx-xl-2 mt-xl-1">
+                    <div class="col-md-6 col-lg-3 p-1">
                         <div class="p-2 d-flex flex-column rounded bg-blue text-white h-100">
                             <div class="d-flex align-self-center">
                                 <i class="fas fa-dove fa-lg pe-2 align-self-center"></i>
                                 <div class="counter">0</div>
                             </div>
-                            <div class="counter-label lato align-self-center">Species</div>
+                            <div class="counter-label lato align-self-center text-center">Species</div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6 p-1">
+                    <div class="col-md-6 col-lg-3 p-1">
                         <div class="p-2 d-flex flex-column rounded bg-blue text-white h-100">
                             <div class="d-flex align-self-center">
                                 <i class="fas fa-users fa-lg pe-1 align-self-center"></i>
                                 <div class="counter">0</div>
                             </div>
-                            <div class="counter-label lato align-self-center">Participants</div>
+                            <div class="counter-label lato align-self-center text-center">Participants</div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6 p-1">
+                    <div class="col-md-6 col-lg-3 p-1">
                         <div class="p-2 d-flex flex-column rounded bg-blue text-white h-100">
                             <div class="d-flex align-self-center">
                                 <i class="fas fa-flag fa-lg pe-1 align-self-center"></i>
                                 <div class="counter">0</div>
                             </div>
-                            <div class="counter-label lato align-self-center">Countries</div>
+                            <div class="counter-label lato align-self-center text-center">Countries</div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6 p-1">
+                    <div class="col-md-6 col-lg-3 p-1">
                         <div class="p-2 d-flex flex-column rounded bg-blue text-white h-100">
                             <div class="d-flex align-self-center">
                                 <i class="fas fa-clock fa-lg pe-1 align-self-center"></i>
                                 <div class="counter">0</div>
                             </div>
-                            <div class="counter-label lato align-self-center">Hours in the field</div>
+                            <div class="counter-label lato align-self-center text-center">Hours in the field</div>
                         </div>
                     </div>
                 </div>
@@ -81,9 +82,9 @@
                         <table id="table" data-height="300">
                             <thead>
                                 <tr>
-                                    <th scope="col" data-field="nb_species">Species total</th>
+                                    <th scope="col" data-align="center" data-field="nb_species"><span class="d-block d-xl-none"># species</span><span class="d-none d-xl-block">Species total</span></th>
                                     <th scope="col" data-field="user_name">Team</th>
-                                    <th scope="col" data-field="country">Country</th>
+                                    <th scope="col" data-align="center" data-field="country"></th>
                                     <!--<th scope="col" data-field="checklists">Checklists</th>-->
                                 </tr>
                             </thead>

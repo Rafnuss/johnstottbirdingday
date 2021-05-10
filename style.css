@@ -165,4 +165,6 @@ a.collapsed  span.is-collapse {display:none}
 .counter-label{
     font-size:1rem;
 }
-
+tbody{
+    cursor: pointer;
+}
