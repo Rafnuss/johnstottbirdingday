@@ -88,19 +88,50 @@ window.onload = function() {
     map = L.map('mapid',{ zoomControl: false }).fitBounds([[7,-270], [-51, 90]]);
     L.tileLayer.provider('Esri.WorldImagery').addTo(map);
     checklist_marker = L.featureGroup().addTo(map);
-    /*
-    Uncomment during the day
-    jQuery.getJSON('the-competition/checklist_list.json', function(checklist_list){
-        checklist_list.forEach(e => {
-            L.marker([e.Latitude, e.Longitude])
-            .bindPopup('<a href="https://ebird.org/profile/'+e.user_id+'">'+e.user_name+'</a><br>'+
-            '<a href="https://ebird.org/checklist/'+e.user_subId+'">'+e.Location+'</a><br>'+
-            'Number of Species: '+e.nb_species)
-            .addTo(checklist_marker)
+    
+    //Uncomment during the day
+    const markerHtmlStyles = `
+        width: 2rem;
+        height: 2rem;
+        display: block;
+        left: -1rem;
+        top: -1rem;
+        position: relative;
+        border-radius: 2rem 2rem 0;
+        transform: rotate(45deg);
+        border: 1px solid #000000;
+        background-color:#006382;`
+
+    jQuery.getJSON('the-bird-race/out.json', function(out){
+        out.checklist_list.forEach(e => {
+            var m = L.marker([e.Latitude, e.Longitude], {
+                icon: L.divIcon({
+                    iconAnchor: [0, 24],
+                    labelAnchor: [-6, 0],
+                    popupAnchor: [0, -36],
+                    html: `<span style="${markerHtmlStyles}" />`
+                })
+            }).addTo(checklist_marker)
         });
         map.fitBounds(checklist_marker.getBounds());
+
+        user_table = out.user_list.map((x,index) => {
+            var y={}
+            y.ranking = index+1,
+            y.nb_species = x.nb_species;
+            y.user_name = (x.user_id=='' ? x.user_name : ('<a target="_blank" href="https://ebird.org/profile/' + x.user_id + '">' + x.user_name + '</a>') ) + ' <small class="text-muted">(<i class="fas fa-users"></i> '+x.number_of_observers+')</small>';
+            //y.checklists = x.checklists.map(y => '<a target="_blank" href="https://ebird.org/checklist/' + y + '"><i class="fas fa-clipboard-list"></i></a>').join(' ');
+            y.user_name += '  <span class="flag-icon flag-icon-'+x.country[0].toLowerCase()+'"></span>'
+            return y
+        })
+
+        $('#table').bootstrapTable({
+            data: user_table.slice(0,5),
+            classes:"table table-hover",
+        })
+
     })
-    */
+    
 
    
     

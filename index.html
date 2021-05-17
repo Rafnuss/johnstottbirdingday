@@ -18,6 +18,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato&family=Libre+Baskerville:wght@400;700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" integrity="sha512-Cv93isQdFwaKBV+Z4X8kaVBYWHST58Xb/jVOcV9aRsGSArZsgAnFIhMpDoMDcFNoUtday1hdjn0nGp3+KZyyFw==" crossorigin="anonymous" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="style.css" rel="stylesheet" />
 </head>
@@ -33,12 +35,15 @@
             </button>
             <div class="navbar-collapse collapse w-100" id="collapseNavbar">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#taking-part">Taking part</a></li>
+                    <!--<li class="nav-item"><a class="nav-link" href="#taking-part">Taking part</a></li>-->
+                    <li class="nav-item"><a class="nav-link" href="#about-the-day">About The Day</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#the-bird-race">The Bird Race</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#the-photo-contest">The Photo Contest</a></li>
                     <li class="nav-item"><a class="nav-link" href="#the-organizers">The Organizers</a></li>
                     <li class="nav-item"><a class="nav-link" href="#the-man">The Man</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#the-bird-race">The Bird Race</a></li>
+                    <!--<li class="nav-item"><a class="nav-link" href="#the-bird-race">The Bird Race</a></li>-->
                     <li class="nav-item"><a class="nav-link" href="#the-stories">The Stories</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#the-auction">The Auction</a></li>
+                    <!--<li class="nav-item"><a class="nav-link" href="#the-auction">The Auction</a></li>-->
                 </ul>
                 <a href="https://www.arocha.org/en/donation-john-stott/" target="_blank" type="button" class="lato btn btn-light d-flex text-blue mx-5 text-uppercase justify-content-center bg-blue-h align-items-center">Donate</a>
             </div>
@@ -59,14 +64,14 @@
             </div>
         </div>
     </section>
-    <!-- The Day -->
+    <!-- The Day 
     <section class="bg-white vertical-center d-flex align-items-center " id="taking-part">
         <div class="container h-100 pt-5 pb-5">
             <div class="row h-100">
                 <div class="col-md-4 my-auto py-5">
                     <h2 class="text-blue">Taking part</h2>
                     <p>The <strong>John Stott memorial birding day</strong> is a global one-day event run by A Rocha on 8 May 2021 to commemorate and celebrate  our great friend and supporter John Stott’s legacy as a theologian, pastor and birdwatcher in his centenary year. Whether you are a novice or an expert birder, we invite you to join friends old and new to head into the great outdoors and enjoy the birds wherever you are in God’s good creation.</p>
-                    <p>Share the day with others in the <a href="">John Stott Memorial Birding Day Facebook group</a>, or on <a href="">Twitter</a> and <a href="">Instagram</a> using #JohnStottBirding.</p>
+                    <p>Share the day with others in the <a href="https://www.facebook.com/groups/284914929692849/">John Stott Memorial Birding Day Facebook group</a>, or on <a href="https://twitter.com/hashtag/johnstottbirding">Twitter</a> and <a href="https://www.instagram.com/explore/tags/johnstottbirding/">Instagram</a> using #JohnStottBirding.</p>
                     <div class="d-flex"></div>
                     <button type="button" class="lato text-uppercase mx-auto d-block btn btn-lg text-white bg-blue bg-white-h" data-bs-toggle="collapse" data-bs-target="#how-to-take-part-collapse" aria-expanded="false" aria-controls="how-to-take-part-collapse">How to take part</button>
                 </div>
@@ -127,6 +132,110 @@
                 </div>
             </div>
         </div>
+    </section>-->
+    <section class="bg-white vertical-center d-flex align-items-center " id="about-the-day">
+        <div class="container h-100 pt-5 pb-5">
+            <div class="row h-100">
+                <div class="alert alert-warning  d-flex align-items-center" role="alert">
+                    <div>
+                        <i class="fas fa-bullhorn fa-lg"></i>  A Rocha is excited to announce we will be running The John Stott Memorial Birding Day again in May 2022. 
+                    </div>
+                  </div>
+                <div class="col-md-4 my-auto py-5">
+                    <h2 class="text-blue">About the day</h2>
+                    <p>On 8 May 2021 teams around the world took part in the John Stott memorial birding day, a one-day event run by A Rocha to commemorate and celebrate our great friend and supporter John Stott’s legacy as a theologian, pastor and birdwatcher in his centenary year. Some took part in a bird-themed spiritual retreat, others entered a photography competition and we held a bird race.</p>
+                    <p>Find out more about the day at the <a href="https://www.facebook.com/groups/284914929692849/">John Stott Memorial Birding Day Facebook group</a>, or on <a href="https://twitter.com/hashtag/johnstottbirding">Twitter</a> and <a href="https://www.instagram.com/explore/tags/johnstottbirding/">Instagram</a> using #JohnStottBirding.</p>
+                    <div class="d-flex"></div>
+                      </div>
+                <div class="col-md-8" id="taking-part-picture">
+                </div>
+            </div>
+        </div>
+    </section>-->
+    <!-- The Bird Race After-->
+    <section id="the-bird-race" class="d-flex">
+        <div class="w-100 position-absolute" id="mapid" style="z-index: -1;"></div>
+        <div class="container h-100">
+            <div class="row pt-5 pb-5 h-100">
+                <div class="col-md-6 rounded py-4 bg-light my-auto" style="opacity: 0.9;">
+                    <h2 class="text-blue">The Bird Race: Result</h2>
+                    <div class="row mx-xl-2 mt-xl-1">
+                        <div class="col-md-6 col-lg-3 p-1">
+                            <div class="p-2 d-flex flex-column rounded bg-blue text-white h-100">
+                                <div class="d-flex align-self-center">
+                                    <i class="fas fa-dove fa-lg pe-2 align-self-center"></i>
+                                    <div class="counter">1089</div>
+                                </div>
+                                <div class="counter-label lato align-self-center text-center">Species</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 p-1">
+                            <div class="p-2 d-flex flex-column rounded bg-blue text-white h-100">
+                                <div class="d-flex align-self-center">
+                                    <i class="fas fa-users fa-lg pe-1 align-self-center"></i>
+                                    <div class="counter">181</div>
+                                </div>
+                                <div class="counter-label lato align-self-center text-center">Participants</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 p-1">
+                            <div class="p-2 d-flex flex-column rounded bg-blue text-white h-100">
+                                <div class="d-flex align-self-center">
+                                    <i class="fas fa-flag fa-lg pe-1 align-self-center"></i>
+                                    <div class="counter">21</div>
+                                </div>
+                                <div class="counter-label lato align-self-center text-center">Countries</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 p-1">
+                            <div class="p-2 d-flex flex-column rounded bg-blue text-white h-100">
+                                <div class="d-flex align-self-center">
+                                    <i class="fas fa-clock fa-lg pe-1 align-self-center"></i>
+                                    <div class="counter">355</div>
+                                </div>
+                                <div class="counter-label lato align-self-center text-center">Hours in the field</div>
+                            </div>
+                        </div>
+                    </div>
+                    <table id="table" data-height="300">
+                        <thead>
+                            <tr>
+                                <th scope="col" data-align="center" data-field="ranking">Ranking</th>
+                                <th scope="col" data-field="user_name">Team</th>
+                                <th scope="col" data-align="center" data-field="nb_species"><span class="d-block d-xl-none"># species</span><span class="d-none d-xl-block">Species total</span></th>
+                                <!--<th scope="col" data-field="checklists">Checklists</th>-->
+                            </tr>
+                        </thead>
+                    </table>
+                    <a href="/the-bird-race/" type="button" class="lato text-uppercase mx-auto d-block btn btn-lg text-white bg-blue bg-white-h" >See the Map</a>
+                </div>
+            </div>
+        </div>
+    </section> 
+    <!-- The Photo Contest -->
+    <section class="bg-white d-flex align-items-center" id="the-photo-contest">
+        <div class="container pt-5 pb-5 h-100">
+            <div class="row h-100">
+                <div class="col-md-12 my-auto">
+                    <h2>The Photo Contest</h2>
+                    <p>Congratulations to the worthy winners of the photography competition. We received some wonderful entries and it wasn't an easy decision. Thank you to everyone who took and shared pictures from the bird race.</p>
+                    <div class="row">
+                    <div class="col-md-6 col-lg-3 p-1">
+                        <img src="assets/photo-contest/bird_picture.jpg" class="img-fluid zoom"  data-bs-toggle="modal" data-bs-target="#photoContest1">
+                    </div>
+                    <div class="col-md-6 col-lg-3 p-1">
+                        <img src="assets/photo-contest/bird_picture_children.JPG" class="img-fluid zoom" data-bs-toggle="modal" data-bs-target="#photoContest2">
+                    </div>
+                    <div class="col-md-6 col-lg-3 p-1">
+                        <img src="assets/photo-contest/human-bird_interaction.jpg" class="img-fluid zoom" data-bs-toggle="modal" data-bs-target="#photoContest3">
+                    </div>
+                    <div class="col-md-6 col-lg-3 p-1">
+                        <img src="assets/photo-contest/evidence_of_commitment.JPG" class="img-fluid zoom" data-bs-toggle="modal" data-bs-target="#photoContest4">
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
     </section>
     <!-- The Organizers -->
     <section class="bg-blue text-white d-flex align-items-center " id="the-organizers">
@@ -177,13 +286,13 @@
             </div>
         </div>
     </section>
-    <!-- The Bird Race -->
+    <!-- The Bird Race Before
     <section id="the-bird-race" class="d-flex">
         <div class="w-100 position-absolute" id="mapid" style="z-index: -1;"></div>
         <div class="container h-100">
             <div class="row pt-5 pb-5 h-100">
                 <div class="col-md-6 rounded py-4 bg-light my-auto">
-                    <h2 class="text-blue">The Bird Race.</h2>
+                    <h2 class="text-blue">The Bird Race</h2>
                     <p>We are partnering with <a  target="_blank" href="bird.org/news/global-big-day-8-may-2021">eBird’s Global Big Day</a>. Taking part is easy! Follow the three steps below:</p>
                     <div class="row">
                         <div class="col m-2 p-2 bg-blue text-white"><b>1.</b><br> <a target="_blank" href="https://secure.birds.cornell.edu/cassso/account/create">Create an eBird account</a></div>
@@ -203,7 +312,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>-->
     <!-- The Stories -->
     <section class="bg-blue text-white d-flex align-items-center " id="the-stories">
         <div class="container pt-5 pb-5 h-100">
@@ -234,20 +343,19 @@
             </div>
             </div>
     </section>
-    <!-- The Auction-->
+    <!-- The Auction 
     <section class="bg-white d-flex align-items-center" id="the-auction">
         <div class="container pt-5 pb-5 h-100">
             <div class="row h-100">
                 <div class="col-md-12 my-auto">
                     <h2>The Auction</h2>
-                    <p>All proceeds from the auction will go to further the work of A Rocha around the world. Please visit <a href="https://www.jumblebee.co.uk/johnstottbirding">www.jumblebee.co.uk/johnstottbirding</a> for more information and to place bids, or click on the images below. </p>
-                    <div class="grid mx-md-5" id="auction-row"></div>
+                    <p>Thank you. </p>
+                    
                 </div>
             </div>
         </div>
     </section>
-
-
+    -->
 
 
 
@@ -284,6 +392,41 @@
             </div>
         </div>
     </footer>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="photoContest1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <img src="assets/photo-contest/bird_picture.jpg" class="img-fluid">
+      </div>
+  </div>
+</div>
+<div class="modal fade" id="photoContest2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <img src="assets/photo-contest/bird_picture_children.jpg" class="img-fluid">
+      </div>
+  </div>
+</div>
+<div class="modal fade" id="photoContest3" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <img src="assets/photo-contest/human-bird_interaction.jpg" class="img-fluid">
+      </div>
+  </div>
+</div>
+<div class="modal fade" id="photoContest4" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <img src="assets/photo-contest/evidence_of_commitment.jpg" class="img-fluid">
+      </div>
+  </div>
+</div>
+
+
+
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
     <div class="scroll-to-top d-lg-none position-fixed">
         <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i
@@ -313,6 +456,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     <script src="https://unpkg.com/imagesloaded@4.1.4/imagesloaded.pkgd.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
     <!-- Core theme JS-->
     <script src="script.js"></script>
 </body>
