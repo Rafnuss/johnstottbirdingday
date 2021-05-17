@@ -2,10 +2,11 @@ import csv
 import codecs
 import os
 import json
+from time import gmtime, strftime
 
 # Defien working directory
 os.chdir('C:/Users/rnussba1/Documents/GitHub/johnstottbirdingday/the-bird-race')
-os.chdir('/Users/rafnuss/Documents/GitHub/johnstottbirdingday/the-bird-race/')
+#os.chdir('/Users/rafnuss/Documents/GitHub/johnstottbirdingday/the-bird-race/')
 
 
 
@@ -83,13 +84,27 @@ for d in data:
 
 
 
+## Filter data to test
+#dataf = [d for d in data if d['user_name']=='Peter and Caleb Scholtens']
+#len(list(set([d['count_as'] for d in dataf if d['count_as']!=""])))
+
+# f = open("sample.csv", "w")
+# writer = csv.DictWriter(f, fieldnames=dataf[0].keys())
+# writer.writeheader()
+# writer.writerows(dataf)
+# f.close()
+
 
 # Compute Value
 
 ## Species
 # list(set([d['Common Name'] for d in data if d['count_as']==""]))
-species_list_sp_only = list(set([d['Common Name'] for d in data if d['count_as']!=""]))
-
+species_list_sp_only = list(set([d['count_as'] for d in data if d['count_as']!=""]))
+species_list_family =[]
+for d in species_list_sp_only:
+    s = [t['ORDER1'] for t in taxo if t["SPECIES_CODE"]==d]
+    species_list_family.append(s[0])
+len(species_list_sp_only)
 
 
 ## Checklists
@@ -126,7 +141,11 @@ for user_name in user_name_list:
     user['user_name'] = sightings[0]['user_name']
     user['checklists'] = list(set([d['user_subId'] for d in sightings]))
     user['nb_species'] = len(list(set([d['count_as'] for d in sightings if d['count_as']!=""])))
-    user['number_of_observers'] = max([int(d['Number of Observers']) for d in sightings])
+    tmp = [int(d['Number of Observers']) for d in sightings if d['Number of Observers']!=""]
+    if tmp:
+        user['number_of_observers'] = max(tmp)
+    else:
+        user['number_of_observers'] = 1
     user['country'] = list(set([d['State/Province'][0:2] for d in sightings]))
     user_list.append(user)
 
@@ -142,6 +161,7 @@ out={}
 out['counter']=counter
 out['checklist_list'] = checklist_list
 out['user_list'] = user_list
+out['update_time'] = strftime("%Y-%m-%d %H:%M:%S %Z", gmtime())
 
 with open('out.json', 'w') as outfile:
     json.dump(out, outfile)
