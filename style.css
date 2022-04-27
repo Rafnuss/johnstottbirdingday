@@ -1,0 +1,180 @@
+body{
+    font-family: 'Libre Baskerville', serif;
+}
+.lato{
+    font-family: 'Lato', sans-serif;
+}
+section, #mapid{
+    min-height: 700px;
+}
+#mapid{
+   /* height: 150%;*/
+}
+.bg-blue{
+    background-color: #006382;
+}
+.bg-grey{
+    background-color: #9A9A9A;
+}
+.text-blue{
+    color: #006382;
+}
+.filter-white{
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(120deg) brightness(102%) contrast(101%);
+}
+a{
+    color: #9A9A9A;
+    text-decoration: none;
+}
+a:hover{
+    color: #000000;
+}
+.nav-link{
+    border-bottom:4px solid transparent;
+}
+.nav-link:hover{
+    border-bottom:4px solid white;
+}
+
+#nav-logo{
+    height: 70px;
+    transition: 0.4s;
+}
+.justGiving{
+    background:#882c84;
+    font-family: roboto,arial;
+}
+.justGiving:hover{
+    background:#700066;
+}
+.bg-blue-h:hover{
+    color: #ffff;
+    background-color: #006382;
+}
+.bg-blue-h:hover{
+    color: #ffff;
+    background-color: #006382;
+}
+.bg-white-h:hover{
+    color: #006382 !important;
+    background-color: #ffff;
+    border-color: #006382;
+}
+.btn-social{
+    height:50px;
+    width: 50px;
+}
+hr{
+    opacity: 1;
+    border-radius: 10px;
+}
+
+a:not(.collapsed)  span.is-not-collapse{display:none}
+a.collapsed  span.is-collapse {display:none}
+
+
+#welcome{
+    background-image: url('assets/welcome.jpg');
+    background-position: top; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    background-attachment: fixed;
+}
+
+#taking-part-picture{
+    background-image: url('assets/taking-part.jpg');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+#the-organizers-picture{
+    background-image: url('assets/the-organizers.jpg');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */  
+}
+#the-man-picture {
+    background-image: url('assets/the-man.jpg');
+    background-position: top; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */  
+}
+
+
+
+
+/* Story */
+@media only screen and (max-width: 576px) {
+    .slider-chevron{
+        color: #212529!important;
+    }
+  }
+
+
+
+/*Auction*/
+.grid-item {
+    float: left;
+  }
+  .grid-item img {
+    display: block;
+    max-width: 100%;
+  }
+
+
+/* Photo contest*/
+.zoom {
+    transition: transform .2s; /* Animation */
+    cursor: pointer;
+  }
+  
+  .zoom:hover {
+    transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }
+
+
+
+
+
+/* THE MAP */
+#sidebarhide{
+    cursor: pointer;
+}
+#sidebarhide:hover{
+    color: black !important;
+}
+#easybutton{
+    display: none;
+}
+.bootstrap-table, .fixed-table-container{
+    height:100% !important;
+ }
+.leaflet-popup-content{
+    font-family: 'Libre Baskerville', serif;
+    font-size: .9rem;
+}
+.awesome-marker i {
+    margin-left: 5px;
+}
+.awesome-marker:hover i {
+    color:black !important;
+}
+.leaflet-container a{
+    color: #9A9A9A;
+    text-decoration: none;
+}
+.leaflet-container a:hover{
+    color: #000000;
+}
+.icon-counter{
+    /*font-size: calc(40px + 1.7vw);*/
+}
+.counter{
+    font-size:1.5rem;
+}
+.counter-label{
+    font-size:1rem;
+}
+tbody{
+    cursor: pointer;
+}
