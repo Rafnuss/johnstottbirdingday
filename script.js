@@ -1,96 +1,43 @@
-jQuery.getJSON('/stories.json', function(stories){
-    //console.log(stories)
-    cards = stories.map( (story,id) => {
-        return `<div class="col-sm-3  my-2">
-            <div class="card">
-                ` + (story.photos.length>0 ? '<img class="img-fluid" src="/assets/stories/'+story.photos[0]+'">' : '<img class="img-fluid" src="/assets/stories/empty.jpg">') + ` 
-                <div class="card-body">
-                    <h5 class="card-title">` + story.author + `</h5>
-                    <p class="card-text">` + shorten(story.body,70) + `</p>
-                    <a href="" data-bs-toggle="modal" data-bs-target="#modal-`+id+`" >Read more...</a>
-                </div>
-            </div>
-        </div>`
-        //<div class="card-header">` + story.author + `</div>
-    });
-
-    var html = ""
-    if (jQuery(window).width() < 576) {
-        for (var i = 0; i < cards.length; i++) {
-            if (i==0){
-                html += '<div class="carousel-item active" data-bs-interval="10000"><div class="row justify-content-center">'
-            } else {
-                html += '<div class="carousel-item" data-bs-interval="10000"><div class="row justify-content-center">'
-            }
-            html += cards[i]
-            html += '</div></div>'
-        }
-    }  else{
-        for (var i = 0; i < cards.length; i++) {
-            if (i==0){
-                html += '<div class="carousel-item active " data-bs-interval="10000"><div class="row justify-content-center">'
-            } else if (i%3==0){
-                html += '<div class="carousel-item" data-bs-interval="10000"><div class="row justify-content-center">'
-            }
-            html += cards[i]
-            if (i%3==2){
-                html += '</div></div>'
-            } else if (i==cards.length){
-                html += '</div></div>'
-            }
-        }
-    }
-    jQuery('#carouselStories .carousel-inner').prepend(html)
-
-    modal = stories.map( (story,id) => {
-        return `<!-- Modal -->
-        <div class="modal fade" id="modal-`+id+`" tabindex="-1" aria-labelledby="modal-`+id+`-label" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modal-`+id+`-label">` + story.author + `</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                `+story.body + story.photos.reduce( (ac,cu) => ac+'<img class="img-fluid" src="/assets/stories/'+cu+'">','')+`
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-            </div>
-        </div>
-        </div>`
-    })
-
-    jQuery('body').append(modal.join(''))
-})
+color_pin=['#efa00b','#d65108','#591f0a','#eee5e5','#adb6c4','#89023e','#ffd9da','#c7d9b7','#17bebb']//['#271F30','#C8AD55','#D0FCB3','#9BC59D','#5BC0EB','#C3423F','#F9E9EC','#F88DAD']
 
 
-jQuery.getJSON('/auctions.json', function(auctions){
-    var cols = auctions.map( (auc,idx) =>{
-        return `
-        <a class="grid-item col-12 col-sm-6 col-lg-4 p-2 p-lg-4" href="https://www.jumblebee.co.uk/johnstottbirding#buzz_expend_`+ auc.linkId +`" target="_blank">
-        <div class="bg-blue text-white text-center p-3 rounded">
-        <img class="img-fluid p-4" src="/assets/auctions/`+ auc.linkId +`.jpg">
-        <h5>`+auc.title+`</h5>
-        </div></a>`
-    })
-    jQuery('#auction-row').html(cols.join(''))
-    jQuery('.grid').imagesLoaded( function() {
-        jQuery('.grid').masonry({
-        itemSelector: '.grid-item',
-      });
-    });
-})
-
-
-window.onload = function() {
-    map = L.map('mapid',{ zoomControl: false }).fitBounds([[7,-270], [-51, 90]]);
+window.onload = function () {
+    
+    // MAP
+    map = L.map('mapid2').fitWorld();
     L.tileLayer.provider('Esri.WorldImagery').addTo(map);
     checklist_marker = L.featureGroup().addTo(map);
     
-    //Uncomment during the day
-    const markerHtmlStyles = `
+    sidebarhide = function() {
+        jQuery('#sidebar').attr('style','display:none !important');
+        jQuery('#mapid2').removeClass('col-md-8').addClass('col-md-12')
+        $('#easybutton').show()
+        map.invalidateSize();
+    }
+    
+    sidebarshow = function(){
+        jQuery('#sidebar').attr('style','display:block !important');
+        jQuery('#mapid2').addClass('col-md-8').removeClass('col-md-12')
+        $('#easybutton').hide()
+        map.invalidateSize();
+    }
+    
+    L.easyButton('fa-caret-right', sidebarshow ,{id:"easybutton"}).addTo( map );
+    
+    
+    
+    $.getJSON('out.json', function (out) {
+        
+        /*var icon = L.AwesomeMarkers.icon({
+            icon: 'clipboard-list',
+            prefix: "fa",
+            iconColor: '#006382',
+            markerColor: "white"
+        });*/
+        
+        var unique_user = [...new Set(out.checklist_list.map( e => e.user_name))]
+        
+        const markerHtmlStyles = `
         width: 2rem;
         height: 2rem;
         display: block;
@@ -99,55 +46,128 @@ window.onload = function() {
         position: relative;
         border-radius: 2rem 2rem 0;
         transform: rotate(45deg);
-        border: 1px solid #000000;
-        background-color:#006382;`
+        border: 1px solid #000000;`
 
-    jQuery.getJSON('the-bird-race/out.json', function(out){
-        out.checklist_list.forEach(e => {
+        // Remove sensitive checklist location.
+        out.checklist_list = out.checklist_list.filter(e => e.my_subId !="S87648328")
+
+        out.checklist_list.forEach( e => {
+            
+            var id = unique_user.indexOf(e.user_name)
+            
             var m = L.marker([e.Latitude, e.Longitude], {
                 icon: L.divIcon({
                     iconAnchor: [0, 24],
                     labelAnchor: [-6, 0],
                     popupAnchor: [0, -36],
-                    html: `<span style="${markerHtmlStyles}" />`
+                    html: `<span style="${markerHtmlStyles+ 'background-color: '+ color_pin[id % color_pin.length] + ';'}" />`
                 })
-            }).addTo(checklist_marker)
-        });
-        map.fitBounds(checklist_marker.getBounds());
+            })
+            .bindPopup(`
+            <ul class="fa-ul">
+            <li><span class="fa-li"><i class="fas fa-dove text-blue"></i></span>`+e.nb_species+`</li>
+            <li><span class="fa-li"><i class="fas fa-clock text-blue"></i></span>`+e.Time+`</li>
+            <li><span class="fa-li"><i class="fas fa-users text-blue"></i></span>`+ (e.user_id=='' ? e.user_name : ('<a target="_blank" href="https://ebird.org/profile/' + e.user_id + '">' + e.user_name + '</a>') )  +  ' <small class="text-muted">(+'+e.number_of_observers+`)</small></b></li>
+            <li><span class="fa-li"><i class="fas fa-map-marker text-blue"></i></span><a target="_blank" href="https://ebird.org/checklist/` + e.user_subId + `">` + e.Location + `</a></li>\
+            </ul>`,{minWidth:200})//,{maxWidth: "auto"})
 
+            m.id=id;
+            m.addTo(checklist_marker)
+        });
+        
+        
+        map.fitBounds(checklist_marker.getBounds());
+        
+        // COUNTER
+        jQuery('.counter').each(function (i) {
+            var $this = $(this);
+            $this.text(out.counter[i])
+            jQuery({
+                Counter: 0
+            }).animate({
+                Counter: $this.text()
+            }, {
+                duration: 1000,
+                easing: 'swing',
+                step: function () {
+                    $this.text(Math.ceil(this.Counter));
+                }
+            });
+        })
+        
+        // Ranking
+        
         user_table = out.user_list.map((x,index) => {
             var y={}
-            y.ranking = index+1,
             y.nb_species = x.nb_species;
             y.user_name = (x.user_id=='' ? x.user_name : ('<a target="_blank" href="https://ebird.org/profile/' + x.user_id + '">' + x.user_name + '</a>') ) + ' <small class="text-muted">(<i class="fas fa-users"></i> '+x.number_of_observers+')</small>';
             //y.checklists = x.checklists.map(y => '<a target="_blank" href="https://ebird.org/checklist/' + y + '"><i class="fas fa-clipboard-list"></i></a>').join(' ');
-            y.user_name += '  <span class="flag-icon flag-icon-'+x.country[0].toLowerCase()+'"></span>'
+            y.country = ' <span class="flag-icon flag-icon-'+x.country[0].toLowerCase()+'"></span>'
+            y.id = unique_user.indexOf(x.user_name)
+            y.index = index
             return y
         })
-
+        
         $('#table').bootstrapTable({
-            data: user_table.slice(0,5),
+            data: user_table,
             classes:"table table-hover",
+            onClickRow: function(e){
+                console.log(e)
+                checklist_marker_zoom =  L.featureGroup();
+                checklist_marker.eachLayer(function (layer) {
+                    if (layer.id==e.id) {
+                        layer.addTo(checklist_marker_zoom)
+                        map.fitBounds(checklist_marker_zoom.getBounds());
+                    }
+                })
+            },
+            onPostBody: function(){
+                var trs = $('#table').find('tbody').children();
+                
+                for (var i = 0; i < trs.length; i++) {
+                    $(trs[i]).mouseover(function(e) {
+                        index = $(e.currentTarget).data('index')
+                        var id = user_table.filter( e => e.index==index)[0].id
+                        $(this).css("background-color",color_pin[id % color_pin.length])
+                        checklist_marker.eachLayer(function (layer) {
+                            if (layer.id==id) {
+                                layer.setOpacity(1)
+                                /*layer.setIcon(L.divIcon({
+                                    iconAnchor: [0, 24],
+                                    labelAnchor: [-6, 0],
+                                    popupAnchor: [0, -36],
+                                    html: `<span style="${markerHtmlStyles+ 'background-color: '+ color_pin[id % color_pin.length] + ';'}" />`
+                                }))*/
+                            } else {
+                                layer.setOpacity(0)
+                                /*layer.setIcon(L.divIcon({
+                                    iconAnchor: [0, 24],
+                                    labelAnchor: [-6, 0],
+                                    popupAnchor: [0, -36],
+                                    html: `<span style="${markerHtmlStyles+ 'background-color: #212529;'}" />`
+                                }))*/
+                            }
+                        });
+                    }).mouseout(function(e) {
+                        $(this).css("background-color","transparent")
+                        checklist_marker.eachLayer(function (layer) {
+                            layer.setOpacity(1)
+                            /*layer.setIcon(L.divIcon({
+                                iconAnchor: [0, 24],
+                                labelAnchor: [-6, 0],
+                                popupAnchor: [0, -36],
+                                html: `<span style="${markerHtmlStyles+ 'background-color: '+ color_pin[layer.id % color_pin.length] + ';'}" />`
+                            }))*/
+                        });
+                    });            
+                };
+            }
         })
-
+        
     })
     
-
-   
     
-  };
-
-window.onscroll = function() {
-    if (document.documentElement.scrollTop > 80) {
-      document.getElementById("nav-logo").style.height = "40px";
-    } else {
-      document.getElementById("nav-logo").style.height = "70px";
-  }
+    
+    
+    
 };
-
-function shorten(str, maxLen, separator = ' ') {
-    str = str.replace(/(<([^>]+)>)/gi, "");
-    if (str.length <= maxLen) return str;
-    var str_return = str.substr(0, str.lastIndexOf(separator, maxLen))
-    return str_return+'...';
-  }

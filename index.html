@@ -1,450 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>John Stott Birding Day</title>
+    <title>The Bird Race | John Stott Birding Day</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon-16x16.png" />
+    <link rel="icon" type="image/x-icon" href="/assets/favicon-16x16.png" />
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin="anonymous" />
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Libre+Baskerville:wght@400;700&display=swap"
-        rel="stylesheet">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" integrity="sha512-cUoWMYmv4H9TGP4hbm1mIjYo90WzIQFo/5jj+P5tQcDTf+iVR59RyIj/a9fRsBxzxt5Dnv/Ex7MzRIxcDwaOLw==" crossorigin="anonymous" />-->
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" integrity="sha512-Cv93isQdFwaKBV+Z4X8kaVBYWHST58Xb/jVOcV9aRsGSArZsgAnFIhMpDoMDcFNoUtday1hdjn0nGp3+KZyyFw==" crossorigin="anonymous" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="style.css" rel="stylesheet" />
+    <link href="/style.css" rel="stylesheet" />
 </head>
 
 
-<body data-bs-spy="scroll" data-bs-target=".navbar-nav" data-bs-offset="20">
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-blue">
-        <div class="container">
-            <a class="navbar-brand" href="#"><img src="assets/logo.svg" id="nav-logo"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse w-100" id="collapseNavbar">
-                <ul class="navbar-nav ms-auto">
-                    <!--<li class="nav-item"><a class="nav-link" href="#taking-part">Taking part</a></li>-->
-                    <li class="nav-item"><a class="nav-link" href="#about-the-day">About The Day</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#the-bird-race">The Bird Race</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#the-photo-contest">The Photo Contest</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#the-organizers">The Organizers</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#the-man">The Man</a></li>
-                    <!--<li class="nav-item"><a class="nav-link" href="#the-bird-race">The Bird Race</a></li>-->
-                    <li class="nav-item"><a class="nav-link" href="#the-stories">The Stories</a></li>
-                    <!--<li class="nav-item"><a class="nav-link" href="#the-auction">The Auction</a></li>-->
-                </ul>
-                <a href="https://www.arocha.org/en/donation-john-stott/" target="_blank" type="button" class="lato btn btn-light d-flex text-blue mx-5 text-uppercase justify-content-center bg-blue-h align-items-center">Donate</a>
-            </div>
-            <!--<a href="https://www.justgiving.com/arocha" target="_blank" type="button" class="navbar-brand btn d-flex justGiving text-white ms-5  align-items-center"><img class="me-2" src="assets/justgiving.png" width="25">Donate</a>-->
-        </div>
-    </nav>
+<body class="h-100 d-flex flex-column" data-bs-spy="scroll" data-bs-target=".navbar-nav" data-bs-offset="0">
+    <div class="container-fluid flex-grow-1 h-100">
+        <div class="row justify-content-center h-100">
 
-    <!-- Welcome -->
-    <section id="welcome" class="vh-100">
-        <div class="container h-100 pt-5 pb-5">
-            <div class="row h-100">
-                <div class="col-md-6 my-auto">
-                    <h1 class="text-blue display-3">Welcome to the John Stott Memorial Birding Day
-                        <hr class="text-white" size="10" style="opacity:1;">
-                        <small class="text-white">8 May 2021<br>#johnstottbirding</small>
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- The Day 
-    <section class="bg-white vertical-center d-flex align-items-center " id="taking-part">
-        <div class="container h-100 pt-5 pb-5">
-            <div class="row h-100">
-                <div class="col-md-4 my-auto py-5">
-                    <h2 class="text-blue">Taking part</h2>
-                    <p>The <strong>John Stott memorial birding day</strong> is a global one-day event run by A Rocha on 8 May 2021 to commemorate and celebrate  our great friend and supporter John Stott’s legacy as a theologian, pastor and birdwatcher in his centenary year. Whether you are a novice or an expert birder, we invite you to join friends old and new to head into the great outdoors and enjoy the birds wherever you are in God’s good creation.</p>
-                    <p>Share the day with others in the <a href="https://www.facebook.com/groups/284914929692849/">John Stott Memorial Birding Day Facebook group</a>, or on <a href="https://twitter.com/hashtag/johnstottbirding">Twitter</a> and <a href="https://www.instagram.com/explore/tags/johnstottbirding/">Instagram</a> using #JohnStottBirding.</p>
-                    <div class="d-flex"></div>
-                    <button type="button" class="lato text-uppercase mx-auto d-block btn btn-lg text-white bg-blue bg-white-h" data-bs-toggle="collapse" data-bs-target="#how-to-take-part-collapse" aria-expanded="false" aria-controls="how-to-take-part-collapse">How to take part</button>
-                </div>
-                <div class="col-md-8" id="taking-part-picture">
-                </div>
-            </div>
-            <div class="row collapse" id="how-to-take-part-collapse">
-                <div class="col-md-6 d-flex flex-column p-4">
-                    <h1 class="text-blue">1.</h1>
-                    <div class="p-4 rounded bg-blue text-white justify-content-center flex-grow-1 d-flex flex-column ">
-                        <h3 class="text-center">Bird Race</h3>
-                        <p class="text-center">Compete on 8 of May to see as many species as you can in 24hrs with other birders all around the world.</p>
-                        <div class="d-flex">
-                        <a href="#the-bird-race" class="btn mx-auto d-block btn-light text-blue text-uppercase bg-blue-h">More Info</a>
+            <div class="col-md-4 h-100 d-flex flex-column" id="sidebar">
+                <div class="row bg-blue text-white">
+                    <div class="col-12 px-4 d-flex align-items-center">
+                        <a class="d-block d-xl-none" href="/"><img src="/assets/logo_small.svg" class="img-fluid" id="nav-logo" style="width:50px;"></a>
+                        <a class="d-none d-xl-block" href="/"><img src="/assets/logo.svg" class="img-fluid" id="nav-logo" style="width:133px;"></a>
+                        <h3 class="flex-grow-1 text-center mb-0">The Bird Race</h3>
+                        <div style="text-align: right;">
+                            <i id="sidebarhide" class="fas fa-2x text-white fa-caret-left" onclick="sidebarhide()"></i>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 d-flex flex-column p-4">
-                    <h1 class="text-blue">2.</h1>
-                    <div class="p-4 rounded bg-blue text-white justify-content-center flex-grow-1 d-flex flex-column">
-                        <h3 class="text-center">Retreat</h3>
-                        <p class="text-center">If a day simply birding doesn't appeal, use 8 May as an opportunity to take some time out with God and learn more about him from <strong>the birds our teachers</strong>, as the title of one of John’s books called them.</p>
-                        <p class="text-center">We've put together some readings, prayers and reflections drawn from John's writings, and invite you to head outside alone or with a small group of friends to open your life to the presence of God through the beauty of all he has made.</p>
-                        
-                        <div class="d-flex">
-                            <a href="/assets/JSMBD_Retreat.pdf" class="btn mx-auto d-block btn-light text-blue text-uppercase bg-blue-h">Download</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 d-flex flex-column p-4">
-                    <h1 class="text-blue">3.</h1>
-                    <div class="p-4 rounded bg-blue text-white justify-content-center flex-grow-1 d-flex flex-column">
-                        <h3 class="text-center">Stories</h3>
-                        <p class="text-center">John loved nothing better than a birding adventure. Many of you experienced these adventures with him around the world and we’d love you to share your stories.</p>
-                        <p class="text-center">Please send your stories and pictures to <a href="mailto:johnstottbirding@arocha.org">johnstottbirding@arocha.org</a> and they will be on the site for everyone to enjoy.</p>
-                        <div class="d-flex justify-content-around">
-                            <a href="mailto:johnstottbirding@arocha.org?subject=Send a story" class="btn btn-light text-blue me-3 text-uppercase bg-blue-h">Send a Story</a>
-                            <a href="#the-stories" class="btn btn-light text-blue text-uppercase bg-blue-h">Read the Stories</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 d-flex flex-column p-4">
-                    <h1 class="text-blue">4.</h1>
-                    <div class="p-4 rounded bg-blue text-white justify-content-center flex-grow-1 d-flex flex-column">
-                        <h3 class="text-center">Photo competition</h3>
-                        <p class="text-center">A panel of judges will select a winner and two runners up in the following categories:</p>
-                        <ol class="text-center">
-                            <li>Best bird photo (under 16/adult)</li>
-                            <li>Best photo of an interaction between birds and humans</li>
-                            <li>Best evidence of commitment to the John Stott birding day</li>
-                        </ol>
-                        <p class="text-center">All photographs must be taken on 8 May. Entries can be posted to the John Stott Memorial Birding Day Facebook group or emailed to <a href="mailto:johnstottbirding@arocha.org">johnstottbirding@arocha.org</a>, by 13 May.</p>
-                        <p class="text-center">Winners will be announced on 17 May on this website and will be sent a bird book from John Stott’s collection. </p>
-                        <div class="d-flex">
-                            <a href="mailto:johnstottbirding@arocha.org?subject=Submit photo for competition" class="disabled btn mx-auto d-block btn-light text-blue text-uppercase bg-blue-h">Send a picture</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>-->
-    <section class="bg-white vertical-center d-flex align-items-center " id="about-the-day">
-        <div class="container h-100 pt-5 pb-5">
-            <div class="row h-100">
-                <div class="alert alert-warning  d-flex align-items-center" role="alert">
-                    <div>
-                        <i class="fas fa-bullhorn fa-lg"></i>  A Rocha is excited to announce we will be running The John Stott Memorial Birding Day again on the 14/15 of May 2022. 
-                    </div>
-                  </div>
-                <div class="col-md-4 my-auto py-5">
-                    <h2 class="text-blue">About the day</h2>
-                    <p>On 8 May 2021 teams around the world took part in the John Stott memorial birding day, a one-day event run by A Rocha to commemorate and celebrate our great friend and supporter John Stott’s legacy as a theologian, pastor and birdwatcher in his centenary year. Some took part in a bird-themed spiritual retreat, others entered a photography competition and we held a bird race.</p>
-                    <p>Find out more about the day at the <a href="https://www.facebook.com/groups/284914929692849/">John Stott Memorial Birding Day Facebook group</a>, or on <a href="https://twitter.com/hashtag/johnstottbirding">Twitter</a> and <a href="https://www.instagram.com/explore/tags/johnstottbirding/">Instagram</a> using #JohnStottBirding.</p>
-                    <div class="d-flex"></div>
-                      </div>
-                <div class="col-md-8" id="taking-part-picture">
-                </div>
-            </div>
-        </div>
-    </section>-->
-    <!-- The Bird Race After-->
-    <section id="the-bird-race" class="d-flex">
-        <div class="w-100 position-absolute" id="mapid" style="z-index: -1;"></div>
-        <div class="container h-100">
-            <div class="row pt-5 pb-5 h-100">
-                <div class="col-md-6 rounded py-4 bg-light my-auto" style="opacity: 0.9;">
-                    <h2 class="text-blue">The Bird Race: Result</h2>
-                    <div class="row mx-xl-2 mt-xl-1">
-                        <div class="col-md-6 col-lg-3 p-1">
-                            <div class="p-2 d-flex flex-column rounded bg-blue text-white h-100">
-                                <div class="d-flex align-self-center">
-                                    <i class="fas fa-dove fa-lg pe-2 align-self-center"></i>
-                                    <div class="counter">1089</div>
-                                </div>
-                                <div class="counter-label lato align-self-center text-center">Species</div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3 p-1">
-                            <div class="p-2 d-flex flex-column rounded bg-blue text-white h-100">
-                                <div class="d-flex align-self-center">
-                                    <i class="fas fa-users fa-lg pe-1 align-self-center"></i>
-                                    <div class="counter">181</div>
-                                </div>
-                                <div class="counter-label lato align-self-center text-center">Participants</div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3 p-1">
-                            <div class="p-2 d-flex flex-column rounded bg-blue text-white h-100">
-                                <div class="d-flex align-self-center">
-                                    <i class="fas fa-flag fa-lg pe-1 align-self-center"></i>
-                                    <div class="counter">21</div>
-                                </div>
-                                <div class="counter-label lato align-self-center text-center">Countries</div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3 p-1">
-                            <div class="p-2 d-flex flex-column rounded bg-blue text-white h-100">
-                                <div class="d-flex align-self-center">
-                                    <i class="fas fa-clock fa-lg pe-1 align-self-center"></i>
-                                    <div class="counter">355</div>
-                                </div>
-                                <div class="counter-label lato align-self-center text-center">Hours in the field</div>
-                            </div>
-                        </div>
-                    </div>
-                    <table id="table" data-height="300">
-                        <thead>
-                            <tr>
-                                <th scope="col" data-align="center" data-field="ranking">Ranking</th>
-                                <th scope="col" data-field="user_name">Team</th>
-                                <th scope="col" data-align="center" data-field="nb_species"><span class="d-block d-xl-none"># species</span><span class="d-none d-xl-block">Species total</span></th>
-                                <!--<th scope="col" data-field="checklists">Checklists</th>-->
-                            </tr>
-                        </thead>
-                    </table>
-                    <a href="/the-bird-race/" type="button" class="lato text-uppercase mx-auto d-block btn btn-lg text-white bg-blue bg-white-h" >See the Map</a>
-                </div>
-            </div>
-        </div>
-    </section> 
-    <!-- The Photo Contest -->
-    <section class="bg-white d-flex align-items-center" id="the-photo-contest">
-        <div class="container pt-5 pb-5 h-100">
-            <div class="row h-100">
-                <div class="col-md-12 my-auto">
-                    <h2>The Photo Contest</h2>
-                    <p>Congratulations to the worthy winners of the photography competition. We received some wonderful entries and it wasn't an easy decision. Thank you to everyone who took and shared pictures from the bird race.</p>
-                    <div class="row">
+                <div class="row mx-xl-2 mt-xl-1">
                     <div class="col-md-6 col-lg-3 p-1">
-                        <img src="assets/photo-contest/bird_picture.jpg" class="img-fluid zoom"  data-bs-toggle="modal" data-bs-target="#photoContest1">
+                        <div class="p-2 d-flex flex-column rounded bg-blue text-white h-100">
+                            <div class="d-flex align-self-center">
+                                <i class="fas fa-dove fa-lg pe-2 align-self-center"></i>
+                                <div class="counter">0</div>
+                            </div>
+                            <div class="counter-label lato align-self-center text-center">Species</div>
+                        </div>
                     </div>
                     <div class="col-md-6 col-lg-3 p-1">
-                        <img src="assets/photo-contest/bird_picture_children.JPG" class="img-fluid zoom" data-bs-toggle="modal" data-bs-target="#photoContest2">
+                        <div class="p-2 d-flex flex-column rounded bg-blue text-white h-100">
+                            <div class="d-flex align-self-center">
+                                <i class="fas fa-users fa-lg pe-1 align-self-center"></i>
+                                <div class="counter">0</div>
+                            </div>
+                            <div class="counter-label lato align-self-center text-center">Participants</div>
+                        </div>
                     </div>
                     <div class="col-md-6 col-lg-3 p-1">
-                        <img src="assets/photo-contest/human-bird_interaction.jpg" class="img-fluid zoom" data-bs-toggle="modal" data-bs-target="#photoContest3">
+                        <div class="p-2 d-flex flex-column rounded bg-blue text-white h-100">
+                            <div class="d-flex align-self-center">
+                                <i class="fas fa-flag fa-lg pe-1 align-self-center"></i>
+                                <div class="counter">0</div>
+                            </div>
+                            <div class="counter-label lato align-self-center text-center">Countries</div>
+                        </div>
                     </div>
                     <div class="col-md-6 col-lg-3 p-1">
-                        <img src="assets/photo-contest/evidence_of_commitment.JPG" class="img-fluid zoom" data-bs-toggle="modal" data-bs-target="#photoContest4">
+                        <div class="p-2 d-flex flex-column rounded bg-blue text-white h-100">
+                            <div class="d-flex align-self-center">
+                                <i class="fas fa-clock fa-lg pe-1 align-self-center"></i>
+                                <div class="counter">0</div>
+                            </div>
+                            <div class="counter-label lato align-self-center text-center">Hours in the field</div>
+                        </div>
                     </div>
                 </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- The Organizers -->
-    <section class="bg-blue text-white d-flex align-items-center " id="the-organizers">
-        <div class="container pt-5 pb-5 h-100">
-            <div class="row h-100">
-                <div class="col-md-8 my-auto">
-                    <h2>The organizers</h2>
-                    <p>The <strong>John Stott memorial birding day</strong> is brought to you by A Rocha, a family of organizations
-                        around the world working in community-based nature conservation. Founded in 1983, we believe the
-                        care of creation belongs at the heart of our calling as followers of Christ. John Stott was a
-                        generous and encouraging friend to A Rocha from its earliest days; his influence continues to be
-                        felt in our culture, theology and values today.</p>
-                    <p>To find out more about A Rocha, please visit <a href="https://www.arocha.org/">www.arocha.org</a></p>
-                    <a href="https://www.arocha.org/en/"><img class="w-50 float-end" src="assets/A_Rocha_generic_white.png"></a>
-                </div>
-                <div class="col-md-4" id="the-organizers-picture">
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- The Men -->
-    <section class="bg-white d-flex align-items-center " id="the-man">
-        <div class="container pt-5 pb-5 h-100">
-            <div class="row h-100">
-                <div class="col-md-12 my-auto clearfix">
-                    <img class="col-md-8 float-md-end mb-3 ms-md-3 img-fluid" src="assets/the-man.jpg">
-                    <h2 class="text-blue">The Man</h2>
-                    <p>John Stott was at the forefront of bringing creation care to the attention of the global Church. He cared deeply for the plight of the planet because he was hardwired with a love of nature in general and of birds in particular. But he was also someone who listened carefully to the Bible and he heard within it God’s great love and concern for all he had made, as well as for people.</p>
-                    <span class="collapse" id="the-man-read-more">
-                        <p>He particularly loved Psalm 104, which he said on the tenth anniversary of A Rocha in 1993 was "perhaps the earliest essay in ecology in the literature of the world."
-                            On that occasion he preached a sermon which cited many psalms, but one reference which particularly struck us was Psalm 105: 1. </p>
-                            <blockquote class="blockquote text-center">
-                                <p>Give thanks to the Lord, call on his name; make known to the nations what he has done… sing praise to him; tell of all his wonderful acts.</p>
-                                <footer class="blockquote-footer">Psalm 105: 1. <cite title="Source Title">The Bible</cite></footer>
-                            </blockquote>
-                            <p></p>And he said</p> 
-                            <blockquote class="blockquote text-center">
-                                <p>Of course we’re used to the idea that we’re to bear witness to what God has done in Jesus for the salvation of the world. But the Scripture says we are also to bear witness to the wonderful works of our Creator. God’s mighty acts in creation and redemption are to be made known throughout the world… I hope, sisters and brothers, that we will not be afraid to bear witness to the Creator as well as to the Redeemer.</p>
-                                <footer class="blockquote-footer">John Stott</footer>
-                              </blockquote>
-                            
-                        <p>29 April is the centenary of John Stott’s birth. Although he didn’t live to celebrate his 100th birthday with us, his legacy endures. We hope you will enjoy this day of birding in his memory.</p>
-                    </span>
-                    <a href="#" data-bs-toggle="collapse" data-bs-target="#the-man-read-more" aria-expanded="false"
-                        aria-controls="the-man-read-more"class="collapsed"><span class="is-not-collapse">Show more</span><span class="is-collapse">Show less</span></a>
-                </div>
-                
-            </div>
-        </div>
-    </section>
-    <!-- The Bird Race Before
-    <section id="the-bird-race" class="d-flex">
-        <div class="w-100 position-absolute" id="mapid" style="z-index: -1;"></div>
-        <div class="container h-100">
-            <div class="row pt-5 pb-5 h-100">
-                <div class="col-md-6 rounded py-4 bg-light my-auto">
-                    <h2 class="text-blue">The Bird Race</h2>
-                    <p>We are partnering with <a  target="_blank" href="bird.org/news/global-big-day-8-may-2021">eBird’s Global Big Day</a>. Taking part is easy! Follow the three steps below:</p>
-                    <div class="row">
-                        <div class="col m-2 p-2 bg-blue text-white"><b>1.</b><br> <a target="_blank" href="https://secure.birds.cornell.edu/cassso/account/create">Create an eBird account</a></div>
-                        <div class="col m-2 p-2 bg-blue text-white"><b>2.</b><br> Submit your sightings on the <a href="https://support.ebird.org/en/support/solutions/articles/48000957911-enter-sightings-on-the-ebird-website">eBird
-                            website</a> or with the <a target="_blank" href="https://support.ebird.org/en/support/solutions/articles/48000957940-enter-sightings-with-ebird-mobile">mobile
-                            app</a>.</div>
-                        <div class="col m-2 p-2 bg-blue text-white"><b>3.</b><br><a target="_blank"
-                            href="https://support.ebird.org/en/support/solutions/articles/48000625567-editing-and-sharing-checklists">Share
-                            your checklists</a> with the username "<a target="_blank"
-                            href="https://ebird.org/profile/MjM1MDM0MA">johnstottbirdingday</a>".</div>
-                    </div>
-                    <p>Teams can be up to six people and you must be able to see each other at all times. All team members must log their data using a single account. You can submit multiple checklists throughout the day, and we will aggregate the total number of species seen across all lists for your team. In the spirit of the event, please minimize your carbon output or consider off-setting with <a href="https://www.climatestewards.org/" target="_blank">Climate Stewards</a>.</p>
-                    <p>Species must be seen on 8 May, but data entered until 13 May will be counted. We will be working together as the John Stott Birding Day to see as many species globally as we can. </p>
-                    <p>Each member of the team that records the greatest number of species in 24 hours will receive a bird book from John Stott’s collection as a prize. The winner will be announced on this website on 17 May.</p>
-                    <p>On the day, the data logged will appear in near real-time so you can see your ranking.</p>
-                    <a href="/the-bird-race/" type="button" class="lato text-uppercase mx-auto d-block btn btn-lg text-white bg-blue bg-white-h" >See the Map</a>
-                </div>
-            </div>
-        </div>
-    </section>-->
-    <!-- The Stories -->
-    <section class="bg-blue text-white d-flex align-items-center " id="the-stories">
-        <div class="container pt-5 pb-5 h-100">
-            <div class="row h-100">
-                <div class="col-12 my-auto">
-                    <h2>The Stories</h2>
-                    <p>John loved nothing better than a birding adventure. Many of you experienced these adventures with
-                        him around the world and we’d love you to share your stories. </p>
-                    <p>Submit them below and a moderator will post them to the site for everyone to enjoy.</p>
-                </div>
-                <div class="col-12">
-                <div class="carousel slide text-dark" id="carouselStories" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselStories"
-                            data-bs-slide="prev">
-                            <!--<span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
-                            <i class="fas fa-3x fa-chevron-circle-left text-light slider-chevron"></i>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselStories"
-                            data-bs-slide="next">
-                            <!--<span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-                            <i class="fas fa-3x fa-chevron-circle-right text-light slider-chevron"></i>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+                <div class="row flex-grow-1" style="overflow: auto;">
+                    <div class="col-12 px-4">
+                        <table id="table" data-height="300">
+                            <thead>
+                                <tr>
+                                    <th scope="col" data-align="center" data-field="nb_species"><span class="d-block d-xl-none"># species</span><span class="d-none d-xl-block">Species total</span></th>
+                                    <th scope="col" data-field="user_name">Team</th>
+                                    <th scope="col" data-align="center" data-field="country"></th>
+                                    <!--<th scope="col" data-field="checklists">Checklists</th>-->
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
             </div>
-            </div>
-    </section>
-    <!-- The Auction 
-    <section class="bg-white d-flex align-items-center" id="the-auction">
-        <div class="container pt-5 pb-5 h-100">
-            <div class="row h-100">
-                <div class="col-md-12 my-auto">
-                    <h2>The Auction</h2>
-                    <p>Thank you. </p>
-                    
-                </div>
+
+            <div class="col-md-8" id="mapid2">
             </div>
         </div>
-    </section>
-    -->
-
-
-
-
-    <!-- Footer-->
-    <footer class="footer py-3 bg-blue text-white">
-        <div class="container">
-            <div class="d-flex d-flex-row justify-content-between align-items-center">
-                <!-- Footer Location-->
-                <div>
-                    <a class="navbar-brand" href="#"><img src="assets/logo.svg" id="nav-logo"></a>
-                    <small class="me-2">Copyright © JohnStottBirdingDay 2020</small>
-                    <a class="github-button mr-3" data-size="large" href="https://github.com/Rafnuss/johnstottbirdingday"> Github</a>
-                </div>
-                <!-- Footer Social Icons-->
-                <div>
-                    <a href="https://www.facebook.com/groups/284914929692849/" target="_blank"><span class="fa-stack fa-2x">
-                        <i class="fas fa-circle fa-stack-2x text-white"></i>
-                        <i class="fab fa-facebook-f text-blue fa-stack-1x bg-blue-h"></i>
-                    </span></a>
-                    <a href="https://twitter.com/hashtag/johnstottbirding" target="_blank"><span class="fa-stack fa-2x text-white">
-                        <i class="fas fa-circle fa-stack-2x"></i>
-                        <i class="fab fa-twitter text-blue fa-stack-1x bg-blue-h"></i>
-                    </span></a>
-                    <a href="https://www.instagram.com/explore/tags/johnstottbirding/" target="_blank"><span class="fa-stack fa-2x text-white">
-                        <i class="fas fa-circle fa-stack-2x"></i>
-                        <i class="fab fa-instagram text-blue fa-stack-1x bg-blue-h"></i>
-                    </span></a>
-                    <a href="mailto:johnstottbirding@arocha.org" target="_blank"><span class="fa-stack fa-2x text-white">
-                        <i class="fas fa-circle fa-stack-2x"></i>
-                        <i class="fas fa-envelope text-blue fa-stack-1x bg-blue-h"></i>
-                    </span></a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="photoContest1" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <img src="assets/photo-contest/bird_picture.jpg" class="img-fluid">
-      </div>
-  </div>
-</div>
-<div class="modal fade" id="photoContest2" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <img src="assets/photo-contest/bird_picture_children.JPG" class="img-fluid">
-      </div>
-  </div>
-</div>
-<div class="modal fade" id="photoContest3" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <img src="assets/photo-contest/human-bird_interaction.jpg" class="img-fluid">
-      </div>
-  </div>
-</div>
-<div class="modal fade" id="photoContest4" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <img src="assets/photo-contest/evidence_of_commitment.JPG" class="img-fluid">
-      </div>
-  </div>
-</div>
-
-
-
-    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
-    <div class="scroll-to-top d-lg-none position-fixed">
-        <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i
-                class="fa fa-chevron-up"></i></a>
     </div>
+
+
+
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/f15ed359e8.js" crossorigin="anonymous"></script>
     <!-- Bootstrap core JS-->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
     </script>
     <!-- Third party plugin JS-->
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>-->
     <!-- Contact form JS
-                    <script src="assets/mail/jqBootstrapValidation.js"></script>
-                    <script src="assets/mail/contact_me.js"></script>-->
+    <script src="assets/mail/jqBootstrapValidation.js"></script>
+    <script src="assets/mail/contact_me.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>-->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
@@ -452,11 +120,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-providers/1.11.0/leaflet-providers.min.js"
         integrity="sha512-TO+Wd5hbpDsACTmvzSqAZL83jMQCXGRFNoS4WZxcxrlJBTdgMYaT7g5uX49C5+Kbuxzlg2A+TFJ6UqdsXuOKLw=="
         crossorigin="anonymous"></script>
-        <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-    <script src="https://unpkg.com/imagesloaded@4.1.4/imagesloaded.pkgd.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.min.js" integrity="sha512-8BqQ2RH4L4sQhV41ZB24fUc1nGcjmrTA6DILV/aTPYuUzo+wBdYdp0fvQ76Sxgf36p787CXF7TktWlcxu/zyOg==" crossorigin="anonymous"></script>-->
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
     <!-- Core theme JS-->
     <script src="script.js"></script>
 </body>
