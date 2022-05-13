@@ -5,7 +5,7 @@ import json
 from time import gmtime, strftime
 
 # Defien working directory
-os.chdir('C:/Users/rnussba1/Documents/GitHub/johnstottbirdingday/the-bird-race')
+# os.chdir('C:/Users/rnussba1/Documents/GitHub/johnstottbirdingday/the-bird-race')
 #os.chdir('/Users/rafnuss/Documents/GitHub/johnstottbirdingday/the-bird-race/')
 
 
@@ -16,8 +16,9 @@ with open('MyEBirdData.csv', mode='r', encoding='utf-8-sig') as csv_file:
     csv_reader = csv.DictReader(csv_file)
     line_count = 0
     for row in csv_reader:
-        data.append(row)
-        line_count += 1
+        if row['Date']=='2022-05-14' or row['Date']=='2022-05-15':
+            data.append(row)
+            line_count += 1
 #print(data)
 
 
