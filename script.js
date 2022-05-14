@@ -27,6 +27,8 @@ window.onload = function () {
     
     
     $.getJSON('out.json', function (out) {
+
+        $("#last-updated").html(out.update_time)
         
         /*var icon = L.AwesomeMarkers.icon({
             icon: 'clipboard-list',
