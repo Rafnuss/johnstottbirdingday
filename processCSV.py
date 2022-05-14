@@ -57,7 +57,7 @@ for d in data:
 # Match Taxonomy Category
 ## Read taxonomy
 taxo=[]
-with open('eBird_Taxonomy_v2019.csv', mode='r', encoding='utf-8-sig') as csv_file:
+with open('eBird_Taxonomy_v2021.csv', mode='r', encoding='utf-8-sig') as csv_file:
     csv_reader = csv.DictReader(csv_file)
     line_count = 0
     for row in csv_reader:
