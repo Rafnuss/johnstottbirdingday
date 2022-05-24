@@ -142,7 +142,7 @@ for user_name in user_name_list:
     user['user_name'] = sightings[0]['user_name']
     user['checklists'] = list(set([d['user_subId'] for d in sightings]))
     user['nb_species'] = len(list(set([d['count_as'] for d in sightings if d['count_as']!=""])))
-    tmp = [int(d['Number of Observers']) for d in sightings if d['Number of Observers']!=""]
+    tmp = [int(d['Number of Observers']) for d in sightings if (d['Number of Observers'] is not None and d['Number of Observers']!="")]
     if tmp:
         user['number_of_observers'] = max(tmp)
     else:
