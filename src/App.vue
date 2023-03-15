@@ -77,7 +77,7 @@
           <l-tile-layer
             :url="'https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/{z}/{x}/{y}?access_token=' + mapboxToken"
           />
-          <l-marker v-for="c in checklist" :key="c.locID" :lat-lng="[c.loc.lat, c.loc.lng]" :icon="getIcon(c)">
+          <l-marker v-for="c in checklist" :key="c.locID" :lat-lng="c.latLng" :icon="getIcon(c)">
             <l-popup :options="{ minWidth: 200 }">
               <b-list-group>
                 <b-list-group-item class="d-flex justify-content-between align-items-center">
@@ -112,6 +112,8 @@
 <script>
 const color_pin = ["#efa00b", "#d65108", "#591f0a", "#eee5e5", "#adb6c4", "#89023e", "#ffd9da", "#c7d9b7", "#17bebb"];
 import { LMap, LTileLayer, LPopup, LMarker, LIcon, LControl } from "vue2-leaflet";
+
+import { latLng } from "leaflet";
 
 export default {
   components: {
@@ -166,10 +168,28 @@ export default {
     fetch("https://api.johnstottbirdingday.com/user")
       .then((response) => response.json())
       .then((data) => {
-        this.user = data.map((d, id) => {
-          d.color = color_pin[id % color_pin.length];
-          return d;
-        });
+        const user = data
+          .map((d, id) => {
+            d.color = color_pin[id % color_pin.length];
+            return d;
+          })
+          .sort(function (a, b) {
+            return b.num_sp[0] - a.num_sp[0];
+          });
+        fetch("https://api.johnstottbirdingday.com/checklist")
+          .then((response) => response.json())
+          .then((data) => {
+            const checklist = data.map((d) => {
+              const useri = user.find((u) => u.name == d.user);
+              d.color = useri.color;
+              d.latLng = latLng([d.loc.lat, d.loc.lng]);
+              return d;
+            });
+            this.map.fitBounds(checklist.map((c) => c.latLng));
+            this.user = user;
+            this.checklist = checklist;
+          })
+          .catch((error) => console.error(error));
       })
       .catch((error) => console.error(error));
 
@@ -178,17 +198,6 @@ export default {
       .then((data) => {
         data.lastUpdated = new Date(data.lastUpdated);
         this.info = data;
-      })
-      .catch((error) => console.error(error));
-
-    fetch("https://api.johnstottbirdingday.com/checklist")
-      .then((response) => response.json())
-      .then((data) => {
-        this.checklist = data.map((d) => {
-          const user = this.user.find((u) => u.name == d.user);
-          d.color = user.color;
-          return d;
-        });
       })
       .catch((error) => console.error(error));
   },
