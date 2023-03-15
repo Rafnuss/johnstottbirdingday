@@ -50,7 +50,34 @@
         </b-row>
         <b-row class="flex-grow-1" style="overflow: auto">
           <b-col class="px-4">
-            <b-table striped hover :items="user"></b-table>
+            <b-table
+              striped
+              hover
+              :items="user"
+              :fields="[
+                { key: 'name', label: 'Name' },
+                { key: 'num_sp', label: 'Number of species' },
+                { key: 'num_checklist', label: 'Number of checklist' },
+                { key: 'countryCode', label: 'Country' },
+              ]"
+              small
+              responsive="sm"
+              v-if="user.length > 0"
+              @row-hovered="handleRowHovered"
+              @row-unhovered="handleRowUnhovered"
+            >
+              <template #cell(name)="data">
+                <template v-if="data.item.hasOwnProperty('profile')">
+                  <a :href="data.item.profile" target="_blank">{{ data.value }}</a>
+                </template>
+                <template v-else>
+                  {{ data.value }}
+                </template>
+              </template>
+              <template #cell(countryCode)="data">
+                <span v-for="f in data.value" :key="f" :class="['fi', 'fi-' + f.toLowerCase(), 'mr-1']" />
+              </template>
+            </b-table>
           </b-col>
         </b-row>
         <b-row>
@@ -64,6 +91,7 @@
             [90, -180],
           ]"
           ref="map"
+          :options="{ preferCanvas: true }"
         >
           <l-control position="topleft" v-if="!sidebarshow">
             <div
@@ -77,7 +105,13 @@
           <l-tile-layer
             :url="'https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/{z}/{x}/{y}?access_token=' + mapboxToken"
           />
-          <l-marker v-for="c in checklist" :key="c.locID" :lat-lng="c.latLng" :icon="getIcon(c)">
+          <l-marker
+            v-for="c in checklist"
+            :key="c.locID"
+            :lat-lng="c.latLng"
+            :icon="getIcon(c)"
+            :visible="user_hover == null || c.user == user_hover"
+          >
             <l-popup :options="{ minWidth: 200 }">
               <b-list-group>
                 <b-list-group-item class="d-flex justify-content-between align-items-center">
@@ -112,8 +146,8 @@
 <script>
 const color_pin = ["#efa00b", "#d65108", "#591f0a", "#eee5e5", "#adb6c4", "#89023e", "#ffd9da", "#c7d9b7", "#17bebb"];
 import { LMap, LTileLayer, LPopup, LMarker, LIcon, LControl } from "vue2-leaflet";
-
 import { latLng } from "leaflet";
+import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 export default {
   components: {
@@ -139,10 +173,17 @@ export default {
       checklist: [],
       sidebarshow: true,
       map: null,
+      user_hover: null,
     };
   },
   methods: {
-    sidebarhide: function (tf) {
+    handleRowHovered(rowInfo) {
+      this.user_hover = rowInfo.name;
+    },
+    handleRowUnhovered(rowInfo) {
+      this.user_hover = null;
+    },
+    sidebarhide(tf) {
       if (tf) {
         this.sidebarshow = false;
       } else {
@@ -171,10 +212,11 @@ export default {
         const user = data
           .map((d, id) => {
             d.color = color_pin[id % color_pin.length];
+            d.num_sp = d.num_sp[0];
             return d;
           })
           .sort(function (a, b) {
-            return b.num_sp[0] - a.num_sp[0];
+            return b.num_sp - a.num_sp;
           });
         fetch("https://api.johnstottbirdingday.com/checklist")
           .then((response) => response.json())
