@@ -1,0 +1,75 @@
+$theme-colors: (
+  "primary": #006382,
+  "secondary": #2c3e50,
+);
+
+//"orange": #fbbd58
+
+@import "node_modules/bootstrap/scss/bootstrap.scss";
+@import "node_modules/bootstrap-vue/src/index.scss";
+html,
+body {
+  height: 100%;
+  font-family: "Libre Baskerville", serif;
+}
+.lato {
+  font-family: "Lato", sans-serif;
+}
+
+a {
+  color: #9a9a9a;
+  text-decoration: none;
+}
+a:hover {
+  color: #000000;
+}
+
+#nav-logo {
+  height: 70px;
+  transition: 0.4s;
+}
+
+/* THE MAP */
+.cursor-pointer {
+  cursor: pointer;
+}
+#sidebarhide:hover {
+  color: black !important;
+}
+#easybutton {
+  display: none;
+}
+.bootstrap-table,
+.fixed-table-container {
+  height: 100% !important;
+}
+.leaflet-popup-content {
+  font-family: "Libre Baskerville", serif;
+  font-size: 0.9rem;
+}
+.awesome-marker i {
+  margin-left: 5px;
+}
+.awesome-marker:hover i {
+  color: black !important;
+}
+.leaflet-container a {
+  color: #9a9a9a;
+  text-decoration: none;
+}
+.leaflet-container a:hover {
+  color: #000000;
+}
+.counter {
+  font-size: 1.5rem;
+}
+.counter-label {
+  font-size: 1rem;
+}
+tbody {
+  cursor: pointer;
+}
+
+.pigeon {
+  inline-size: 1.5rem;
+}
