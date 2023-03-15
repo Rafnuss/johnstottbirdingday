@@ -1,7 +1,7 @@
 <template>
   <b-container fluid class="h-100 d-flex flex-column px-0">
     <b-row class="justify-content-center h-100 no-gutters">
-      <b-col md="4" class="h-100 d-flex flex-column" id="sidebar">
+      <b-col md="4" class="h-100 d-flex flex-column" v-if="sidebarshow">
         <b-row class="bg-primary text-white">
           <div class="col-12 px-4 d-flex align-items-center">
             <a class="d-block d-xl-none" href="https://johnstottbirdingday.com/en/">
@@ -11,7 +11,7 @@
               <b-img src="logo.svg" fluid id="nav-logo" style="width: 133px" />
             </a>
             <h3 class="flex-grow-1 text-center mb-0">The Bird Race</h3>
-            <b-icon icon="caret-left-fill" class="h2 text-white cursor-pointer" @click="sidebarhide()" />
+            <b-icon icon="caret-left-fill" class="h2 text-white cursor-pointer" @click="sidebarhide(true)" />
           </div>
         </b-row>
         <b-row class="mx-xl-2 mt-xl-1">
@@ -57,13 +57,23 @@
           <b-col> Last updated: {{ info.lastUpdated.toLocaleString() }} </b-col>
         </b-row>
       </b-col>
-      <b-col md="8" class="h-100">
+      <b-col class="h-100">
         <l-map
           :bounds="[
             [-90, 180],
             [90, -180],
           ]"
+          ref="map"
         >
+          <l-control position="topleft" v-if="!sidebarshow">
+            <div
+              class="leaflet-control-layers leaflet-control-layers-expanded cursor-pointer"
+              @click="sidebarhide(false)"
+              aria-haspopup="true"
+            >
+              <b-icon icon="caret-right-fill" />
+            </div>
+          </l-control>
           <l-tile-layer
             :url="'https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/{z}/{x}/{y}?access_token=' + mapboxToken"
           />
@@ -101,7 +111,7 @@
 
 <script>
 const color_pin = ["#efa00b", "#d65108", "#591f0a", "#eee5e5", "#adb6c4", "#89023e", "#ffd9da", "#c7d9b7", "#17bebb"];
-import { LMap, LTileLayer, LPopup, LMarker, LIcon } from "vue2-leaflet";
+import { LMap, LTileLayer, LPopup, LMarker, LIcon, LControl } from "vue2-leaflet";
 
 export default {
   components: {
@@ -110,6 +120,7 @@ export default {
     LMarker,
     LIcon,
     LPopup,
+    LControl,
   },
   data() {
     return {
@@ -124,11 +135,20 @@ export default {
         lastUpdated: new Date(),
       },
       checklist: [],
+      sidebarshow: true,
+      map: null,
     };
   },
   methods: {
-    sidebarhide: function () {
-      console.log("test");
+    sidebarhide: function (tf) {
+      if (tf) {
+        this.sidebarshow = false;
+      } else {
+        this.sidebarshow = true;
+      }
+      setTimeout(() => {
+        this.map.invalidateSize();
+      }, 100);
     },
     getIcon(c) {
       return L.divIcon({
@@ -172,6 +192,10 @@ export default {
       })
       .catch((error) => console.error(error));
   },
-  mounted() {},
+  mounted() {
+    this.$nextTick(() => {
+      this.map = this.$refs.map.mapObject; // work as expected
+    });
+  },
 };
 </script>
