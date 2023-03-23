@@ -5,7 +5,7 @@
         <b-row class="bg-primary text-white">
           <div class="col-12 px-4 d-flex align-items-center">
             <a class="d-block d-xl-none" href="https://johnstottbirdingday.com/en/">
-              <b-img src="./logo_small.svg" fluid id="nav-logo" style="width: 50px" />
+              <b-img src="logo_small.svg" fluid id="nav-logo" style="width: 50px" />
             </a>
             <a class="d-none d-xl-block" href="https://johnstottbirdingday.com/en/">
               <b-img src="logo.svg" fluid id="nav-logo" style="width: 133px" />
@@ -19,7 +19,7 @@
             <div class="p-2 d-flex flex-column rounded bg-primary text-white h-100">
               <div class="d-flex align-self-center">
                 <div class="counter d-flex">
-                  <img src="./pigeon.svg" class="pigeon mr-2" /> {{ info.counterSpecies }}
+                  <b-img src="pigeon.svg" class="pigeon mr-2" /> {{ info.counterSpecies }}
                 </div>
               </div>
               <div class="counter-label lato align-self-center text-center">Species</div>
@@ -117,7 +117,7 @@
             <l-popup :options="{ minWidth: 200 }">
               <b-list-group>
                 <b-list-group-item class="d-flex justify-content-between align-items-center">
-                  <img src="./pigeon.svg" class="pigeon mr-2" />
+                  <b-img src="pigeon.svg" class="pigeon mr-2" />
                   {{ c.numSpecies }}
                 </b-list-group-item>
                 <b-list-group-item class="d-flex justify-content-between align-items-center">
