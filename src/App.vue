@@ -245,7 +245,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.map = this.$refs.map.mapObject; // work as expected
+      this.map = this.$refs.map.mapObject;
     });
   },
 };
