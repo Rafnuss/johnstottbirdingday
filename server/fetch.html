@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>John Stott Birding Day | Fetching Trip Report</title>
+</head>
+
+<body>
+    <h1>Fetch Trip Report</h1>
+
+    <h2>Previous fetch</h2>
+    <div id="log" style=" white-space: pre;"></div>
+
+    <h2>New fetch</h2>
+    <p>Takes 3seconds per tripreport</p>
+    <button id="fetch"> Fetch </button>
+    <div id="loader" style="display:none;"></div>
+    <div id="result"></div>
+</body>
+
+
+<script>
+    let id;
+    document.querySelector("#fetch").addEventListener("click", async () => {
+        document.querySelector("#fetch").disabled = true;
+        document.querySelector("#loader").style.display = "block";
+        let response = await fetch("/fetch-start");
+        let res = await response.json();
+        console.log(res)
+        document.querySelector('#result').setHTML(res.response);
+        document.querySelector("#loader").style.display = "none";
+    });
+    fetch("./log").then(x => x.text())
+        .then(res => {
+            console.log(res)
+            document.querySelector('#log').innerHTML = res;
+        });
+</script>
+<style>
+    #loader {
+        border: 5px solid #f3f3f3;
+        -webkit-animation: spin 1s linear infinite;
+        animation: spin 1s linear infinite;
+        border-top: 5px solid #555;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+</html>

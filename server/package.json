@@ -5,10 +5,10 @@
     "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "pm2 start server.js",
+        "start": "pm2 start server.js --name johnstottbirdingday",
         "dev": "node server.js",
-        "fetch": "node fetch.js",
-        "auto-fetch": "pm2 start fetch.js --cron '*/15 * * * *'"
+        "fetch": "node fetchTripReport.js",
+        "auto-fetch": "pm2 start fetchTripReport.js --cron '*/15 * * * *'"
     },
     "author": "Raphaël Nussbaumer",
     "license": "ISC",
