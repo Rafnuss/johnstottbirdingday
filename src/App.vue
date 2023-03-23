@@ -114,25 +114,16 @@
             :icon="getIcon(c)"
             :visible="user_hover == null || c.user == user_hover"
           >
-            <l-popup :options="{ minWidth: 200 }">
-              <b-list-group>
-                <b-list-group-item class="d-flex justify-content-between align-items-center">
-                  <b-img src="pigeon.svg" class="pigeon mr-2" />
-                  {{ c.numSpecies }}
-                </b-list-group-item>
-                <b-list-group-item class="d-flex justify-content-between align-items-center">
-                  <b-icon icon="clock-fill" scale="2" variant="warning" />
-                  {{ c.obsDt }} {{ c.obsTime }}
-                </b-list-group-item>
-                <b-list-group-item class="d-flex justify-content-between align-items-center">
-                  <b-icon icon="user-fill" scale="2" variant="info"></b-icon>
-                  {{ c.user }}
-                </b-list-group-item>
-                <b-list-group-item class="d-flex justify-content-between align-items-center">
-                  <b-icon icon="check-square" scale="2" variant="success"></b-icon>
-                  <a target="_blank" :href="'https://ebird.org/checklist/' + c.subId">{{ c.loc.name }}</a>
-                </b-list-group-item>
-              </b-list-group>
+            <l-popup :options="{ minWidth: 200 }" class="d-flex flex-column">
+              <div class="py-1"><b-icon icon="person-fill" class="mr-2" /> {{ c.user }}</div>
+              <div class="py-1">
+                <b-icon icon="clock-fill" class="mr-2" />
+                <a target="_blank" :href="'https://ebird.org/checklist/' + c.subId">{{ c.obsDt }} {{ c.obsTime }}</a>
+              </div>
+              <div class="py-1">
+                <b-icon icon="geo-alt-fill" class="mr-2" />
+                {{ c.loc.name }}
+              </div>
             </l-popup>
           </l-marker>
         </l-map>

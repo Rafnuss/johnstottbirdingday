@@ -6,7 +6,9 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "pm2 start server.js",
-        "dev": "node server.js"
+        "dev": "node server.js",
+        "fetch": "node fetch.js",
+        "auto-fetch": "pm2 start fetch.js --cron '*/15 * * * *'"
     },
     "author": "Raphaël Nussbaumer",
     "license": "ISC",
