@@ -22,7 +22,7 @@
                   <b-img src="pigeon.svg" class="pigeon mr-2" /> {{ info.counterSpecies }}
                 </div>
               </div>
-              <div class="counter-label lato align-self-center text-center">Species</div>
+              <div class="counter-label align-self-center text-center">Species</div>
             </div>
           </b-col>
           <b-col class="col-md-6 col-lg-3 p-1">
@@ -30,7 +30,7 @@
               <div class="d-flex align-self-center">
                 <div class="counter"><b-icon icon="person-fill" /> {{ info.counterParticipants }}</div>
               </div>
-              <div class="counter-label lato align-self-center text-center">Participants</div>
+              <div class="counter-label align-self-center text-center">Participants</div>
             </div>
           </b-col>
           <b-col md="6" lg="3" class="p-1">
@@ -38,7 +38,7 @@
               <div class="d-flex align-self-center">
                 <div class="counter"><b-icon icon="flag-fill" /> {{ info.counterCountries }}</div>
               </div>
-              <div class="counter-label lato align-self-center text-center">Countries</div>
+              <div class="counter-label align-self-center text-center">Countries</div>
             </div>
           </b-col>
           <b-col md="6" lg="3" class="p-1">
@@ -46,7 +46,7 @@
               <div class="d-flex align-self-center">
                 <div class="counter"><b-icon icon="card-checklist" /> {{ info.counterChecklists }}</div>
               </div>
-              <div class="counter-label lato align-self-center text-center">Checklists</div>
+              <div class="counter-label align-self-center text-center">Checklists</div>
             </div>
           </b-col>
         </b-row>
@@ -59,7 +59,7 @@
               :fields="[
                 { key: 'name', label: 'Name' },
                 { key: 'num_sp', label: 'Number of species' },
-                { key: 'num_checklist', label: 'Number of checklist' },
+                { key: 'num_checklist', label: 'Number of checklists' },
                 { key: 'countryCode', label: 'Country' },
               ]"
               small
@@ -75,6 +75,9 @@
                 <template v-else>
                   {{ data.value }}
                 </template>
+              </template>
+              <template #cell(num_sp)="data">
+                <a :href="'https://ebird.org/tripreport/' + data.item.tripreport" target="_blank">{{ data.value }}</a>
               </template>
               <template #cell(countryCode)="data">
                 <span v-for="f in data.value" :key="f" :class="['fi', 'fi-' + f.toLowerCase(), 'mr-1']" />
@@ -105,7 +108,7 @@
             </div>
           </l-control>
           <l-tile-layer
-            :url="'https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/{z}/{x}/{y}?access_token=' + mapboxToken"
+            :url="'https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=' + mapboxToken"
           />
           <l-marker
             v-for="c in checklist"
