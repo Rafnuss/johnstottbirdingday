@@ -8,17 +8,20 @@ async function fetchUserData() {
   );
   const data = await response.json();
   const rows = data.values.slice(1);
-  const user = rows.map((row) => {
-    return {
-      email: row[1],
-      name: row[2],
-      party: row[3],
-      tripreport: row[4]
-        .replace("https://ebird.org/tripreport/", "")
-        .replace("/", "?tripReportPersonId="),
-      profile: row[5],
-    };
-  });
+  const user = rows
+    .map((row) => {
+      return {
+        email: row[1],
+        name: row[2],
+        party: row[3],
+        tripreport: row[4]
+          .replace("https://ebird.org/tripreport/", "")
+          .replace("/", "?tripReportPersonId="),
+        profile: row[5],
+        year: row[0].substring(6, 10),
+      };
+    })
+    .filter((u) => u.year == "2024");
   return user;
 }
 
@@ -122,14 +125,23 @@ async function fetchTripReport(timeout = 5000, callback) {
     callback(error);
   }
 }
-/*
-fetchTripReport(2000, (status) => {
-    if (status == null) {
-        console.log("Ok")
-    } else {
-        console.log(status)
-    }
+
+/* 
+// TEST fetching user data
+fetchUserData().then((user) => {
+  console.log("spreadsheet read: ");
+  console.log(user);
 });
 */
+
+// TEST fetching report data
+fetchTripReport(2000, (status) => {
+  if (status == null) {
+    console.log("Ok");
+  } else {
+    console.log(status);
+  }
+});
+
 // add the code below
 module.exports = { fetchTripReport };
