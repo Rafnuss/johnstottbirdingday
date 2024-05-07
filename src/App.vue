@@ -11,7 +11,11 @@
               <b-img src="logo.svg" fluid id="nav-logo" style="width: 133px" />
             </a>
             <h3 class="flex-grow-1 text-center mb-0">The Bird Race</h3>
-            <b-icon icon="caret-left-fill" class="h2 text-white cursor-pointer" @click="sidebarhide(true)" />
+            <b-icon
+              icon="caret-left-fill"
+              class="h2 text-white cursor-pointer"
+              @click="sidebarhide(true)"
+            />
           </div>
         </b-row>
         <b-row class="mx-xl-2 mt-xl-1">
@@ -28,7 +32,9 @@
           <b-col class="col-md-6 col-lg-3 p-1">
             <div class="p-2 d-flex flex-column rounded bg-primary text-white h-100">
               <div class="d-flex align-self-center">
-                <div class="counter"><b-icon icon="person-fill" /> {{ info.counterParticipants }}</div>
+                <div class="counter">
+                  <b-icon icon="person-fill" /> {{ info.counterParticipants }}
+                </div>
               </div>
               <div class="counter-label align-self-center text-center">Participants</div>
             </div>
@@ -44,7 +50,9 @@
           <b-col md="6" lg="3" class="p-1">
             <div class="p-2 d-flex flex-column rounded bg-primary text-white h-100">
               <div class="d-flex align-self-center">
-                <div class="counter"><b-icon icon="card-checklist" /> {{ info.counterChecklists }}</div>
+                <div class="counter">
+                  <b-icon icon="card-checklist" /> {{ info.counterChecklists }}
+                </div>
               </div>
               <div class="counter-label align-self-center text-center">Checklists</div>
             </div>
@@ -77,10 +85,16 @@
                 </template>
               </template>
               <template #cell(num_sp)="data">
-                <a :href="'https://ebird.org/tripreport/' + data.item.tripreport" target="_blank">{{ data.value }}</a>
+                <a :href="'https://ebird.org/tripreport/' + data.item.tripreport" target="_blank">{{
+                  data.value
+                }}</a>
               </template>
               <template #cell(countryCode)="data">
-                <span v-for="f in data.value" :key="f" :class="['fi', 'fi-' + f.toLowerCase(), 'mr-1']" />
+                <span
+                  v-for="f in data.value"
+                  :key="f"
+                  :class="['fi', 'fi-' + f.toLowerCase(), 'mr-1']"
+                />
               </template>
             </b-table>
           </b-col>
@@ -108,7 +122,10 @@
             </div>
           </l-control>
           <l-tile-layer
-            :url="'https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=' + mapboxToken"
+            :url="
+              'https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=' +
+              mapboxToken
+            "
           />
           <l-marker
             v-for="c in checklist"
@@ -121,7 +138,9 @@
               <div class="py-1"><b-icon icon="person-fill" class="mr-2" /> {{ c.user }}</div>
               <div class="py-1">
                 <b-icon icon="clock-fill" class="mr-2" />
-                <a target="_blank" :href="'https://ebird.org/checklist/' + c.subId">{{ c.obsDt }} {{ c.obsTime }}</a>
+                <a target="_blank" :href="'https://ebird.org/checklist/' + c.subId"
+                  >{{ c.obsDt }} {{ c.obsTime }}</a
+                >
               </div>
               <div class="py-1">
                 <b-icon icon="geo-alt-fill" class="mr-2" />
@@ -140,7 +159,17 @@
 </script>
 
 <script>
-const color_pin = ["#efa00b", "#d65108", "#591f0a", "#eee5e5", "#adb6c4", "#89023e", "#ffd9da", "#c7d9b7", "#17bebb"];
+const color_pin = [
+  "#efa00b",
+  "#d65108",
+  "#591f0a",
+  "#eee5e5",
+  "#adb6c4",
+  "#89023e",
+  "#ffd9da",
+  "#c7d9b7",
+  "#17bebb",
+];
 import { LMap, LTileLayer, LPopup, LMarker, LIcon, LControl } from "vue2-leaflet";
 import { latLng } from "leaflet";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
