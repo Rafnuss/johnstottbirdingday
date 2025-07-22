@@ -21,7 +21,7 @@ async function fetchUserData() {
         year: row[0].substring(6, 10),
       };
     })
-    .filter((u) => u.year == "2024");
+    .filter((u) => u.year == "2025");
   return user;
 }
 

@@ -13,7 +13,7 @@ This node server is used to fetch eBird tripreport data of the participant and s
 This node js server can be used to serve the compiled data. It serves the data under:
 
 - https://api.johnstottbirdingday.com/user
-- https://api.johnstottbirdingday.com/checklists
+- https://api.johnstottbirdingday.com/checklist
 - https://api.johnstottbirdingday.com/info
 
 The server can be started with `npm run start`.
