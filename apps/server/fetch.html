@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>John Stott Birding Day | Fetch Trip Report</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-GTVpR4iYF0z6Jt0lKfe4nkn2j1ZC2jv1nG7x1Lk8G1LqjD7j8WvyaManIeZDV4mQ"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        min-height: 100vh;
+        background: linear-gradient(180deg, #f7f4ea 0%, #eef3ea 100%);
+        color: #21312a;
+      }
+
+      .page-shell {
+        max-width: 860px;
+      }
+
+      .hero-card,
+      .panel-card {
+        border: 0;
+        border-radius: 1rem;
+        box-shadow: 0 1rem 2.5rem rgba(33, 49, 42, 0.08);
+      }
+
+      .hero-card {
+        background: linear-gradient(135deg, #29443a 0%, #44685c 100%);
+        color: #fffdf6;
+      }
+
+      .hero-kicker {
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        opacity: 0.75;
+      }
+
+      .btn-fetch {
+        background-color: #d6a64f;
+        border-color: #d6a64f;
+        color: #21312a;
+        font-weight: 600;
+      }
+
+      .btn-fetch:hover,
+      .btn-fetch:focus {
+        background-color: #c7953c;
+        border-color: #c7953c;
+        color: #21312a;
+      }
+
+      .log-box {
+        min-height: 180px;
+        max-height: 320px;
+        overflow: auto;
+        white-space: pre-wrap;
+        background: #f8f6ef;
+        border: 1px solid #dbe3d8;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        font-size: 0.92rem;
+      }
+
+      .status-box {
+        min-height: 72px;
+        border-radius: 0.75rem;
+      }
+
+      .loader {
+        width: 1.1rem;
+        height: 1.1rem;
+        border: 0.18rem solid rgba(255, 255, 255, 0.35);
+        border-top-color: #21312a;
+        border-radius: 50%;
+        display: inline-block;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container py-5">
+      <div class="page-shell mx-auto">
+        <section class="card hero-card mb-4">
+          <div class="card-body p-4 p-md-5">
+            <div class="hero-kicker mb-2">Race Server</div>
+            <h1 class="h2 mb-3">Fetch eBird Trip Reports</h1>
+            <p class="mb-4">
+              Refresh participant trip report data and review the latest server log in one place.
+            </p>
+            <div class="d-flex flex-wrap align-items-center">
+              <button id="fetch" class="btn btn-fetch btn-lg mr-3 mb-2">Start Fetch</button>
+              <div id="loadingState" class="text-light mb-2" style="display: none">
+                <span class="loader mr-2"></span>
+                Fetch in progress. Expect roughly 3 seconds per trip report.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card panel-card mb-4">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h2 class="h5 mb-0">Fetch Result</h2>
+            </div>
+            <div id="result" class="alert alert-light border status-box d-flex align-items-center mb-0">
+              No fetch started yet.
+            </div>
+          </div>
+        </section>
+
+        <section class="card panel-card">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h2 class="h5 mb-0">Previous Fetch Log</h2>
+              <button id="refreshLog" class="btn btn-outline-secondary btn-sm">Refresh Log</button>
+            </div>
+            <div id="log" class="log-box">Loading log...</div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      const fetchButton = document.querySelector("#fetch");
+      const refreshLogButton = document.querySelector("#refreshLog");
+      const loadingState = document.querySelector("#loadingState");
+      const result = document.querySelector("#result");
+      const log = document.querySelector("#log");
+
+      function setLoading(isLoading) {
+        fetchButton.disabled = isLoading;
+        loadingState.style.display = isLoading ? "block" : "none";
+      }
+
+      async function loadLog() {
+        try {
+          const response = await fetch("./log");
+          const text = await response.text();
+          log.textContent = text || "No log entries yet.";
+        } catch (error) {
+          log.textContent = "Failed to load log.";
+        }
+      }
+
+      fetchButton.addEventListener("click", async () => {
+        setLoading(true);
+        result.className = "alert alert-light border status-box d-flex align-items-center mb-0";
+        result.textContent = "Fetching data...";
+
+        try {
+          const response = await fetch("/fetch-start");
+          const data = await response.json();
+          result.className = "alert alert-success status-box d-flex align-items-center mb-0";
+          result.textContent = data.response;
+          await loadLog();
+        } catch (error) {
+          result.className = "alert alert-danger status-box d-flex align-items-center mb-0";
+          result.textContent = "Fetch failed.";
+        } finally {
+          setLoading(false);
+        }
+      });
+
+      refreshLogButton.addEventListener("click", loadLog);
+      loadLog();
+    </script>
+  </body>
+</html>

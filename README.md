@@ -1,17 +1,108 @@
 # John Stott Birding Day
 
-The [John Stott Birding Day](https://www.johnstottbirdingday.com/) is a global one-day event run by [A Rocha](https://www.arocha.org/en/) in to commemorate and celebrate our great friend and supporter John Stott’s legacy as a theologian, pastor and birdwatcher in his centenary year.
+This repository contains two applications deployed from the same GitHub branch:
 
-Visit [www.johnstottbirdingday.com](https://www.johnstottbirdingday.com/) for more information!
+- `apps/web`: the public website, deployed to GitHub Pages
+- `apps/server`: the race data server, running on a Google Compute Engine instance
 
-[![image](https://user-images.githubusercontent.com/7571260/116087719-6f2b8280-a6a1-11eb-9ca3-57f1e9a7b975.png)](https://www.johnstottbirdingday.com/)
+This structure fits your workflow well:
 
-## The Bird Race
+- develop both apps locally in one repository
+- push changes to GitHub once
+- let GitHub Actions deploy the website from a build artifact
+- update the Google server from the same repository with `git pull`
 
-This repository contains the code for the visualization of the The Bird Race.
+## Repository structure
 
-The map is build by [@rafnuss](https://github.com/Rafnuss) and [@dannolloth](https://github.com/dannolloth) based on [Boostrap 5.0](https://github.com/twbs/bootstrap), and [Leaflet.js](https://github.com/Leaflet/Leaflet). We also used [eBird](https://ebird.org/) for collecting the birding data and [eBird API](https://documenter.getpostman.com/view/664302/S1ENwy59?version=latest) to display them on the website.
+```text
+apps/
+  server/
+  web/
+.github/workflows/
+package.json
+README.md
+```
 
-[![image](https://user-images.githubusercontent.com/7571260/116089206-e44b8780-a6a2-11eb-937b-a661be4e5897.png)](https://www.johnstottbirdingday.com/the-bird-race/)
+## Local development
 
-## Server Update
+Install dependencies separately for each app:
+
+```bash
+npm install --prefix apps/web
+npm install --prefix apps/server
+```
+
+Run the website:
+
+```bash
+npm run web:dev
+```
+
+Run the server:
+
+```bash
+npm run server:dev
+```
+
+Run a manual fetch:
+
+```bash
+npm run server:fetch
+```
+
+## Frontend configuration
+
+The frontend uses `VITE_API_BASE_URL`.
+
+Create a local env file:
+
+```bash
+cp apps/web/.env.example apps/web/.env.local
+```
+
+Typical values:
+
+- local frontend against local server: `VITE_API_BASE_URL=http://localhost:8081`
+- deployed frontend against production API: `VITE_API_BASE_URL=https://api.johnstottbirdingday.com`
+
+## Website deployment
+
+The GitHub Pages deployment is handled by [build_and_deploy.yml](./.github/workflows/build_and_deploy.yml).
+
+It now uses the GitHub Pages artifact flow:
+
+1. build `apps/web`
+2. upload the generated `apps/web/dist` as a Pages artifact
+3. deploy with `actions/deploy-pages`
+
+This does not require a separate `gh-pages` branch.
+
+## Server deployment on Google Compute Engine
+
+The server is not deployed by GitHub Actions. Update it directly on the instance from the same repository.
+
+Typical update flow:
+
+```bash
+ssh <your-server>
+cd /path/to/johnstottbirdingday
+git fetch origin
+git checkout 2026
+git pull --ff-only origin 2026
+npm ci --prefix apps/server
+pm2 restart johnstottbirdingday
+pm2 restart johnstottbirdingday-fetch
+```
+
+If the PM2 processes do not exist yet:
+
+```bash
+npm run server:pm2:start
+npm run server:pm2:fetch
+```
+
+## Notes
+
+- The website and server are intentionally separate apps because they have different runtime and deployment targets.
+- They should communicate only through the API, not through shared generated files.
+- See [apps/server/README.md](/Users/rafnuss/Documents/GitHub/johnstottbirdingday/apps/server/README.md) for server-specific behavior.

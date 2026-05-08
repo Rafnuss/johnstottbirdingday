@@ -1,0 +1,22 @@
+{
+  "name": "johnstottbirdingday-server",
+  "version": "1.0.0",
+  "description": "Fetch tripreport for the john stott birding day race",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "fetch": "node fetchTripReport.js",
+    "check": "node --check server.js && node --check fetchTripReport.js",
+    "test": "npm run check",
+    "pm2:start": "pm2 start server.js --name johnstottbirdingday",
+    "pm2:fetch": "pm2 start fetchTripReport.js --name johnstottbirdingday-fetch --cron '*/15 * * * *'"
+  },
+  "author": "Raphaël Nussbaumer",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "node-fetch": "^3.3.2",
+    "pm2": "^6.0.10"
+  }
+}

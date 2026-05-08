@@ -154,10 +154,6 @@
   </b-container>
 </template>
 
-<script setup>
-//import regionsJson from "./assets/regions.json";
-</script>
-
 <script>
 const color_pin = [
   "#efa00b",
@@ -170,9 +166,14 @@ const color_pin = [
   "#c7d9b7",
   "#17bebb",
 ];
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://localhost:8081").replace(
+  /\/$/,
+  "",
+);
+
 import { LMap, LTileLayer, LPopup, LMarker, LIcon, LControl } from "vue2-leaflet";
 import { latLng } from "leaflet";
-import "/node_modules/flag-icons/css/flag-icons.min.css";
+import "flag-icons/css/flag-icons.min.css";
 
 export default {
   components: {
@@ -231,7 +232,7 @@ export default {
   },
   computed: {},
   created: function () {
-    fetch("https://api.johnstottbirdingday.com/user")
+    fetch(`${API_BASE_URL}/user`)
       .then((response) => response.json())
       .then((data) => {
         const user = data
@@ -243,7 +244,7 @@ export default {
           .sort(function (a, b) {
             return b.num_sp - a.num_sp;
           });
-        fetch("https://api.johnstottbirdingday.com/checklist")
+        fetch(`${API_BASE_URL}/checklist`)
           .then((response) => response.json())
           .then((data) => {
             const checklist = data.map((d) => {
@@ -260,7 +261,7 @@ export default {
       })
       .catch((error) => console.error(error));
 
-    fetch("https://api.johnstottbirdingday.com/info")
+    fetch(`${API_BASE_URL}/info`)
       .then((response) => response.json())
       .then((data) => {
         data.lastUpdated = new Date(data.lastUpdated);
