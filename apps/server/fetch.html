@@ -3,83 +3,281 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>John Stott Birding Day | Fetch Trip Report</title>
+    <title>John Stott Birding Day | Data Refresh</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-      integrity="sha384-GTVpR4iYF0z6Jt0lKfe4nkn2j1ZC2jv1nG7x1Lk8G1LqjD7j8WvyaManIeZDV4mQ"
       crossorigin="anonymous"
     />
     <style>
+      :root {
+        --page-bg: #f3f1ea;
+        --panel-bg: rgba(255, 255, 255, 0.82);
+        --panel-border: rgba(33, 43, 37, 0.1);
+        --text-main: #243128;
+        --text-muted: #667267;
+        --accent: #2f5a47;
+        --accent-soft: #dce7de;
+        --gold: #bc9551;
+        --danger: #9a4f42;
+      }
+
       body {
         min-height: 100vh;
-        background: linear-gradient(180deg, #f7f4ea 0%, #eef3ea 100%);
-        color: #21312a;
+        margin: 0;
+        background:
+          radial-gradient(circle at top left, rgba(188, 149, 81, 0.18), transparent 28%),
+          linear-gradient(180deg, #f7f5ef 0%, var(--page-bg) 100%);
+        color: var(--text-main);
+        font-family: Georgia, "Times New Roman", serif;
       }
 
-      .page-shell {
-        max-width: 860px;
+      .page {
+        max-width: 880px;
       }
 
-      .hero-card,
-      .panel-card {
+      .panel {
+        background: var(--panel-bg);
+        border: 1px solid var(--panel-border);
+        border-radius: 1.25rem;
+        box-shadow: 0 1.2rem 2.6rem rgba(36, 49, 40, 0.08);
+        backdrop-filter: blur(8px);
+      }
+
+      .eyebrow {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .hero-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.05;
+      }
+
+      .hero-copy {
+        color: var(--text-muted);
+        font-size: 1.05rem;
+        max-width: 38rem;
+      }
+
+      .btn-refresh {
         border: 0;
+        border-radius: 999px;
+        padding: 0.8rem 1.4rem;
+        background: var(--accent);
+        color: #fff;
+        font-weight: 600;
+        box-shadow: 0 0.5rem 1.25rem rgba(47, 90, 71, 0.2);
+      }
+
+      .btn-refresh:hover,
+      .btn-refresh:focus {
+        background: #274a3a;
+        color: #fff;
+      }
+
+      .btn-outline-soft {
+        border-radius: 999px;
+        border-color: rgba(47, 90, 71, 0.2);
+        color: var(--accent);
+      }
+
+      .btn-outline-soft:hover,
+      .btn-outline-soft:focus {
+        background: var(--accent-soft);
+        border-color: rgba(47, 90, 71, 0.2);
+        color: var(--accent);
+      }
+
+      .status-card {
         border-radius: 1rem;
-        box-shadow: 0 1rem 2.5rem rgba(33, 49, 42, 0.08);
+        min-height: 104px;
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(36, 49, 40, 0.08);
       }
 
-      .hero-card {
-        background: linear-gradient(135deg, #29443a 0%, #44685c 100%);
-        color: #fffdf6;
-      }
-
-      .hero-kicker {
+      .status-label {
+        font-size: 0.8rem;
+        font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        font-size: 0.8rem;
-        opacity: 0.75;
+        color: var(--text-muted);
       }
 
-      .btn-fetch {
-        background-color: #d6a64f;
-        border-color: #d6a64f;
-        color: #21312a;
-        font-weight: 600;
+      .status-message {
+        font-size: 1rem;
+        margin: 0;
       }
 
-      .btn-fetch:hover,
-      .btn-fetch:focus {
-        background-color: #c7953c;
-        border-color: #c7953c;
-        color: #21312a;
-      }
-
-      .log-box {
-        min-height: 180px;
-        max-height: 320px;
-        overflow: auto;
-        white-space: pre-wrap;
-        background: #f8f6ef;
-        border: 1px solid #dbe3d8;
-        border-radius: 0.75rem;
-        padding: 1rem;
-        font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      .status-meta {
+        margin-top: 0.8rem;
+        color: var(--text-muted);
         font-size: 0.92rem;
       }
 
-      .status-box {
-        min-height: 72px;
-        border-radius: 0.75rem;
+      .status-idle {
+        border-left: 4px solid #d5ddd2;
       }
 
-      .loader {
-        width: 1.1rem;
-        height: 1.1rem;
-        border: 0.18rem solid rgba(255, 255, 255, 0.35);
-        border-top-color: #21312a;
+      .status-loading {
+        border-left: 4px solid var(--gold);
+      }
+
+      .status-success {
+        border-left: 4px solid var(--accent);
+      }
+
+      .status-error {
+        border-left: 4px solid var(--danger);
+      }
+
+      .meta-note {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      .live-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.3rem 0.7rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.64);
+        border: 1px solid rgba(36, 49, 40, 0.08);
+        color: var(--text-muted);
+        font-size: 0.82rem;
+      }
+
+      .live-dot {
+        width: 0.55rem;
+        height: 0.55rem;
         border-radius: 50%;
-        display: inline-block;
+        background: #c9d1c6;
+      }
+
+      .live-dot-live {
+        background: var(--accent);
+        box-shadow: 0 0 0 0.2rem rgba(47, 90, 71, 0.12);
+      }
+
+      .live-dot-offline {
+        background: var(--danger);
+        box-shadow: 0 0 0 0.2rem rgba(154, 79, 66, 0.1);
+      }
+
+      .log-box {
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .log-entry {
+        padding: 0.95rem 1rem;
+        border-radius: 1rem;
+        border: 1px solid rgba(36, 49, 40, 0.08);
+        background: rgba(249, 248, 244, 0.92);
+      }
+
+      .log-entry:last-child {
+        margin-bottom: 0;
+      }
+
+      .log-entry-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 0.35rem;
+        font-size: 0.88rem;
+      }
+
+      .log-entry-time {
+        color: var(--text-main);
+        font-weight: 600;
+      }
+
+      .log-entry-badge {
+        padding: 0.15rem 0.55rem;
+        border-radius: 999px;
+        font-size: 0.74rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .log-entry-badge-success {
+        background: rgba(47, 90, 71, 0.11);
+        color: var(--accent);
+      }
+
+      .log-entry-badge-failed {
+        background: rgba(154, 79, 66, 0.12);
+        color: var(--danger);
+      }
+
+      .log-entry-text {
+        margin: 0;
+        color: #344038;
+        font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        font-size: 0.88rem;
+        line-height: 1.5;
+        white-space: pre-wrap;
+      }
+
+      .log-empty {
+        padding: 1rem;
+        border-radius: 1rem;
+        border: 1px dashed rgba(36, 49, 40, 0.14);
+        color: var(--text-muted);
+        background: rgba(255, 255, 255, 0.56);
+      }
+
+      .spinner-dot {
+        width: 0.9rem;
+        height: 0.9rem;
+        border-radius: 50%;
+        border: 2px solid rgba(188, 149, 81, 0.25);
+        border-top-color: var(--gold);
         animation: spin 0.8s linear infinite;
+      }
+
+      .link-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.75rem;
+      }
+
+      .link-card {
+        display: block;
+        padding: 0.95rem 1rem;
+        border-radius: 0.95rem;
+        border: 1px solid rgba(36, 49, 40, 0.08);
+        background: rgba(255, 255, 255, 0.72);
+        color: var(--text-main);
+        text-decoration: none;
+        transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+      }
+
+      .link-card:hover,
+      .link-card:focus {
+        color: var(--text-main);
+        text-decoration: none;
+        transform: translateY(-1px);
+        border-color: rgba(47, 90, 71, 0.22);
+        background: rgba(220, 231, 222, 0.42);
+      }
+
+      .link-title {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 0.2rem;
+      }
+
+      .link-text {
+        display: block;
+        color: var(--text-muted);
+        font-size: 0.9rem;
       }
 
       @keyframes spin {
@@ -94,44 +292,84 @@
     </style>
   </head>
   <body>
-    <main class="container py-5">
-      <div class="page-shell mx-auto">
-        <section class="card hero-card mb-4">
-          <div class="card-body p-4 p-md-5">
-            <div class="hero-kicker mb-2">Race Server</div>
-            <h1 class="h2 mb-3">Fetch eBird Trip Reports</h1>
-            <p class="mb-4">
-              Refresh participant trip report data and review the latest server log in one place.
-            </p>
-            <div class="d-flex flex-wrap align-items-center">
-              <button id="fetch" class="btn btn-fetch btn-lg mr-3 mb-2">Start Fetch</button>
-              <div id="loadingState" class="text-light mb-2" style="display: none">
-                <span class="loader mr-2"></span>
-                Fetch in progress. Expect roughly 3 seconds per trip report.
-              </div>
+    <main class="container py-5 py-md-6">
+      <div class="page mx-auto">
+        <section class="panel p-4 p-md-5 mb-4">
+          <div class="eyebrow mb-3">Race Server</div>
+          <h1 class="hero-title mb-3">Refresh Trip Report Data</h1>
+          <p class="hero-copy mb-4">
+            Run a manual refresh for the current race data and review the latest server activity in a
+            simple control page.
+          </p>
+          <div class="d-flex flex-wrap align-items-center">
+            <button id="fetch" class="btn btn-refresh mr-3 mb-2">Start Refresh</button>
+            <div class="meta-note mb-2 d-flex align-items-center mr-3">
+              <span id="loadingState" class="d-none align-items-center">
+                <span class="spinner-dot mr-2"></span>
+                A refresh is running. Expect roughly 3 seconds per trip report.
+              </span>
+            </div>
+            <div class="mb-2">
+              <span id="liveStatus" class="live-pill">
+                <span id="liveDot" class="live-dot"></span>
+                <span id="liveText">Connecting…</span>
+              </span>
             </div>
           </div>
         </section>
 
-        <section class="card panel-card mb-4">
-          <div class="card-body p-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h2 class="h5 mb-0">Fetch Result</h2>
+        <section class="panel p-4 mb-4">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+              <div class="eyebrow mb-2">Current Status</div>
+              <h2 class="h4 mb-0">Latest Refresh Result</h2>
             </div>
-            <div id="result" class="alert alert-light border status-box d-flex align-items-center mb-0">
-              No fetch started yet.
+          </div>
+          <div id="resultCard" class="status-card status-idle d-flex align-items-center p-4">
+            <div>
+              <div id="resultLabel" class="status-label mb-2">Idle</div>
+              <p id="resultMessage" class="status-message">No manual refresh has been started yet.</p>
+              <div id="resultMeta" class="status-meta"></div>
             </div>
           </div>
         </section>
 
-        <section class="card panel-card">
-          <div class="card-body p-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h2 class="h5 mb-0">Previous Fetch Log</h2>
-              <button id="refreshLog" class="btn btn-outline-secondary btn-sm">Refresh Log</button>
+        <section class="panel p-4 p-md-5">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+            <div class="mb-2 mb-md-0">
+              <div class="eyebrow mb-2">API Routes</div>
+              <h2 class="h4 mb-0">Browse Server Data</h2>
             </div>
-            <div id="log" class="log-box">Loading log...</div>
           </div>
+          <div class="link-grid mb-4">
+            <a class="link-card" href="/info" target="_blank" rel="noopener noreferrer">
+              <span class="link-title">Info</span>
+              <span class="link-text">Summary counters and last update</span>
+            </a>
+            <a class="link-card" href="/user" target="_blank" rel="noopener noreferrer">
+              <span class="link-title">User</span>
+              <span class="link-text">Participant race data</span>
+            </a>
+            <a class="link-card" href="/checklist" target="_blank" rel="noopener noreferrer">
+              <span class="link-title">Checklist</span>
+              <span class="link-text">Compiled checklist dataset</span>
+            </a>
+            <a class="link-card" href="/log" target="_blank" rel="noopener noreferrer">
+              <span class="link-title">Log</span>
+              <span class="link-text">Raw fetch log output</span>
+            </a>
+          </div>
+        </section>
+
+        <section class="panel p-4 p-md-5">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+            <div class="mb-2 mb-md-0">
+              <div class="eyebrow mb-2">Server Log</div>
+              <h2 class="h4 mb-0">Recent Activity</h2>
+            </div>
+            <button id="refreshLog" class="btn btn-outline-soft btn-sm px-3">Refresh Log</button>
+          </div>
+          <div id="log" class="log-box">Loading log...</div>
         </section>
       </div>
     </main>
@@ -140,45 +378,175 @@
       const fetchButton = document.querySelector("#fetch");
       const refreshLogButton = document.querySelector("#refreshLog");
       const loadingState = document.querySelector("#loadingState");
-      const result = document.querySelector("#result");
+      const resultCard = document.querySelector("#resultCard");
+      const resultLabel = document.querySelector("#resultLabel");
+      const resultMessage = document.querySelector("#resultMessage");
+      const resultMeta = document.querySelector("#resultMeta");
+      const liveDot = document.querySelector("#liveDot");
+      const liveText = document.querySelector("#liveText");
       const log = document.querySelector("#log");
+      let eventSource;
 
       function setLoading(isLoading) {
         fetchButton.disabled = isLoading;
-        loadingState.style.display = isLoading ? "block" : "none";
+        loadingState.classList.toggle("d-none", !isLoading);
+        loadingState.classList.toggle("d-flex", isLoading);
+      }
+
+      function formatDateTime(value) {
+        if (!value) return "";
+
+        return new Date(value).toLocaleString();
+      }
+
+      function setStatus(type, label, message, meta = "") {
+        resultCard.className = `status-card d-flex align-items-center p-4 status-${type}`;
+        resultLabel.textContent = label;
+        resultMessage.textContent = message;
+        resultMeta.textContent = meta;
+      }
+
+      function setLiveConnection(isLive) {
+        liveDot.classList.toggle("live-dot-live", isLive);
+        liveDot.classList.toggle("live-dot-offline", !isLive);
+        liveText.textContent = isLive ? "Live updates connected" : "Live updates reconnecting";
+      }
+
+      function renderFetchStatus(status) {
+        if (status.isRunning) {
+          const meta = status.startedAt ? `Started ${formatDateTime(status.startedAt)}` : "";
+          setStatus("loading", "Running", status.message || "Refreshing race data...", meta);
+          setLoading(true);
+          return;
+        }
+
+        setLoading(false);
+
+        if (status.success === true) {
+          const metaParts = [];
+          if (status.finishedAt) metaParts.push(`Finished ${formatDateTime(status.finishedAt)}`);
+          if (status.durationSeconds != null) metaParts.push(`Duration ${status.durationSeconds}s`);
+          setStatus("success", "Completed", status.message, metaParts.join("  •  "));
+          return;
+        }
+
+        if (status.success === false) {
+          const metaParts = [];
+          if (status.finishedAt) metaParts.push(`Finished ${formatDateTime(status.finishedAt)}`);
+          if (status.durationSeconds != null) metaParts.push(`Duration ${status.durationSeconds}s`);
+          setStatus("error", "Failed", status.message, metaParts.join("  •  "));
+          return;
+        }
+
+        setStatus("idle", "Idle", status.message || "No manual refresh has been started yet.");
+      }
+
+      function renderLog(text) {
+        const lines = text
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean)
+          .reverse();
+
+        if (lines.length === 0) {
+          log.innerHTML = '<div class="log-empty">No log entries yet.</div>';
+          return;
+        }
+
+        log.innerHTML = lines
+          .map((line) => {
+            const parts = line.split(" - ");
+            const timestamp = parts.shift() || "";
+            const message = parts.join(" - ");
+            const isSuccess = message.toLowerCase().includes("success");
+            const badgeClass = isSuccess ? "log-entry-badge-success" : "log-entry-badge-failed";
+            const badgeText = isSuccess ? "Success" : "Failed";
+
+            return `
+              <article class="log-entry">
+                <div class="log-entry-head">
+                  <span class="log-entry-time">${timestamp}</span>
+                  <span class="log-entry-badge ${badgeClass}">${badgeText}</span>
+                </div>
+                <p class="log-entry-text">${message}</p>
+              </article>
+            `;
+          })
+          .join("");
+      }
+
+      async function loadFetchStatus() {
+        try {
+          const response = await fetch("./fetch-status");
+          const data = await response.json();
+          renderFetchStatus(data);
+        } catch (error) {
+          setStatus("error", "Unavailable", "Failed to load current refresh status.");
+          setLoading(false);
+        }
       }
 
       async function loadLog() {
         try {
           const response = await fetch("./log");
           const text = await response.text();
-          log.textContent = text || "No log entries yet.";
+          renderLog(text || "");
         } catch (error) {
-          log.textContent = "Failed to load log.";
+          log.innerHTML = '<div class="log-empty">Failed to load log.</div>';
         }
+      }
+
+      function connectEvents() {
+        eventSource = new EventSource("/events");
+
+        eventSource.addEventListener("open", () => {
+          setLiveConnection(true);
+        });
+
+        eventSource.addEventListener("status", (event) => {
+          renderFetchStatus(JSON.parse(event.data));
+        });
+
+        eventSource.addEventListener("log", (event) => {
+          const payload = JSON.parse(event.data);
+          renderLog(payload.text || "");
+        });
+
+        eventSource.addEventListener("error", () => {
+          setLiveConnection(false);
+        });
       }
 
       fetchButton.addEventListener("click", async () => {
         setLoading(true);
-        result.className = "alert alert-light border status-box d-flex align-items-center mb-0";
-        result.textContent = "Fetching data...";
+        setStatus("loading", "Running", "Refreshing race data...");
 
         try {
           const response = await fetch("/fetch-start");
           const data = await response.json();
-          result.className = "alert alert-success status-box d-flex align-items-center mb-0";
-          result.textContent = data.response;
+
+          if (!response.ok) {
+            renderFetchStatus({
+              ...data,
+              success: false,
+              message: data.message || "The refresh request was rejected.",
+            });
+            return;
+          }
+
+          renderFetchStatus(data);
           await loadLog();
         } catch (error) {
-          result.className = "alert alert-danger status-box d-flex align-items-center mb-0";
-          result.textContent = "Fetch failed.";
+          setStatus("error", "Failed", "The refresh request did not complete successfully.");
         } finally {
           setLoading(false);
         }
       });
 
       refreshLogButton.addEventListener("click", loadLog);
+      loadFetchStatus();
       loadLog();
+      connectEvents();
     </script>
   </body>
 </html>

@@ -1,7 +1,7 @@
 {
   "name": "johnstottbirdingday-web",
   "private": true,
-  "version": "2025.0",
+  "version": "2026.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,22 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^2.7.16",
-    "vue2-leaflet": "^2.7.1",
-    "bootstrap": "^4.6.2",
-    "bootstrap-table": "1.24.1",
-    "bootstrap-vue": "^2.23.1",
     "flag-icons": "7.3.2",
-    "leaflet": "^1.9.4"
+    "mapbox-gl": "^3.15.0",
+    "vue": "^3.5.18"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue2": "2.3.3",
-    "csvtojson": "^2.0.10",
-    "eslint": "8.57.0",
-    "eslint-plugin-prettier": "5.4.0",
-    "eslint-plugin-vue": "9.24.0",
-    "prettier": "^3.5.3",
-    "sass": "^1.83.1",
-    "vite": "^5.4.11"
+    "@vitejs/plugin-vue": "^6.0.1",
+    "vite": "^7.1.4"
   }
 }

@@ -1,161 +1,214 @@
 <template>
-  <b-container fluid class="h-100 d-flex flex-column px-0">
-    <b-row class="justify-content-center h-100 no-gutters">
-      <b-col md="4" class="h-100 d-flex flex-column" v-if="sidebarshow">
-        <b-row class="bg-primary text-white">
-          <div class="col-12 px-4 d-flex align-items-center">
-            <a class="d-block d-xl-none" href="https://johnstottbirdingday.com/en/">
-              <b-img src="logo_small.svg" fluid id="nav-logo" style="width: 50px" />
-            </a>
-            <a class="d-none d-xl-block" href="https://johnstottbirdingday.com/en/">
-              <b-img src="logo.svg" fluid id="nav-logo" style="width: 133px" />
-            </a>
-            <h3 class="flex-grow-1 text-center mb-0">The Bird Race</h3>
-            <b-icon
-              icon="caret-left-fill"
-              class="h2 text-white cursor-pointer"
-              @click="sidebarhide(true)"
+  <div
+    class="app-shell"
+    :class="{
+      'app-shell-sidebar-hidden': !sidebarVisible && !isMobile,
+      'app-shell-mobile': isMobile,
+    }"
+  >
+    <button
+      v-if="!sidebarVisible"
+      class="map-reveal-button"
+      type="button"
+      @click="sidebarVisible = true"
+      aria-label="Show sidebar"
+    >
+      <svg viewBox="0 0 16 16" aria-hidden="true" class="ui-icon">
+        <path
+          fill="currentColor"
+          d="M5.3 13.7a1 1 0 0 1 0-1.4L9.59 8l-4.3-4.3a1 1 0 0 1 1.42-1.4l4.99 5a1 1 0 0 1 0 1.4l-4.99 5a1 1 0 0 1-1.41 0Z"
+        />
+      </svg>
+    </button>
+
+    <div v-if="isMobile && sidebarVisible" class="sidebar-backdrop" @click="sidebarVisible = false"></div>
+
+    <aside class="sidebar" :class="{ 'sidebar-hidden': !sidebarVisible }">
+      <header class="sidebar-header">
+        <a class="brand-link brand-link-compact" href="https://johnstottbirdingday.com/en/">
+          <img src="/logo_small.svg" alt="John Stott Birding Day" class="brand-mark compact-mark" />
+        </a>
+        <a class="brand-link brand-link-wide" href="https://johnstottbirdingday.com/en/">
+          <img src="/logo.svg" alt="John Stott Birding Day" class="brand-mark" />
+        </a>
+        <div class="header-copy">
+          <h1>The Bird Race</h1>
+        </div>
+        <button class="toggle-button" type="button" @click="sidebarVisible = false" aria-label="Hide sidebar">
+          <svg viewBox="0 0 16 16" aria-hidden="true" class="ui-icon">
+            <path
+              fill="currentColor"
+              d="M10.7 2.3a1 1 0 0 1 0 1.4L6.41 8l4.3 4.3a1 1 0 1 1-1.42 1.4L4.3 8.7a1 1 0 0 1 0-1.4l4.99-5a1 1 0 0 1 1.41 0Z"
             />
+          </svg>
+        </button>
+      </header>
+
+      <section class="stats-grid">
+        <article class="stat-card">
+          <div class="stat-value">
+            <img src="/pigeon.svg" alt="" class="stat-icon-image" />
+            <span>{{ info.counterSpecies }}</span>
           </div>
-        </b-row>
-        <b-row class="mx-xl-2 mt-xl-1">
-          <b-col md="6" lg="3" class="p-1">
-            <div class="p-2 d-flex flex-column rounded bg-primary text-white h-100">
-              <div class="d-flex align-self-center">
-                <div class="counter d-flex">
-                  <b-img src="pigeon.svg" class="pigeon mr-2" /> {{ info.counterSpecies }}
-                </div>
-              </div>
-              <div class="counter-label align-self-center text-center">Species</div>
-            </div>
-          </b-col>
-          <b-col class="col-md-6 col-lg-3 p-1">
-            <div class="p-2 d-flex flex-column rounded bg-primary text-white h-100">
-              <div class="d-flex align-self-center">
-                <div class="counter">
-                  <b-icon icon="person-fill" /> {{ info.counterParticipants }}
-                </div>
-              </div>
-              <div class="counter-label align-self-center text-center">Participants</div>
-            </div>
-          </b-col>
-          <b-col md="6" lg="3" class="p-1">
-            <div class="p-2 d-flex flex-column rounded bg-primary text-white h-100">
-              <div class="d-flex align-self-center">
-                <div class="counter"><b-icon icon="flag-fill" /> {{ info.counterCountries }}</div>
-              </div>
-              <div class="counter-label align-self-center text-center">Countries</div>
-            </div>
-          </b-col>
-          <b-col md="6" lg="3" class="p-1">
-            <div class="p-2 d-flex flex-column rounded bg-primary text-white h-100">
-              <div class="d-flex align-self-center">
-                <div class="counter">
-                  <b-icon icon="card-checklist" /> {{ info.counterChecklists }}
-                </div>
-              </div>
-              <div class="counter-label align-self-center text-center">Checklists</div>
-            </div>
-          </b-col>
-        </b-row>
-        <b-row class="flex-grow-1" style="overflow: auto">
-          <b-col class="px-4">
-            <b-table
-              striped
-              hover
-              :items="user"
-              :fields="[
-                { key: 'name', label: 'Name' },
-                { key: 'num_sp', label: 'Number of species' },
-                { key: 'num_checklist', label: 'Number of checklists' },
-                { key: 'countryCode', label: 'Country' },
-              ]"
-              small
-              responsive="sm"
-              v-if="user.length > 0"
-              @row-hovered="handleRowHovered"
-              @row-unhovered="handleRowUnhovered"
-            >
-              <template #cell(name)="data">
-                <template v-if="data.item.hasOwnProperty('profile')">
-                  <a :href="data.item.profile" target="_blank">{{ data.value }}</a>
-                </template>
-                <template v-else>
-                  {{ data.value }}
-                </template>
-              </template>
-              <template #cell(num_sp)="data">
-                <a :href="'https://ebird.org/tripreport/' + data.item.tripreport" target="_blank">{{
-                  data.value
-                }}</a>
-              </template>
-              <template #cell(countryCode)="data">
-                <span
-                  v-for="f in data.value"
-                  :key="f"
-                  :class="['fi', 'fi-' + f.toLowerCase(), 'mr-1']"
-                />
-              </template>
-            </b-table>
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col> Last updated: {{ info.lastUpdated.toLocaleString() }} </b-col>
-        </b-row>
-      </b-col>
-      <b-col class="h-100">
-        <l-map
-          :bounds="[
-            [-90, 180],
-            [90, -180],
-          ]"
-          ref="map"
-          :options="{ preferCanvas: true }"
-        >
-          <l-control position="topleft" v-if="!sidebarshow">
-            <div
-              class="leaflet-control-layers leaflet-control-layers-expanded cursor-pointer"
-              @click="sidebarhide(false)"
-              aria-haspopup="true"
-            >
-              <b-icon icon="caret-right-fill" />
-            </div>
-          </l-control>
-          <l-tile-layer
-            :url="
-              'https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=' +
-              mapboxToken
-            "
-          />
-          <l-marker
-            v-for="c in checklist"
-            :key="c.locID"
-            :lat-lng="c.latLng"
-            :icon="getIcon(c)"
-            :visible="user_hover == null || c.user == user_hover"
-          >
-            <l-popup :options="{ minWidth: 200 }" class="d-flex flex-column">
-              <div class="py-1"><b-icon icon="person-fill" class="mr-2" /> {{ c.user }}</div>
-              <div class="py-1">
-                <b-icon icon="clock-fill" class="mr-2" />
-                <a target="_blank" :href="'https://ebird.org/checklist/' + c.subId"
-                  >{{ c.obsDt }} {{ c.obsTime }}</a
-                >
-              </div>
-              <div class="py-1">
-                <b-icon icon="geo-alt-fill" class="mr-2" />
-                {{ c.loc.name }}
-              </div>
-            </l-popup>
-          </l-marker>
-        </l-map>
-      </b-col>
-    </b-row>
-  </b-container>
+          <div class="stat-label">Species</div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-value">
+            <svg viewBox="0 0 16 16" aria-hidden="true" class="stat-icon-svg">
+              <path
+                fill="currentColor"
+                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5 6a5 5 0 0 1 10 0v.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V14Z"
+              />
+            </svg>
+            <span>{{ info.counterParticipants }}</span>
+          </div>
+          <div class="stat-label">Participants</div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-value">
+            <svg viewBox="0 0 16 16" aria-hidden="true" class="stat-icon-svg">
+              <path
+                fill="currentColor"
+                d="M3 1.5A.5.5 0 0 1 3.5 1h.79a.5.5 0 0 1 .43.24L5.3 2H12a.5.5 0 0 1 .4.8L10.5 5l1.9 2.2a.5.5 0 0 1-.4.8H5.3l-.58.76a.5.5 0 0 1-.43.24H4V15a.5.5 0 0 1-1 0V1.5Z"
+              />
+            </svg>
+            <span>{{ info.counterCountries }}</span>
+          </div>
+          <div class="stat-label">Countries</div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-value">
+            <svg viewBox="0 0 16 16" aria-hidden="true" class="stat-icon-svg">
+              <path
+                fill="currentColor"
+                d="M2.5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11Zm0 4a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11Zm0 4a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11Z"
+              />
+            </svg>
+            <span>{{ info.counterChecklists }}</span>
+          </div>
+          <div class="stat-label">Checklists</div>
+        </article>
+      </section>
+
+      <section class="sidebar-body">
+        <div v-if="loading" class="panel-message">Loading race data…</div>
+        <div v-else-if="errorMessage" class="panel-message panel-message-error">{{ errorMessage }}</div>
+        <div v-else class="table-wrap">
+          <table class="race-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th class="metric-heading">
+                  <span class="metric-head" aria-label="Species" title="Species">
+                    <img src="/pigeon.svg" alt="Species" class="metric-head-image metric-head-image-blue" />
+                  </span>
+                </th>
+                <th class="metric-heading">
+                  <span class="metric-head" aria-label="Checklists" title="Checklists">
+                    <svg viewBox="0 0 16 16" aria-hidden="true" class="metric-head-icon">
+                      <path
+                        fill="currentColor"
+                        d="M2.5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11Zm0 4a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11Zm0 4a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11Z"
+                      />
+                    </svg>
+                  </span>
+                </th>
+                <th class="metric-heading">
+                  <span class="metric-head" aria-label="Country" title="Country">
+                    <svg viewBox="0 0 16 16" aria-hidden="true" class="metric-head-icon">
+                      <path
+                        fill="currentColor"
+                        d="M3 1.5A.5.5 0 0 1 3.5 1h.79a.5.5 0 0 1 .43.24L5.3 2H12a.5.5 0 0 1 .4.8L10.5 5l1.9 2.2a.5.5 0 0 1-.4.8H5.3l-.58.76a.5.5 0 0 1-.43.24H4V15a.5.5 0 0 1-1 0V1.5Z"
+                      />
+                    </svg>
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="participant in users"
+                :key="participant.email || participant.name"
+                @mouseenter="hoveredUser = participant.name"
+                @mouseleave="hoveredUser = null"
+                :class="{ 'is-active-row': hoveredUser === participant.name }"
+              >
+                <td>
+                  <div class="name-cell">
+                    <a
+                      v-if="participant.profile"
+                      :href="participant.profile"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="name-link name-link-profile"
+                    >
+                      {{ participant.name }}
+                    </a>
+                    <span v-else class="name-link name-text">{{ participant.name }}</span>
+                    <span v-if="participant.party" class="party-badge" :title="`${participant.party} observers`">
+                      <svg viewBox="0 0 16 16" aria-hidden="true" class="party-badge-icon">
+                        <path
+                          fill="currentColor"
+                          d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5 6a5 5 0 0 1 10 0v.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V14Z"
+                        />
+                      </svg>
+                      <span>{{ participant.party }}</span>
+                    </span>
+                  </div>
+                </td>
+                <td class="metric-cell">
+                  <a
+                    :href="tripReportUrl(participant.tripreport)"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="metric-link"
+                  >
+                    {{ participant.num_sp }}
+                  </a>
+                </td>
+                <td class="metric-cell">{{ participant.num_checklist }}</td>
+                <td>
+                  <div class="flag-list">
+                    <span
+                      v-for="country in participant.countryCode"
+                      :key="country"
+                      :class="['fi', `fi-${country.toLowerCase()}`]"
+                    />
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <footer class="sidebar-footer">
+        <span v-if="info.lastUpdated">Last updated: {{ formatDateTime(info.lastUpdated) }}</span>
+        <span v-else>Waiting for latest update timestamp…</span>
+      </footer>
+    </aside>
+
+    <main class="map-shell">
+      <div ref="mapContainer" class="map-canvas"></div>
+      <div v-if="mapError" class="map-overlay">
+        <h2>Map unavailable</h2>
+        <p>{{ mapError }}</p>
+      </div>
+    </main>
+  </div>
 </template>
 
-<script>
-const color_pin = [
+<script setup>
+import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from "vue";
+import mapboxgl from "mapbox-gl";
+import "flag-icons/css/flag-icons.min.css";
+
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://localhost:8081").replace(/\/$/, "");
+const MAPBOX_TOKEN =
+  import.meta.env.VITE_MAPBOX_TOKEN ||
+  "pk.eyJ1IjoicmFmbnVzcyIsImEiOiIzMVE1dnc0In0.3FNMKIlQ_afYktqki-6m0g";
+
+const markerPalette = [
   "#efa00b",
   "#d65108",
   "#591f0a",
@@ -166,113 +219,267 @@ const color_pin = [
   "#c7d9b7",
   "#17bebb",
 ];
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://localhost:8081").replace(
-  /\/$/,
-  "",
+
+const users = ref([]);
+const checklist = ref([]);
+const hoveredUser = ref(null);
+const loading = ref(true);
+const errorMessage = ref("");
+const isMobile = ref(window.innerWidth < 980);
+const sidebarVisible = ref(window.innerWidth >= 980);
+const mapError = ref("");
+const mapContainer = ref(null);
+const map = ref(null);
+const markers = ref([]);
+
+const info = reactive({
+  counterSpecies: 0,
+  counterParticipants: 0,
+  counterCountries: 0,
+  counterChecklists: 0,
+  lastUpdated: null,
+});
+
+const filteredChecklist = computed(() =>
+  hoveredUser.value ? checklist.value.filter((item) => item.user === hoveredUser.value) : checklist.value,
 );
 
-import { LMap, LTileLayer, LPopup, LMarker, LIcon, LControl } from "vue2-leaflet";
-import { latLng } from "leaflet";
-import "flag-icons/css/flag-icons.min.css";
+function tripReportUrl(report) {
+  const [tripReportId, personQuery] = String(report).split("?");
+  const personId = personQuery?.replace("tripReportPersonId=", "");
+  return personId ? `https://ebird.org/tripreport/${tripReportId}/${personId}` : `https://ebird.org/tripreport/${tripReportId}`;
+}
 
-export default {
-  components: {
-    LMap,
-    LTileLayer,
-    LMarker,
-    LIcon,
-    LPopup,
-    LControl,
-  },
-  data() {
-    return {
-      mapboxToken: "pk.eyJ1IjoicmFmbnVzcyIsImEiOiIzMVE1dnc0In0.3FNMKIlQ_afYktqki-6m0g",
-      lastUpdated: new Date(),
-      user: [],
-      info: {
-        counterSpecies: 0,
-        counterParticipants: 0,
-        counterCountries: 0,
-        counterChecklists: 0,
-        lastUpdated: new Date(),
-      },
-      checklist: [],
-      sidebarshow: true,
-      map: null,
-      user_hover: null,
-    };
-  },
-  methods: {
-    handleRowHovered(rowInfo) {
-      this.user_hover = rowInfo.name;
-    },
-    handleRowUnhovered(rowInfo) {
-      this.user_hover = null;
-    },
-    sidebarhide(tf) {
-      if (tf) {
-        this.sidebarshow = false;
-      } else {
-        this.sidebarshow = true;
-      }
-      setTimeout(() => {
-        this.map.invalidateSize();
-      }, 100);
-    },
-    getIcon(c) {
-      return L.divIcon({
-        className: "my-custom-icon",
-        popupAnchor: [0, -34],
-        iconAnchor: [12.5, 34],
-        iconSize: [25, 34],
-        html: `
-        <?xml version="1.0" encoding="UTF-8"?><svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24.66 33.31"><defs><style>.cls-1,.cls-2{fill:#fff;}#cls-${c.locId}{fill:${c.color};}.cls-2{font-family:ArialMT, Arial;font-size:14.2px; fill:#fff;}</style></defs><g><path id="cls-${c.locId}" d="M12.35,32.81c-.32,0-.8-.11-1.27-.66-2.97-3.44-5.33-6.7-7.21-9.96-1.43-2.49-2.36-4.61-2.91-6.66C.01,12.01,.54,8.71,2.52,5.74,4.22,3.21,6.6,1.55,9.6,.83c.42-.1,.86-.17,1.29-.23,.19-.03,.38-.06,.57-.09h1.67c.27,.03,.46,.06,.65,.09,.43,.06,.87,.13,1.29,.23,3.35,.83,5.92,2.79,7.64,5.83,.84,1.5,1.33,3.18,1.43,5.01,.15,2.57-.65,4.85-1.36,6.55-1.22,2.91-2.94,5.85-5.26,8.98-1.01,1.36-2.09,2.69-3.14,3.98l-.78,.97c-.45,.56-.93,.68-1.25,.68Z"/><path class="cls-1" d="M13.13,1c.61,.1,1.23,.17,1.83,.32,3.25,.8,5.69,2.69,7.32,5.59,.83,1.48,1.27,3.09,1.37,4.79,.13,2.23-.48,4.31-1.32,6.33-1.33,3.19-3.15,6.11-5.2,8.87-1.25,1.68-2.59,3.3-3.91,4.93-.27,.33-.57,.49-.87,.49s-.61-.16-.89-.49c-2.67-3.09-5.11-6.34-7.15-9.88-1.19-2.07-2.24-4.22-2.86-6.54-.9-3.35-.43-6.5,1.5-9.38,1.63-2.44,3.91-4.01,6.78-4.7,.6-.14,1.22-.21,1.83-.32h1.59m.08-1h-1.84c-.19,.05-.37,.07-.56,.1-.43,.07-.88,.13-1.33,.24C6.35,1.1,3.87,2.82,2.11,5.46,.04,8.56-.51,11.99,.48,15.66c.56,2.09,1.5,4.25,2.96,6.78,1.89,3.29,4.27,6.57,7.26,10.03,.6,.69,1.23,.84,1.65,.84,.61,0,1.19-.31,1.64-.86l.79-.97c1.05-1.29,2.13-2.62,3.15-3.99,2.35-3.16,4.09-6.13,5.32-9.08,.73-1.75,1.55-4.1,1.4-6.77-.11-1.9-.61-3.66-1.5-5.22-1.78-3.16-4.46-5.21-7.95-6.07-.45-.11-.9-.18-1.34-.24-.19-.03-.37-.06-.56-.09h-.08Z"/></g></svg>`,
-      });
-    },
-  },
-  computed: {},
-  created: function () {
-    fetch(`${API_BASE_URL}/user`)
-      .then((response) => response.json())
-      .then((data) => {
-        const user = data
-          .map((d, id) => {
-            d.color = color_pin[id % color_pin.length];
-            d.num_sp = d.num_sp[0];
-            return d;
-          })
-          .sort(function (a, b) {
-            return b.num_sp - a.num_sp;
-          });
-        fetch(`${API_BASE_URL}/checklist`)
-          .then((response) => response.json())
-          .then((data) => {
-            const checklist = data.map((d) => {
-              const useri = user.find((u) => u.name == d.user);
-              d.color = useri.color;
-              d.latLng = latLng([d.loc.lat, d.loc.lng]);
-              return d;
-            });
-            this.map.fitBounds(checklist.map((c) => c.latLng));
-            this.user = user;
-            this.checklist = checklist;
-          })
-          .catch((error) => console.error(error));
-      })
-      .catch((error) => console.error(error));
+function checklistUrl(subId) {
+  return `https://ebird.org/checklist/${subId}`;
+}
 
-    fetch(`${API_BASE_URL}/info`)
-      .then((response) => response.json())
-      .then((data) => {
-        data.lastUpdated = new Date(data.lastUpdated);
-        this.info = data;
-      })
-      .catch((error) => console.error(error));
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.map = this.$refs.map.mapObject;
+function formatDateTime(value) {
+  return new Date(value).toLocaleString();
+}
+
+function createMarkerElement(color) {
+  const element = document.createElement("div");
+  element.className = "map-pin";
+  element.innerHTML = `
+    <svg viewBox="0 0 25 34" aria-hidden="true">
+      <path fill="${color}" d="M12.4 33.1c-.4 0-.8-.2-1.2-.6-3-3.5-5.4-6.8-7.3-10.1C2.5 19.9 1.5 17.7.9 15.6 0 12.1.5 8.7 2.5 5.7 4.3 3 6.8 1.3 9.8.6c.6-.2 1.2-.3 1.8-.4h1.6c.6.1 1.2.2 1.8.4 3.4.8 6 2.8 7.7 5.9.9 1.5 1.4 3.2 1.5 5.1.1 2.6-.7 4.9-1.4 6.6-1.2 2.9-3 5.9-5.3 9.1-1 1.4-2.1 2.7-3.2 4l-.8 1c-.4.5-.8.7-1.2.7Z"/>
+      <path fill="rgba(255,255,255,0.92)" d="M12.4 18.4a5.5 5.5 0 1 0 0-11.1 5.5 5.5 0 0 0 0 11.1Z"/>
+    </svg>
+  `;
+  return element;
+}
+
+function createPopupMarkup(entry) {
+  return `
+    <article class="popup-card">
+      <p class="popup-line popup-title"><strong>${entry.loc.name}</strong></p>
+      <div class="popup-meta">
+        <p class="popup-line popup-chip">
+          <span class="popup-icon" aria-hidden="true">
+            <img src="/pigeon.svg" alt="" />
+          </span>
+          <span>${entry.numSpecies ?? 0} species</span>
+        </p>
+        <p class="popup-line popup-chip">
+          <span class="popup-icon popup-icon-stroke" aria-hidden="true">
+            <svg viewBox="0 0 16 16">
+              <path
+                fill="currentColor"
+                d="M8 3.5a.5.5 0 0 1 .5.5v3.7l2.4 1.4a.5.5 0 0 1-.5.86l-2.65-1.55A.5.5 0 0 1 7.5 8V4a.5.5 0 0 1 .5-.5Z"
+              />
+              <path
+                fill="currentColor"
+                d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm-5.5 6.5a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0Z"
+              />
+            </svg>
+          </span>
+          <span>${entry.obsDt}${entry.obsTime ? ` ${entry.obsTime}` : ""}</span>
+        </p>
+      </div>
+      <p class="popup-line popup-link-row">
+        <a href="${checklistUrl(entry.subId)}" target="_blank" rel="noopener noreferrer" class="popup-link">
+          Open checklist
+        </a>
+      </p>
+    </article>
+  `;
+}
+
+function clearMarkers() {
+  for (const marker of markers.value) {
+    marker.remove();
+  }
+  markers.value = [];
+}
+
+function renderMarkers() {
+  if (!map.value) return;
+
+  clearMarkers();
+
+  for (const entry of filteredChecklist.value) {
+    const marker = new mapboxgl.Marker({
+      element: createMarkerElement(entry.color),
+      anchor: "bottom",
+    })
+      .setLngLat([entry.loc.lng, entry.loc.lat])
+      .setPopup(
+        new mapboxgl.Popup({
+          offset: 20,
+          closeButton: false,
+          className: "race-popup",
+        }).setHTML(createPopupMarkup(entry)),
+      )
+      .addTo(map.value);
+
+    markers.value.push(marker);
+  }
+}
+
+function fitMapToChecklist() {
+  if (!map.value || checklist.value.length === 0) return;
+
+  const bounds = new mapboxgl.LngLatBounds();
+  for (const entry of checklist.value) {
+    bounds.extend([entry.loc.lng, entry.loc.lat]);
+  }
+
+  const sidePadding = isMobile.value ? 72 : 84;
+
+  map.value.fitBounds(bounds, {
+    padding: {
+      top: 72,
+      right: sidePadding,
+      bottom: 72,
+      left: sidePadding,
+    },
+    maxZoom: 5.2,
+    duration: 1200,
+  });
+}
+
+async function loadRaceData() {
+  loading.value = true;
+  errorMessage.value = "";
+
+  try {
+    const [userResponse, checklistResponse, infoResponse] = await Promise.all([
+      fetch(`${API_BASE_URL}/user`),
+      fetch(`${API_BASE_URL}/checklist`),
+      fetch(`${API_BASE_URL}/info`),
+    ]);
+
+    if (!userResponse.ok || !checklistResponse.ok || !infoResponse.ok) {
+      throw new Error("Failed to load race data from the API.");
+    }
+
+    const [userData, checklistData, infoData] = await Promise.all([
+      userResponse.json(),
+      checklistResponse.json(),
+      infoResponse.json(),
+    ]);
+
+    const decoratedUsers = userData
+      .map((entry, index) => ({
+        ...entry,
+        color: markerPalette[index % markerPalette.length],
+        num_sp: Array.isArray(entry.num_sp) ? entry.num_sp[0] : entry.num_sp,
+      }))
+      .sort((a, b) => Number(b.num_sp) - Number(a.num_sp));
+
+    const userByName = new Map(decoratedUsers.map((entry) => [entry.name, entry]));
+
+    users.value = decoratedUsers;
+    checklist.value = checklistData.map((entry) => ({
+      ...entry,
+      color: userByName.get(entry.user)?.color || markerPalette[0],
+    }));
+
+    info.counterSpecies = infoData.counterSpecies ?? 0;
+    info.counterParticipants = infoData.counterParticipants ?? 0;
+    info.counterCountries = infoData.counterCountries ?? 0;
+    info.counterChecklists = infoData.counterChecklists ?? 0;
+    info.lastUpdated = infoData.lastUpdated ? new Date(infoData.lastUpdated) : null;
+
+    await nextTick();
+    renderMarkers();
+    fitMapToChecklist();
+  } catch (error) {
+    console.error(error);
+    errorMessage.value = "The race data could not be loaded right now.";
+  } finally {
+    loading.value = false;
+  }
+}
+
+function handleResize() {
+  const mobile = window.innerWidth < 980;
+  isMobile.value = mobile;
+
+  if (!mobile) sidebarVisible.value = true;
+
+  map.value?.resize();
+}
+
+function initializeMap() {
+  if (!MAPBOX_TOKEN) {
+    mapError.value = "Missing Mapbox token.";
+    return;
+  }
+
+  mapboxgl.accessToken = MAPBOX_TOKEN;
+
+  map.value = new mapboxgl.Map({
+    container: mapContainer.value,
+    style: "mapbox://styles/mapbox/satellite-streets-v12",
+    center: [0, 10],
+    zoom: 1.55,
+    projection: "globe",
+    attributionControl: false,
+  });
+
+  map.value.addControl(new mapboxgl.NavigationControl(), "top-right");
+
+  map.value.on("style.load", () => {
+    map.value.setFog({
+      color: "rgb(118, 145, 170)",
+      "high-color": "rgb(24, 38, 58)",
+      "space-color": "rgb(3, 7, 14)",
+      "horizon-blend": 0.03,
+      "star-intensity": 0.02,
     });
-  },
-};
+  });
+
+  map.value.on("load", () => {
+    renderMarkers();
+    fitMapToChecklist();
+  });
+
+  map.value.on("error", () => {
+    mapError.value = "The interactive map could not be rendered.";
+  });
+}
+
+watch(filteredChecklist, () => {
+  renderMarkers();
+});
+
+watch(sidebarVisible, async () => {
+  await nextTick();
+  map.value?.resize();
+  fitMapToChecklist();
+});
+
+onMounted(async () => {
+  initializeMap();
+  window.addEventListener("resize", handleResize);
+  await loadRaceData();
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", handleResize);
+  clearMarkers();
+  map.value?.remove();
+});
 </script>
