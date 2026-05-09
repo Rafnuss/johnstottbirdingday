@@ -8,6 +8,7 @@
     "server:dev": "npm --prefix apps/server run dev",
     "server:start": "npm --prefix apps/server run start",
     "server:fetch": "npm --prefix apps/server run fetch",
+    "server:archive": "npm --prefix apps/server run archive",
     "server:check": "npm --prefix apps/server run check",
     "server:pm2:start": "npm --prefix apps/server run pm2:start",
     "server:pm2:fetch": "npm --prefix apps/server run pm2:fetch"

@@ -13,4 +13,7 @@ apps/web/dist/
 apps/web/.env.local
 apps/web/.env.*.local
 
+apps/server/checklists.json
+apps/server/info.json
+apps/server/user.json
 apps/server/log.txt

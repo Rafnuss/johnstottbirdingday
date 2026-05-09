@@ -51,6 +51,7 @@ In short:
 - `npm run server:start`: serve the API continuously
 - `npm run server:dev`: same as `server:start` for now, used as the local development alias
 - `npm run server:fetch`: fetch race data once and exit
+- `npm run server:archive -- <label>`: copy the current server data into a versioned archive folder
 
 For local development, if you want both behaviors, run them separately: keep `server:start` running, and call `server:fetch` whenever you want to refresh data manually.
 
@@ -59,6 +60,15 @@ Run a manual fetch:
 ```bash
 npm run server:fetch
 ```
+
+Create an archive snapshot of the current data:
+
+```bash
+npm run server:archive -- 2026-final
+```
+
+This copies the current `checklists.json`, `user.json`, `info.json`, and `log.txt` into
+`apps/server/archive/<label>/` so the snapshot can be committed intentionally without tracking the live runtime files.
 
 ## Frontend configuration
 
@@ -120,4 +130,5 @@ Here too, the names match the roles:
 
 - The website and server are intentionally separate apps because they have different runtime and deployment targets.
 - They should communicate only through the API, not through shared generated files.
+- Live server data files in `apps/server/*.json` and `apps/server/log.txt` are runtime artifacts and should not be committed from the deployed server.
 - See [apps/server/README.md](/Users/rafnuss/Documents/GitHub/johnstottbirdingday/apps/server/README.md) for server-specific behavior.

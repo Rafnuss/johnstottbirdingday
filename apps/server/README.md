@@ -58,6 +58,18 @@ From the repository root:
 npm run server:fetch
 ```
 
+Archive the current live data into a commit-friendly snapshot:
+
+```bash
+npm run archive -- 2026-final
+```
+
+Or from the repository root:
+
+```bash
+npm run server:archive -- 2026-final
+```
+
 Automatic fetch with PM2:
 
 ```bash
@@ -102,3 +114,5 @@ npm run server:pm2:fetch
 - Only rows for the current year are imported.
 - Fetch logs are appended to `log.txt`.
 - Output JSON files are written inside `apps/server/`.
+- `checklists.json`, `user.json`, `info.json`, and `log.txt` are live runtime files and should stay untracked.
+- Use `apps/server/archive/<label>/` for yearly or final snapshots that you do want to commit.
