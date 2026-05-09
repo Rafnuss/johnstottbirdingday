@@ -1,5 +1,5 @@
 const fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
-const { writeFile } = require("fs/promises");
+const { appendFile, writeFile } = require("fs/promises");
 const path = require("path");
 
 const GOOGLE_API_KEY = "AIzaSyCaVWdIpSvq8BoF7PvEK4oY3LByPYTQ2Xs";
@@ -9,6 +9,38 @@ const CURRENT_YEAR = String(new Date().getFullYear());
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function getRunSource(source) {
+  if (source === "manual-ui" || source === "manual") return "manual";
+  if (source === "pm2" || source === "auto") return "auto";
+  if (process.env.pm_id != null) return "auto";
+  return "manual-cli";
+}
+
+function formatLogTimestamp(date = new Date()) {
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const hours = String(date.getUTCHours()).padStart(2, "0");
+  const minutes = String(date.getUTCMinutes()).padStart(2, "0");
+  const seconds = String(date.getUTCSeconds()).padStart(2, "0");
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds} UTC`;
+}
+
+function emitProgress(options, message) {
+  console.log(message);
+  options.onProgress?.(message);
+}
+
+async function appendActivityLog({ finishedAt, success, durationSeconds, source, error }) {
+  const statusLabel = success ? "success" : "failed";
+  const suffix = success ? "" : `: ${error}`;
+  const line =
+    `${finishedAt} - [${source}] Fetching ${statusLabel} (${durationSeconds}s)${suffix}\n`;
+
+  await appendFile(path.join(__dirname, "log.txt"), line);
 }
 
 function normalizeTripReport(url = "") {
@@ -26,7 +58,7 @@ async function fetchJson(url) {
 
 async function fetchUserData(year = CURRENT_YEAR) {
   const data = await fetchJson(
-    `https://sheets.googleapis.com/v4/spreadsheets/${GOOGLE_SHEET_ID}/values/A1:F100?key=${GOOGLE_API_KEY}`,
+    `https://sheets.googleapis.com/v4/spreadsheets/${GOOGLE_SHEET_ID}/values/A:F?key=${GOOGLE_API_KEY}`,
   );
   const rows = data.values?.slice(1) ?? [];
 
@@ -73,19 +105,21 @@ async function fetchTripReportData(user) {
   };
 }
 
-async function fetchTripReport(timeout = 5000, callback = () => {}) {
+async function fetchTripReport(timeout = 5000, callback = () => {}, options = {}) {
+  const source = getRunSource(options.source);
+  const startedMs = Date.now();
+
   try {
     const users = await fetchUserData();
-    console.log("spreadsheet read:");
-    console.log(users);
+    emitProgress(options, `Loaded ${users.length} participant rows for ${CURRENT_YEAR}.`);
 
     const completedUsers = [];
     const checklists = [];
     const taxons = [];
 
-    for (const user of users) {
-      console.log(`fetching: ${user.name}`);
-      console.log(`waiting ${timeout / 1000}sec...`);
+    for (const [index, user] of users.entries()) {
+      const stepLabel = `[${index + 1}/${users.length}] ${user.name}`;
+      emitProgress(options, `${stepLabel} - fetching trip report`);
       await sleep(timeout);
 
       try {
@@ -103,14 +137,16 @@ async function fetchTripReport(timeout = 5000, callback = () => {}) {
         });
         checklists.push(...tripReportData.checklists);
         taxons.push(...tripReportData.taxons);
-        console.log("- fetched trip report data");
+        emitProgress(
+          options,
+          `${stepLabel} - done: ${tripReportData.num_sp} species, ${tripReportData.num_checklist} checklists`,
+        );
       } catch (error) {
-        console.log(`Error with ${user.name}:`);
-        console.log(error);
+        emitProgress(options, `${stepLabel} - failed: ${error}`);
       }
     }
 
-    console.log("\n-> fetched all data\n");
+    emitProgress(options, "All trip report requests completed.");
 
     const info = {
       counterSpecies: new Set(taxons).size,
@@ -128,8 +164,37 @@ async function fetchTripReport(timeout = 5000, callback = () => {}) {
       writeFile(path.join(__dirname, "info.json"), JSON.stringify(info)),
     ]);
 
+    emitProgress(
+      options,
+      `Saved datasets: ${completedUsers.length} teams, ${checklists.length} checklists, ${new Set(taxons).size} species.`,
+    );
+
+    const finishedAt = formatLogTimestamp();
+    const durationSeconds = Math.round((Date.now() - startedMs) / 100) / 10;
+    await appendActivityLog({
+      finishedAt,
+      success: true,
+      durationSeconds,
+      source,
+    });
+
     callback(null);
   } catch (error) {
+    const finishedAt = formatLogTimestamp();
+    const durationSeconds = Math.round((Date.now() - startedMs) / 100) / 10;
+
+    try {
+      await appendActivityLog({
+        finishedAt,
+        success: false,
+        durationSeconds,
+        source,
+        error,
+      });
+    } catch (logError) {
+      console.error("Failed to append log entry:", logError);
+    }
+
     callback(error);
   }
 }

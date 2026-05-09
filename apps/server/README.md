@@ -10,11 +10,12 @@ It writes:
 
 It serves:
 
+- `GET /`
 - `GET /user`
 - `GET /checklist`
 - `GET /info`
 - `GET /log`
-- `GET /fetch`
+- `GET /fetch` (redirects to `/`)
 - `GET /fetch-start`
 
 ## Install

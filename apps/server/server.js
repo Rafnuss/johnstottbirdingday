@@ -20,6 +20,7 @@ const fetchState = {
   message: "No manual refresh has been started yet.",
   durationSeconds: null,
 };
+let fetchConsoleLines = [];
 
 async function readJsonFile(filename) {
   const filePath = path.join(__dirname, filename);
@@ -27,16 +28,16 @@ async function readJsonFile(filename) {
   return JSON.parse(content);
 }
 
-async function appendLog(message) {
-  await fs.appendFile(path.join(__dirname, "log.txt"), message);
-}
-
 function sendAdminPage(res) {
-  res.sendFile(path.join(__dirname, "fetch.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 }
 
 function getFetchStatus() {
   return { ...fetchState };
+}
+
+function formatConsoleTimestamp(date = new Date()) {
+  return date.toISOString().replace("T", " ").replace(/\.\d{3}Z$/, " UTC");
 }
 
 app.use((req, res, next) => {
@@ -74,7 +75,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/fetch", (req, res) => {
-  sendAdminPage(res);
+  res.redirect(302, "/");
 });
 
 app.get("/events", async (req, res) => {
@@ -85,6 +86,7 @@ app.get("/events", async (req, res) => {
 
   eventClients.add(res);
   sendEvent(res, "status", getFetchStatus());
+  sendEvent(res, "progress", { lines: fetchConsoleLines });
 
   try {
     const log = await fs.readFile(path.join(__dirname, "log.txt"), "utf8");
@@ -117,16 +119,16 @@ app.get("/fetch-start", (req, res) => {
   fetchState.success = null;
   fetchState.durationSeconds = null;
   fetchState.message = "Refreshing race data...";
+  fetchConsoleLines = [`${formatConsoleTimestamp()} - Manual refresh started.`];
   broadcastEvent("status", getFetchStatus());
+  broadcastEvent("progress", { lines: fetchConsoleLines });
+
+  res.status(202).json(getFetchStatus());
 
   fetchTripReport(3000, async (status) => {
     const finishedAt = new Date().toISOString();
     const success = status == null;
     const durationSeconds = Math.round((Date.now() - startMs) / 100) / 10;
-    const logMessage =
-      success
-        ? `${finishedAt} - Fetching success (${durationSeconds}s)\n`
-        : `${finishedAt} - Fetching failed (${durationSeconds}s): ${status}\n`;
 
     fetchState.isRunning = false;
     fetchState.finishedAt = finishedAt;
@@ -135,22 +137,27 @@ app.get("/fetch-start", (req, res) => {
     fetchState.message = success
       ? `Refresh completed successfully in ${durationSeconds}s.`
       : `Refresh failed after ${durationSeconds}s.`;
-
-    try {
-      await appendLog(logMessage);
-    } catch (error) {
-      console.error("Failed to append log:", error);
-    }
+    fetchConsoleLines = [
+      ...fetchConsoleLines,
+      success
+        ? `${formatConsoleTimestamp()} - Manual refresh completed successfully.`
+        : `${formatConsoleTimestamp()} - Manual refresh failed: ${status}`,
+    ];
 
     broadcastEvent("status", getFetchStatus());
+    broadcastEvent("progress", { lines: fetchConsoleLines });
     try {
       const log = await fs.readFile(path.join(__dirname, "log.txt"), "utf8");
       broadcastEvent("log", { text: log });
     } catch (error) {
       console.error("Failed to broadcast log:", error);
     }
-
-    res.json(getFetchStatus());
+  }, {
+    source: "manual-ui",
+    onProgress(message) {
+      fetchConsoleLines = [...fetchConsoleLines, message];
+      broadcastEvent("progress", { lines: fetchConsoleLines });
+    },
   });
 });
 

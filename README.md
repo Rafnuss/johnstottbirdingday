@@ -41,8 +41,18 @@ npm run web:dev
 Run the server:
 
 ```bash
-npm run server:dev
+npm run server:start
 ```
+
+This starts the API server (`apps/server/server.js`) and keeps it running locally.
+
+In short:
+
+- `npm run server:start`: serve the API continuously
+- `npm run server:dev`: same as `server:start` for now, used as the local development alias
+- `npm run server:fetch`: fetch race data once and exit
+
+For local development, if you want both behaviors, run them separately: keep `server:start` running, and call `server:fetch` whenever you want to refresh data manually.
 
 Run a manual fetch:
 
@@ -100,6 +110,11 @@ If the PM2 processes do not exist yet:
 npm run server:pm2:start
 npm run server:pm2:fetch
 ```
+
+Here too, the names match the roles:
+
+- `server:pm2:start`: keeps the API server running under PM2
+- `server:pm2:fetch`: registers the fetch script as a PM2 cron job that runs every 15 minutes
 
 ## Notes
 

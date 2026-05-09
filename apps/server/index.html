@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>John Stott Birding Day | Refresh Console</title>
+    <style>
+      :root {
+        --page-bg: #f2efe7;
+        --page-ink: #243128;
+        --muted: #667267;
+        --panel: rgba(255, 255, 255, 0.84);
+        --panel-border: rgba(31, 46, 36, 0.1);
+        --accent: #2f5a47;
+        --accent-strong: #1f4133;
+        --accent-soft: #d9e5dd;
+        --gold: #b78f4f;
+        --danger: #99463e;
+        --console-bg: #1f2622;
+        --console-ink: #edf5ef;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background:
+          radial-gradient(circle at top left, rgba(183, 143, 79, 0.17), transparent 30%),
+          linear-gradient(180deg, #f8f5ee 0%, var(--page-bg) 100%);
+        color: var(--page-ink);
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      main {
+        width: min(940px, calc(100% - 2rem));
+        margin: 0 auto;
+        padding: 2rem 0 3rem;
+      }
+
+      .stack {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--panel-border);
+        border-radius: 1.4rem;
+        padding: 1.4rem;
+        box-shadow: 0 1.2rem 2.8rem rgba(36, 49, 40, 0.08);
+        backdrop-filter: blur(8px);
+      }
+
+      .eyebrow {
+        margin: 0 0 0.55rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      h1,
+      h2,
+      p {
+        margin-top: 0;
+      }
+
+      .title {
+        font-size: clamp(2rem, 4vw, 3.1rem);
+        line-height: 1;
+        margin-bottom: 0.9rem;
+      }
+
+      .intro {
+        max-width: 42rem;
+        color: var(--muted);
+        font-size: 1.04rem;
+        line-height: 1.6;
+      }
+
+      .instruction-list {
+        margin: 1rem 0 0;
+        padding-left: 1.15rem;
+        color: var(--page-ink);
+      }
+
+      .instruction-list li + li {
+        margin-top: 0.45rem;
+      }
+
+      .control-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.9rem;
+        align-items: center;
+      }
+
+      .btn {
+        border: 0;
+        border-radius: 999px;
+        padding: 0.88rem 1.35rem;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .btn-primary {
+        color: #fff;
+        background: var(--accent);
+        box-shadow: 0 0.6rem 1.4rem rgba(47, 90, 71, 0.2);
+      }
+
+      .btn-primary:hover,
+      .btn-primary:focus {
+        background: var(--accent-strong);
+      }
+
+      .btn-primary:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+
+      .btn-secondary {
+        color: var(--accent);
+        background: transparent;
+        border: 1px solid rgba(47, 90, 71, 0.18);
+      }
+
+      .btn-secondary:hover,
+      .btn-secondary:focus {
+        background: var(--accent-soft);
+      }
+
+      .control-copy {
+        color: var(--muted);
+        margin-bottom: 1rem;
+      }
+
+      .console {
+        min-height: 260px;
+        max-height: 420px;
+        padding: 1rem 1.1rem;
+        border-radius: 1rem;
+        background: var(--console-bg);
+        color: var(--console-ink);
+        font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        font-size: 0.88rem;
+        line-height: 1.55;
+        white-space: pre-wrap;
+        overflow-x: auto;
+        overflow-y: auto;
+      }
+
+      .console-empty {
+        color: rgba(237, 245, 239, 0.7);
+      }
+
+      .log-box {
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .log-entry {
+        padding: 0.95rem 1rem;
+        border-radius: 1rem;
+        border: 1px solid rgba(36, 49, 40, 0.08);
+        background: rgba(249, 248, 244, 0.92);
+      }
+
+      .log-entry-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 0.35rem;
+        font-size: 0.88rem;
+      }
+
+      .log-entry-time {
+        color: var(--page-ink);
+        font-weight: 600;
+      }
+
+      .log-entry-badge {
+        padding: 0.15rem 0.55rem;
+        border-radius: 999px;
+        font-size: 0.74rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .log-entry-badge-success {
+        background: rgba(47, 90, 71, 0.11);
+        color: var(--accent);
+      }
+
+      .log-entry-badge-failed {
+        background: rgba(153, 70, 62, 0.12);
+        color: var(--danger);
+      }
+
+      .log-entry-text {
+        margin: 0;
+        color: #344038;
+        font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        font-size: 0.88rem;
+        line-height: 1.5;
+        white-space: pre-wrap;
+      }
+
+      .log-empty {
+        padding: 1rem;
+        border-radius: 1rem;
+        border: 1px dashed rgba(36, 49, 40, 0.14);
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.56);
+      }
+
+      .link-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 0.75rem;
+      }
+
+      .link-card {
+        display: block;
+        padding: 0.95rem 1rem;
+        border-radius: 0.95rem;
+        border: 1px solid rgba(36, 49, 40, 0.08);
+        background: rgba(255, 255, 255, 0.72);
+        color: var(--page-ink);
+        text-decoration: none;
+      }
+
+      .link-card:hover,
+      .link-card:focus {
+        color: var(--page-ink);
+        background: rgba(217, 229, 221, 0.45);
+        text-decoration: none;
+      }
+
+      .link-title {
+        display: block;
+        margin-bottom: 0.2rem;
+        font-weight: 700;
+      }
+
+      .link-text {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 640px) {
+        main {
+          width: min(100% - 1rem, 940px);
+          padding-top: 1rem;
+        }
+
+        .panel {
+          padding: 1.1rem;
+        }
+
+        .control-row {
+          align-items: stretch;
+        }
+
+        .btn {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="stack">
+        <section class="panel">
+          <p class="eyebrow">Race Server</p>
+          <h1 class="title">Trip Report Refresh Console</h1>
+          <p class="intro">
+            Use this page to trigger a manual race-data refresh, watch the fetch progress line by line,
+            and review the combined activity history from both manual runs and the automatic PM2 cron job.
+          </p>
+          <ul class="instruction-list">
+            <li>Open this page at <code>/</code>. The old <code>/fetch</code> path now redirects here.</li>
+            <li>Use <strong>Start refresh</strong> for a manual run. Only one manual refresh can run at a time.</li>
+            <li>The live console below shows the current or most recent manual run output.</li>
+          </ul>
+        </section>
+
+        <section class="panel">
+          <div style="display: flex; justify-content: space-between; gap: 1rem; align-items: center;">
+            <div>
+              <p class="eyebrow">Manual Refresh</p>
+              <h2>Start Refresh</h2>
+            </div>
+            <button id="fetch" class="btn btn-primary">Start Refresh</button>
+          </div>
+          <p class="control-copy">
+            Start a manual refresh and follow the progress below. The console keeps the latest run output and
+            scrolls when the list gets long.
+          </p>
+          <pre id="console" class="console"><span class="console-empty">Waiting for a manual refresh.</span></pre>
+        </section>
+
+        <section class="panel">
+          <div style="display: flex; justify-content: space-between; gap: 1rem; align-items: center; flex-wrap: wrap;">
+            <div>
+              <p class="eyebrow">All Fetch Runs</p>
+              <h2>Recent Activity</h2>
+            </div>
+            <button id="refreshLog" class="btn btn-secondary">Refresh Activity</button>
+          </div>
+          <div id="log" class="log-box" style="margin-top: 1rem;">Loading log...</div>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">Data Endpoints</p>
+          <h2>Browse Data</h2>
+          <div class="link-grid">
+            <a class="link-card" href="/info" target="_blank" rel="noopener noreferrer">
+              <span class="link-title">Info</span>
+              <span class="link-text">Summary counters and last update</span>
+            </a>
+            <a class="link-card" href="/user" target="_blank" rel="noopener noreferrer">
+              <span class="link-title">User</span>
+              <span class="link-text">Participant race data</span>
+            </a>
+            <a class="link-card" href="/checklist" target="_blank" rel="noopener noreferrer">
+              <span class="link-title">Checklist</span>
+              <span class="link-text">Compiled checklist dataset</span>
+            </a>
+            <a class="link-card" href="/log" target="_blank" rel="noopener noreferrer">
+              <span class="link-title">Log</span>
+              <span class="link-text">Raw activity log file</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      const fetchButton = document.querySelector("#fetch");
+      const refreshLogButton = document.querySelector("#refreshLog");
+      const consoleBox = document.querySelector("#console");
+      const log = document.querySelector("#log");
+      let eventSource;
+
+      function escapeHtml(text) {
+        return text
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;");
+      }
+
+      function setLoading(isLoading) {
+        fetchButton.disabled = isLoading;
+      }
+
+      function renderFetchStatus(status) {
+        setLoading(Boolean(status.isRunning));
+      }
+
+      function renderConsole(lines) {
+        if (!lines || lines.length === 0) {
+          consoleBox.innerHTML = '<span class="console-empty">Waiting for a manual refresh.</span>';
+          return;
+        }
+
+        consoleBox.innerHTML = escapeHtml(lines.join("\n"));
+        consoleBox.scrollTop = consoleBox.scrollHeight;
+      }
+
+      function renderLog(text) {
+        const lines = text
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean)
+          .reverse();
+
+        if (lines.length === 0) {
+          log.innerHTML = '<div class="log-empty">No log entries yet.</div>';
+          return;
+        }
+
+        log.innerHTML = lines
+          .map((line) => {
+            const match = line.match(/^(.+?) - (?:\[([^\]]+)\] )?(.*)$/);
+            const timestamp = match?.[1] || "";
+            const source = match?.[2] || "";
+            const message = match?.[3] || line;
+            const isSuccess = message.toLowerCase().includes("success");
+            const badgeClass = isSuccess ? "log-entry-badge-success" : "log-entry-badge-failed";
+            const badgeText = isSuccess ? "Success" : "Failed";
+            const sourceLabel =
+              source === "auto"
+                ? "Auto PM2"
+                : source === "manual"
+                  ? "Manual refresh"
+                  : source === "manual-cli"
+                    ? "Manual CLI"
+                    : source === "pm2"
+                      ? "PM2 cron"
+                      : source === "manual-ui"
+                        ? "Manual refresh"
+                        : source === "cli"
+                          ? "CLI"
+                          : source;
+            const meta = sourceLabel ? `${timestamp}  •  ${sourceLabel}` : timestamp;
+
+            return `
+              <article class="log-entry">
+                <div class="log-entry-head">
+                  <span class="log-entry-time">${escapeHtml(meta)}</span>
+                  <span class="log-entry-badge ${badgeClass}">${badgeText}</span>
+                </div>
+                <p class="log-entry-text">${escapeHtml(message)}</p>
+              </article>
+            `;
+          })
+          .join("");
+      }
+
+      async function loadFetchStatus() {
+        try {
+          const response = await fetch("/fetch-status");
+          const data = await response.json();
+          renderFetchStatus(data);
+        } catch (error) {
+          setLoading(false);
+          consoleBox.innerHTML = escapeHtml("Failed to load current refresh status.");
+        }
+      }
+
+      async function loadLog() {
+        try {
+          const response = await fetch("/log");
+          const text = await response.text();
+          renderLog(text || "");
+        } catch (error) {
+          log.innerHTML = '<div class="log-empty">Failed to load log.</div>';
+        }
+      }
+
+      function connectEvents() {
+        eventSource = new EventSource("/events");
+
+        eventSource.addEventListener("status", (event) => {
+          renderFetchStatus(JSON.parse(event.data));
+        });
+
+        eventSource.addEventListener("progress", (event) => {
+          const payload = JSON.parse(event.data);
+          renderConsole(payload.lines || []);
+        });
+
+        eventSource.addEventListener("log", (event) => {
+          const payload = JSON.parse(event.data);
+          renderLog(payload.text || "");
+        });
+
+        eventSource.addEventListener("error", () => {});
+      }
+
+      fetchButton.addEventListener("click", async () => {
+        setLoading(true);
+
+        try {
+          const response = await fetch("/fetch-start");
+          const data = await response.json();
+
+          if (!response.ok) {
+            setLoading(false);
+            consoleBox.innerHTML = escapeHtml(data.message || "The refresh request was rejected.");
+            return;
+          }
+
+          renderFetchStatus(data);
+        } catch (error) {
+          setLoading(false);
+          consoleBox.innerHTML = escapeHtml("The refresh request did not complete successfully.");
+        }
+      });
+
+      refreshLogButton.addEventListener("click", loadLog);
+      loadFetchStatus();
+      loadLog();
+      connectEvents();
+      setInterval(loadLog, 20000);
+    </script>
+  </body>
+</html>
