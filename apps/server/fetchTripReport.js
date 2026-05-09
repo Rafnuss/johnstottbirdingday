@@ -44,7 +44,10 @@ async function appendActivityLog({ finishedAt, success, durationSeconds, source,
 }
 
 function normalizeTripReport(url = "") {
-  return url.replace("https://ebird.org/tripreport/", "").replace("/", "?tripReportPersonId=");
+  return url
+    .replace("https://ebird.org/tripreport/", "")
+    .replace("?welcome=true", "")
+    .replace("/", "?tripReportPersonId=");
 }
 
 async function fetchJson(url) {

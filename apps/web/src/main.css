@@ -159,16 +159,16 @@ button {
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
-  padding: 0.75rem 0.75rem 0;
+  gap: 0.85rem;
+  padding: 0.9rem 0.9rem 0;
 }
 
 .stat-card {
-  padding: 0.7rem 0.9rem 0.65rem;
+  padding: 0.92rem 1rem 0.86rem;
   border-radius: 0.35rem;
   background: var(--accent);
   color: white;
-  min-height: 64px;
+  min-height: 82px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -177,33 +177,33 @@ button {
 .stat-value {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 1.25rem;
+  gap: 0.6rem;
+  font-size: 1.48rem;
   font-weight: 700;
   font-family: "Lato", "Helvetica Neue", Arial, sans-serif;
 }
 
 .stat-icon-image {
-  width: 1.22rem;
-  height: 1.22rem;
+  width: 1.34rem;
+  height: 1.34rem;
 }
 
 .stat-icon-svg {
-  width: 1.08rem;
-  height: 1.08rem;
+  width: 1.18rem;
+  height: 1.18rem;
   color: rgba(255, 255, 255, 0.9);
 }
 
 .stat-label {
   color: rgba(255, 255, 255, 0.78);
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   font-family: "Lato", "Helvetica Neue", Arial, sans-serif;
 }
 
 .sidebar-body {
   flex: 1;
   min-height: 0;
-  padding: 0.75rem 0.75rem;
+  padding: 0.65rem 0.45rem;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -224,7 +224,7 @@ button {
   position: sticky;
   top: 0;
   background: rgba(248, 250, 252, 0.98);
-  padding: 0.8rem 0.9rem 0.72rem;
+  padding: 0.8rem 0.6rem 0.72rem;
   text-align: left;
   font-size: 0.76rem;
   letter-spacing: 0.08em;
@@ -276,11 +276,11 @@ button {
 }
 
 .race-table td {
-  padding: 0.7rem 0.9rem;
+  padding: 0.46rem 0.6rem;
   border-top: 1px solid rgba(44, 62, 80, 0.07);
   vertical-align: middle;
-  font-size: 0.92rem;
-  line-height: 1.35;
+  font-size: 0.89rem;
+  line-height: 1.2;
 }
 
 .race-table td:first-child {
@@ -288,29 +288,32 @@ button {
 }
 
 .name-link {
-  color: var(--accent);
-  font-size: 0.88rem;
-  line-height: 1.25;
+  font-size: 0.85rem;
+  line-height: 1.15;
 }
 
 .name-cell {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.35rem 0.45rem;
+  gap: 0.24rem 0.68rem;
 }
 
-.name-link-profile {
+.name-link-tripreport {
+  color: var(--accent);
   font-weight: 700;
+  text-decoration: none;
 }
 
-.name-link-profile:hover {
-  text-decoration: underline;
-  text-underline-offset: 0.12em;
+.name-link-tripreport:hover {
+  color: var(--accent-strong);
 }
 
 .name-text {
-  font-weight: 400;
+  font-weight: 700;
+}
+
+.name-text-plain {
   color: var(--text-main);
 }
 
@@ -318,39 +321,56 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 0.22rem;
-  padding: 0.14rem 0.38rem;
+  padding: 0.12rem 0.34rem;
   border-radius: 999px;
   background: rgba(0, 99, 130, 0.08);
   color: var(--accent);
   font-family: "Lato", "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 700;
   line-height: 1;
   white-space: nowrap;
+  text-decoration: none;
 }
 
 .party-badge-icon {
-  width: 0.68rem;
-  height: 0.68rem;
+  width: 0.62rem;
+  height: 0.62rem;
+}
+
+.party-badge-link {
+  border: 1px solid rgba(0, 99, 130, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+.party-badge-link:hover {
+  background: rgba(0, 99, 130, 0.13);
+  color: var(--accent-strong);
+}
+
+.party-badge-static {
+  background: rgba(83, 98, 110, 0.11);
+  color: var(--text-soft);
 }
 
 .metric-cell {
   width: 15%;
   text-align: center;
   font-family: "Lato", "Helvetica Neue", Arial, sans-serif;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--accent);
-}
-
-.metric-link {
-  color: inherit;
 }
 
 .flag-list {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
+}
+
+.flag-list-inline {
+  align-items: center;
+  gap: 0.26rem;
 }
 
 .panel-message {

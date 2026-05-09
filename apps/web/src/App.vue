@@ -113,16 +113,6 @@
                     </svg>
                   </span>
                 </th>
-                <th class="metric-heading">
-                  <span class="metric-head" aria-label="Country" title="Country">
-                    <svg viewBox="0 0 16 16" aria-hidden="true" class="metric-head-icon">
-                      <path
-                        fill="currentColor"
-                        d="M3 1.5A.5.5 0 0 1 3.5 1h.79a.5.5 0 0 1 .43.24L5.3 2H12a.5.5 0 0 1 .4.8L10.5 5l1.9 2.2a.5.5 0 0 1-.4.8H5.3l-.58.76a.5.5 0 0 1-.43.24H4V15a.5.5 0 0 1-1 0V1.5Z"
-                      />
-                    </svg>
-                  </span>
-                </th>
               </tr>
             </thead>
             <tbody>
@@ -136,16 +126,36 @@
                 <td>
                   <div class="name-cell">
                     <a
-                      v-if="participant.profile"
-                      :href="participant.profile"
+                      v-if="participant.tripreport"
+                      :href="tripReportUrl(participant.tripreport)"
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="name-link name-link-profile"
+                      class="name-link name-link-tripreport"
                     >
                       {{ participant.name }}
                     </a>
-                    <span v-else class="name-link name-text">{{ participant.name }}</span>
-                    <span v-if="participant.party" class="party-badge" :title="`${participant.party} observers`">
+                    <span v-else class="name-link name-text name-text-plain">{{ participant.name }}</span>
+                    <a
+                      v-if="participant.party && participant.profile"
+                      :href="participant.profile"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="party-badge party-badge-link"
+                      :title="`${participant.party} observers`"
+                    >
+                      <svg viewBox="0 0 16 16" aria-hidden="true" class="party-badge-icon">
+                        <path
+                          fill="currentColor"
+                          d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5 6a5 5 0 0 1 10 0v.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V14Z"
+                        />
+                      </svg>
+                      <span>{{ participant.party }}</span>
+                    </a>
+                    <span
+                      v-else-if="participant.party"
+                      class="party-badge party-badge-static"
+                      :title="`${participant.party} observers`"
+                    >
                       <svg viewBox="0 0 16 16" aria-hidden="true" class="party-badge-icon">
                         <path
                           fill="currentColor"
@@ -154,28 +164,18 @@
                       </svg>
                       <span>{{ participant.party }}</span>
                     </span>
+                    <div v-if="participant.countryCode?.length" class="flag-list flag-list-inline">
+                      <span
+                        v-for="country in participant.countryCode"
+                        :key="country"
+                        :class="['fi', `fi-${country.toLowerCase()}`]"
+                        :title="countryDisplayName(country)"
+                      />
+                    </div>
                   </div>
                 </td>
-                <td class="metric-cell">
-                  <a
-                    :href="tripReportUrl(participant.tripreport)"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="metric-link"
-                  >
-                    {{ participant.num_sp }}
-                  </a>
-                </td>
+                <td class="metric-cell">{{ participant.num_sp }}</td>
                 <td class="metric-cell">{{ participant.num_checklist }}</td>
-                <td>
-                  <div class="flag-list">
-                    <span
-                      v-for="country in participant.countryCode"
-                      :key="country"
-                      :class="['fi', `fi-${country.toLowerCase()}`]"
-                    />
-                  </div>
-                </td>
               </tr>
             </tbody>
           </table>
@@ -231,6 +231,10 @@ const mapError = ref("");
 const mapContainer = ref(null);
 const map = ref(null);
 const markers = ref([]);
+const regionNames =
+  typeof Intl !== "undefined" && typeof Intl.DisplayNames === "function"
+    ? new Intl.DisplayNames(["en"], { type: "region" })
+    : null;
 
 const info = reactive({
   counterSpecies: 0,
@@ -256,6 +260,10 @@ function checklistUrl(subId) {
 
 function formatDateTime(value) {
   return new Date(value).toLocaleString();
+}
+
+function countryDisplayName(countryCode) {
+  return regionNames?.of(countryCode) || countryCode;
 }
 
 function createMarkerElement(color) {
