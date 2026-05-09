@@ -348,6 +348,7 @@
       const consoleBox = document.querySelector("#console");
       const log = document.querySelector("#log");
       let eventSource;
+      let progressPollTimer;
 
       function escapeHtml(text) {
         return text
@@ -362,6 +363,12 @@
 
       function renderFetchStatus(status) {
         setLoading(Boolean(status.isRunning));
+
+        if (status.isRunning) {
+          startProgressPolling();
+        } else {
+          stopProgressPolling();
+        }
       }
 
       function renderConsole(lines) {
@@ -445,6 +452,27 @@
         }
       }
 
+      async function loadFetchProgress() {
+        try {
+          const response = await fetch("/fetch-progress");
+          const data = await response.json();
+          renderConsole(data.lines || []);
+        } catch (error) {
+          // Ignore polling errors; SSE may still be active.
+        }
+      }
+
+      function startProgressPolling() {
+        if (progressPollTimer) return;
+        progressPollTimer = window.setInterval(loadFetchProgress, 2000);
+      }
+
+      function stopProgressPolling() {
+        if (!progressPollTimer) return;
+        window.clearInterval(progressPollTimer);
+        progressPollTimer = null;
+      }
+
       function connectEvents() {
         eventSource = new EventSource("/events");
 
@@ -474,10 +502,11 @@
 
           if (!response.ok) {
             setLoading(false);
-            consoleBox.innerHTML = escapeHtml(data.message || "The refresh request was rejected.");
+            renderConsole(data.consoleLines || [data.message || "The refresh request was rejected."]);
             return;
           }
 
+          renderConsole(data.consoleLines || []);
           renderFetchStatus(data);
         } catch (error) {
           setLoading(false);
@@ -487,6 +516,7 @@
 
       refreshLogButton.addEventListener("click", loadLog);
       loadFetchStatus();
+      loadFetchProgress();
       loadLog();
       connectEvents();
       setInterval(loadLog, 20000);

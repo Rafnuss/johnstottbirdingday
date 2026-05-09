@@ -36,6 +36,10 @@ function getFetchStatus() {
   return { ...fetchState };
 }
 
+function getFetchProgress() {
+  return [...fetchConsoleLines];
+}
+
 function formatConsoleTimestamp(date = new Date()) {
   return date.toISOString().replace("T", " ").replace(/\.\d{3}Z$/, " UTC");
 }
@@ -86,7 +90,7 @@ app.get("/events", async (req, res) => {
 
   eventClients.add(res);
   sendEvent(res, "status", getFetchStatus());
-  sendEvent(res, "progress", { lines: fetchConsoleLines });
+  sendEvent(res, "progress", { lines: getFetchProgress() });
 
   try {
     const log = await fs.readFile(path.join(__dirname, "log.txt"), "utf8");
@@ -105,6 +109,7 @@ app.get("/fetch-start", (req, res) => {
   if (fetchState.isRunning) {
     res.status(409).json({
       ...getFetchStatus(),
+      consoleLines: getFetchProgress(),
       message: "A refresh is already running.",
     });
     return;
@@ -121,9 +126,12 @@ app.get("/fetch-start", (req, res) => {
   fetchState.message = "Refreshing race data...";
   fetchConsoleLines = [`${formatConsoleTimestamp()} - Manual refresh started.`];
   broadcastEvent("status", getFetchStatus());
-  broadcastEvent("progress", { lines: fetchConsoleLines });
+  broadcastEvent("progress", { lines: getFetchProgress() });
 
-  res.status(202).json(getFetchStatus());
+  res.status(202).json({
+    ...getFetchStatus(),
+    consoleLines: getFetchProgress(),
+  });
 
   fetchTripReport(3000, async (status) => {
     const finishedAt = new Date().toISOString();
@@ -145,7 +153,7 @@ app.get("/fetch-start", (req, res) => {
     ];
 
     broadcastEvent("status", getFetchStatus());
-    broadcastEvent("progress", { lines: fetchConsoleLines });
+    broadcastEvent("progress", { lines: getFetchProgress() });
     try {
       const log = await fs.readFile(path.join(__dirname, "log.txt"), "utf8");
       broadcastEvent("log", { text: log });
@@ -156,13 +164,17 @@ app.get("/fetch-start", (req, res) => {
     source: "manual-ui",
     onProgress(message) {
       fetchConsoleLines = [...fetchConsoleLines, message];
-      broadcastEvent("progress", { lines: fetchConsoleLines });
+      broadcastEvent("progress", { lines: getFetchProgress() });
     },
   });
 });
 
 app.get("/fetch-status", (req, res) => {
   res.json(getFetchStatus());
+});
+
+app.get("/fetch-progress", (req, res) => {
+  res.json({ lines: getFetchProgress() });
 });
 
 app.get("/user", async (req, res) => {

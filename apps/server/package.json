@@ -7,11 +7,12 @@
     "start": "node server.js",
     "dev": "node server.js",
     "fetch": "node fetchTripReport.js",
+    "fetch:scheduler": "node fetchScheduler.js",
     "archive": "node archiveData.js",
-    "check": "node --check server.js && node --check fetchTripReport.js",
+    "check": "node --check server.js && node --check fetchTripReport.js && node --check fetchScheduler.js",
     "test": "npm run check",
     "pm2:start": "pm2 start server.js --name johnstottbirdingday",
-    "pm2:fetch": "pm2 start fetchTripReport.js --name johnstottbirdingday-fetch --cron '*/15 * * * *'"
+    "pm2:fetch": "pm2 start fetchScheduler.js --name johnstottbirdingday-fetch"
   },
   "author": "Raphaël Nussbaumer",
   "license": "ISC",

@@ -76,6 +76,8 @@ Automatic fetch with PM2:
 npm run pm2:fetch
 ```
 
+This starts a persistent scheduler process under PM2 that runs the fetch immediately and then every 15 minutes.
+
 ## Validate
 
 ```bash
